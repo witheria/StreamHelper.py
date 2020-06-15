@@ -1,0 +1,17 @@
+Trying to create the standard Folder...
+Folder exists!
+Trying to create the standard Files with arg 0...
+Standard file folder exists...
+XML Files exist, not creating any new ones
+Loading filepath...
+Standard file path is  {'path': 'C:\\Users\\sc4le\\AppData\\Local\\StreamHelper'} 
+Custom file path is  {'path': 'C:\\Users\\sc4le\\AppData\\Local\\StreamHelper\\textfiles'}
+Trying to recall what was in the list...
+chronoup already exists!
+time already exists!
+chronodown already exists!
+Added item: {0: 'asd'}
+Added item: {1: 'sdfds'}
+Added item: {2: ''}
+Added item: {0: 'sdfsdf'}
+Added item: {1: 'sfsdfsd'}
