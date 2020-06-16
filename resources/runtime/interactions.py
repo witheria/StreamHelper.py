@@ -2,7 +2,7 @@ import shutil
 import xml
 
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QListWidgetItem, QInputDialog, QFileDialog
+from PyQt5.QtWidgets import QListWidgetItem, QInputDialog, QFileDialog, QMainWindow
 from qtpy import uic
 
 from resources import information
@@ -29,12 +29,12 @@ def addListElement(self):
     if item == 1:
         # Creates a NUMBER
         if ok:
-            createNumberItem(self, text)
+            createNumberItem(self, text, 0, 3)
             savestate.itemorder.append(savestate.itemType.NUMBER)
     elif item == 0:
         # Creates a TEXT Item
         if ok:
-            createTextItem(self, text)
+            createTextItem(self, text, "", 3)
             savestate.itemorder.append(savestate.itemType.TEXT)
     elif item == 2:
         # Creates a CERTAINTEXT Item which allows the user to input a number of texts and change them at will
@@ -48,7 +48,7 @@ def addListElement(self):
             # savestate.itemorder.append(savestate.itemType.CHRONOS) TODO
 
 
-def createTextItem(self, text, *value, **list):
+def createTextItem(self, text, value, list):
     leftOne = self.ui.listWidget
     rightOne = self.ui.listWidget_2
     if self.ui.addright.isChecked() or list == 1:
@@ -63,6 +63,7 @@ def createTextItem(self, text, *value, **list):
 
         if value:
             wid.lineEdit.setText(value)
+        wid.setWhatsThis("text")
         item[savestate.count] = QListWidgetItem()
         item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
         item[savestate.count].setData(5, savestate.count + 1)
@@ -79,6 +80,7 @@ def createTextItem(self, text, *value, **list):
         wid.label.setText(text)
         if value:
             wid.lineEdit.setText(value)
+        wid.setWhatsThis("text")
         item[savestate.count] = QListWidgetItem()
         item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
         item[savestate.count].setData(5, text)
@@ -90,10 +92,29 @@ def createTextItem(self, text, *value, **list):
         information("Please select a list to add the object!")
 
 
-def createNumberItem(self, text, *value, **list):
+def createNumberItem(self: QMainWindow, text: str, value: str, listnr: int) -> None:
     leftOne = self.ui.listWidget
     rightOne = self.ui.listWidget_2
-    if self.ui.addright.isChecked() or list == 1:
+
+    if listnr == 0 or self.ui.addleft.isChecked():
+        savestate.count = leftOne.count()
+        item = {savestate.count: str(text)}
+        print("Added item: " + str(item))
+        wid = uic.loadUi("NumberWidget.ui")
+        wid.setStyleSheet(savestate.shortBorder)
+        wid.label.setText(text)
+
+        wid.spinBox.setValue(int(value))
+
+        wid.setWhatsThis("number")
+        item[savestate.count] = QListWidgetItem()
+        item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
+        item[savestate.count].setData(5, text)
+        item[savestate.count].setSizeHint(QSize(270, 80))
+        leftOne.addItem(item[savestate.count])
+        leftOne.setItemWidget(item[savestate.count], wid)
+
+    elif listnr == 1 or self.ui.addright.isChecked():
 
         savestate.count = rightOne.count()
         item = {savestate.count: str(text)}
@@ -104,32 +125,15 @@ def createNumberItem(self, text, *value, **list):
         wid.label.setText(text)
 
         if value:
-            wid.spinbox.setValue(value)
+            wid.spinBox.setValue(int(value))
 
+        wid.setWhatsThis("number")
         item[savestate.count] = QListWidgetItem()
         item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
         item[savestate.count].setData(5, savestate.count + 1)
         item[savestate.count].setSizeHint(QSize(270, 80))
         rightOne.addItem(item[savestate.count])
         rightOne.setItemWidget(item[savestate.count], wid)
-
-    elif self.ui.addleft.isChecked() or list == 0:
-        savestate.count = leftOne.count()
-        item = {savestate.count: str(text)}
-        print("Added item: " + str(item))
-        wid = uic.loadUi("NumberWidget.ui")
-        wid.setStyleSheet(savestate.shortBorder)
-        wid.label.setText(text)
-
-        if value:
-            wid.spinbox.setValue(value)
-
-        item[savestate.count] = QListWidgetItem()
-        item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
-        item[savestate.count].setData(5, text)
-        item[savestate.count].setSizeHint(QSize(270, 80))
-        leftOne.addItem(item[savestate.count])
-        leftOne.setItemWidget(item[savestate.count], wid)
 
     else:
         information("Please select a list to add the object!")
@@ -210,15 +214,6 @@ def autTextListElement(self, name, nr, value, *itemType):
         information("Please select a list to add the object!")
 
 
-def autListElement(self, name, nr, value, itemType):
-    if itemType == 0:
-        createTextItem(self, name, value, nr)
-    elif itemType == 1:
-        createNumberItem(self, name, value, nr)
-    else:
-        print("Not a valid Item!")
-
-
 def getTextOfItem(self, path, *item):
     # This function gets the text from within the List Widgets, first from the left list, then from the other one it
     # will also write these texts into the xml and text files. If there is an item given it will internally return
@@ -250,7 +245,6 @@ def getTextOfItem(self, path, *item):
         print(itemtype)
 
         if itemtype == "text":
-
             # Set the list in which the item lays for revive purposes
             listnr = ET.SubElement(itemdirect[index], "list")
             listnr.set("list", "0")
@@ -267,16 +261,11 @@ def getTextOfItem(self, path, *item):
             listnr = ET.SubElement(itemdirect[index], "list")
             listnr.set("list", "0")
             # Now the values of the item
-            value1int = str(self.ui.listWidget.itemWidget(current).spinBox.value())
-            value2int = str(self.ui.listWidget.itemWidget(current).spinBox_2.value())
-            value3int = str(self.ui.listWidget.itemWidget(current).spinBox_3.value())
+            valueint = str(self.ui.listWidget.itemWidget(current).spinBox.value())
 
-            value1 = ET.SubElement(itemdirect[index], "value")
-            value1.set("value1", value1int)
-            value2 = ET.SubElement(itemdirect[index], "value")
-            value2.set("value2", value2int)
-            value3 = ET.SubElement(itemdirect[index], "value")
-            value3.set("value3", value3int)
+            value = ET.SubElement(itemdirect[index], "value")
+            value.set("value", valueint)
+
             # And now the label
             labeltext = ET.SubElement(itemdirect[index], "labeltext")
             labeltext.set("text", label)
@@ -290,25 +279,44 @@ def getTextOfItem(self, path, *item):
         # Get the current element on index
         current = self.ui.listWidget_2.item(index)
 
-        # Save the two fields that are customizable
-        text = self.ui.listWidget_2.itemWidget(current).lineEdit.text()
+        # Save the label that is customizable
+
         label = self.ui.listWidget_2.itemWidget(current).label.text()
+
         # Create the XML Tree element
         itemdirect[index] = ET.SubElement(data, ("item" + str(index)))
 
         # Save the type of the item
+        itemtype = str(self.ui.listWidget_2.itemWidget(current).whatsThis())
         Listtype = ET.SubElement(itemdirect[index], "itemtype")
-        Listtype.set("itemtype", str(self.ui.listWidget_2.itemWidget(current).whatsThis()))
+        Listtype.set("itemtype", itemtype)
+        print(itemtype)
 
-        # Set the list in which the item lays for revive purposes
-        listnr = ET.SubElement(itemdirect[index], "list")
-        listnr.set("list", "1")
-        # Now the value of the item
-        value1 = ET.SubElement(itemdirect[index], "value")
-        value1.set("value", text)
-        # And now the label
-        labeltext = ET.SubElement(itemdirect[index], "labeltext")
-        labeltext.set("text", label)
+        if itemtype == "text":
+            # Set the list in which the item lays for revive purposes
+            listnr = ET.SubElement(itemdirect[index], "list")
+            listnr.set("list", "1")
+            # Now the value of the item
+            text = self.ui.listWidget_2.itemWidget(current).lineEdit.text()
+            value1 = ET.SubElement(itemdirect[index], "value")
+            value1.set("value", text)
+            # And now the label
+            labeltext = ET.SubElement(itemdirect[index], "labeltext")
+            labeltext.set("text", label)
+
+        if itemtype == "number":
+            # Set the list in which the item lays for revive purposes
+            listnr = ET.SubElement(itemdirect[index], "list")
+            listnr.set("list", "1")
+            # Now the values of the item
+            valueint = str(self.ui.listWidget_2.itemWidget(current).spinBox.value())
+
+            value = ET.SubElement(itemdirect[index], "value")
+            value.set("value", valueint)
+
+            # And now the label
+            labeltext = ET.SubElement(itemdirect[index], "labeltext")
+            labeltext.set("text", label)
 
         # Out to the log it goes
         print("text of item", itemdirect[index], "saved to file")
@@ -335,38 +343,49 @@ def createListFiles(self, path):
         source = ET.parse(path + "\\autosave.xml")
         sourceroot = source.getroot()
 
-    # After parsing we need to get the values for each field. Then we put it in the list. Sorry for the naming here,
-    # its really quite obvious though. a is the value, b is the name/text the user has called his element,
-    # c is the list in which it should be; 0 means left 1 means right
+        # After parsing we need to get the values for each field. Then we put it in the list. Sorry for the naming here.
+        # a is the value, b is the name/text the user has called his element,
+        # c is the list in which it should be; 0 means left 1 means right
         for child in sourceroot:
 
             a = child.find("value").attrib.get("value")
             b = child.find("labeltext").attrib.get("text")
             c = int(child.find("list").attrib.get("list"))
-            # d = child.find("itemtype").attrib.get("type")
+            d = child.find("itemtype").attrib.get("itemtype")
 
             # x = next(iter(a.values()))
 
             print(
-                "# Value of item is " + a + "\n" + "# Name of item is " + b + "\n" + "# List where it needs to be is " +
+                "# Value of the " + str(d) + " item is " + str(a) + "\n" + "# Name of item is " + str(
+                    b) + "\n" + "# List where it needs to be is " +
                 str(c))
-            if c == 1:
-                autTextListElement(self, b, 1, a)
-            elif c == 0:
-                autTextListElement(self, b, 0, a)
+            if d == "text":
+                createTextItem(self, b, a, int(c))
+            elif d == "number":
+                createNumberItem(self, b, a, int(c))
             else:
                 information("The Element could not be loaded! The data may have been corrupted!")
     except xml.etree.ElementTree.ParseError:
         print("No Files found")
-    except AttributeError:
-        print("Not readable!")
+
+
+
+'''
+    def autListElement(self, name, nr, value, itemType):
+        if itemType == "text":
+            createTextItem(self, name, value, nr)
+        elif itemType == "number":
+            createNumberItem(self, name, value, nr)
+        else:
+            print("Not a valid Item!")
+'''
 
 
 def saveConfig(self, basefilepath):
     # saves the current lists to a separate file
     filepath = QFileDialog.getSaveFileName(self, "Create Save", basefilepath, ".oi")
     file = str(filepath[0] + ".oi")
-    savefile = shutil.copy(str(savestate.standardFilePath +"\\autosave.xml"), file)
+    savefile = shutil.copy(str(savestate.standardFilePath + "\\autosave.xml"), file)
 
 
 def loadConfig(self, basefilepath):

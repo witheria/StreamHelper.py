@@ -77,8 +77,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>2</x>
+      <y>2</y>
       <width>171</width>
       <height>16</height>
      </rect>
@@ -211,30 +211,33 @@
    <widget class="QSpinBox" name="spinBox">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>220</x>
       <y>20</y>
       <width>42</width>
-      <height>22</height>
+      <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_2">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>20</y>
-      <width>42</width>
-      <height>22</height>
+      <x>5</x>
+      <y>21</y>
+      <width>141</width>
+      <height>16</height>
      </rect>
     </property>
+    <property name="text">
+     <string>Show this in front of number:</string>
+    </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_3">
+   <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>147</x>
       <y>20</y>
-      <width>42</width>
-      <height>22</height>
+      <width>71</width>
+      <height>20</height>
      </rect>
     </property>
    </widget>
