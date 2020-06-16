@@ -71,6 +71,9 @@
      </disabled>
     </palette>
    </property>
+   <property name="whatsThis">
+    <string>text</string>
+   </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -107,8 +110,8 @@
      <rect>
       <x>200</x>
       <y>0</y>
-      <width>64</width>
-      <height>18</height>
+      <width>0</width>
+      <height>0</height>
      </rect>
     </property>
     <property name="text">
@@ -141,10 +144,10 @@
      <string>Change Appearance</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="deleteFromItem">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>200</x>
       <y>50</y>
       <width>71</width>
       <height>21</height>
@@ -215,7 +218,7 @@
      </palette>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Delete</string>
     </property>
    </widget>
    <widget class="Line" name="line_6">

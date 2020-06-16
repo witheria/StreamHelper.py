@@ -7,7 +7,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from resources.runtime import savestate
 from resources.runtime.functions import information, activateUi, updateSelection, createStandardFiles, createTextFiles
-from resources.runtime.interactions import addListElement, setFilePath, autTextListElement, getTextOfItem, createListFiles
+from resources.runtime.interactions import addListElement, setFilePath, autTextListElement, getTextOfItem, \
+    createListFiles, saveConfig, loadConfig
 
 try:
     import xml.etree.cElementTree as ET
@@ -74,11 +75,13 @@ class uiControlTest(QMainWindow):
 
         # Detect the interactions
         window.addButton.clicked.connect(lambda: addListElement(self))
-        window.listWidget.itemSelectionChanged.connect(lambda: updateSelection(self, 0))
-        window.listWidget_2.itemSelectionChanged.connect(lambda: updateSelection(self, 1))
+        # window.listWidget.itemSelectionChanged.connect(lambda: updateSelection(self, 0))
+        # window.listWidget_2.itemSelectionChanged.connect(lambda: updateSelection(self, 1))
 
         window.actionSetMainFilePath.triggered.connect(lambda: setFilePath(self))
-        window.actionStreamHelperDocumentation.triggered.connect(webbrowser.open(""))
+        window.actionStreamHelperDocumentation.triggered.connect(lambda: webbrowser.open("https://github.com/xFLLSquadronNorden/StreamHelper.py"))
+        window.actionSave.triggered.connect(lambda: saveConfig(self, newFilePath))
+        window.actionLoad.triggered.connect(lambda: loadConfig(self, newFilePath))
 
         window.updateButton.clicked.connect(lambda: getTextOfItem(self, oldFilePath))
 

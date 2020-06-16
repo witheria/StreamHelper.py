@@ -71,6 +71,9 @@
      </disabled>
     </palette>
    </property>
+   <property name="whatsThis">
+    <string>number</string>
+   </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>

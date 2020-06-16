@@ -48,7 +48,7 @@ def updateSelection(self, number, *row):
 
 
 def alloydeselectItem(self):
-    # UNUSED SINCE DEPRECATED!
+    # UNUSED!
     if self.ui.addright.isChecked():
         savestate.lastListSelected = 1
     if not savestate.deselectListFunctionInitiated:
@@ -79,11 +79,6 @@ def alloydeselectItem(self):
 
 def resetFiles():
     # TODO: Get on with it
-    pass
-
-
-def saveListState():
-    # TODO: Get on with it #2
     pass
 
 
