@@ -1,17 +1,10 @@
-import random
-from enum import Enum
-from importlib import resources
-from pathlib import Path
-
-import pickle
 import os
-from typing import List, Any
+from enum import Enum
 
 try:
     import xml.etree.cElementTree as ET
 except ImportError:
     import xml.etree.ElementTree as ET
-from PyQt5.QtCore import QModelIndex
 
 os.system("cls")
 
@@ -33,7 +26,7 @@ lastItemSelected = [0, 0]
 # Standard Filepath and File Names
 # standardFilePath: str = os.getcwd()
 standardFilePath: str = os.getenv('LOCALAPPDATA') + "\\StreamHelper"
-standardFileNames = {"chronoup", "chronodown", "time"}
+# standardFileNames = {"chronoup", "chronodown", "time"} UNUSED
 standardXMLNames = ['autosave', 'config', 'init']
 
 itemorder = []

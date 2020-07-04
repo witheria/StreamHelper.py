@@ -1,5 +1,7 @@
+import os
 import shutil
 import xml
+from os.path import join
 
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import QListWidgetItem, QInputDialog, QFileDialog, QMainWindow
@@ -7,7 +9,7 @@ from qtpy import uic
 
 from resources import information
 from resources.runtime import savestate
-from resources.runtime.functions import setNewFilePath
+from resources.runtime.functions import setNewFilePath, logWrite, logWriteNoTime
 
 try:
     import xml.etree.cElementTree as ET
@@ -29,7 +31,7 @@ def addListElement(self):
     if item == 1:
         # Creates a NUMBER
         if ok:
-            createNumberItem(self, text, 0, 3)
+            createNumberItem(self, text, 0, 3, "")
             savestate.itemorder.append(savestate.itemType.NUMBER)
     elif item == 0:
         # Creates a TEXT Item
@@ -48,14 +50,15 @@ def addListElement(self):
             # savestate.itemorder.append(savestate.itemType.CHRONOS) TODO
 
 
-def createTextItem(self, text, value, list):
+def createTextItem(self, text, value, slist):
     leftOne = self.ui.listWidget
     rightOne = self.ui.listWidget_2
-    if self.ui.addright.isChecked() or list == 1:
+    if self.ui.addright.isChecked() or slist == 1:
 
         savestate.count = rightOne.count()
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
+        logWrite("Added item: " + str(item[savestate.count]) + "\n")
 
         wid = uic.loadUi("TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
@@ -71,7 +74,7 @@ def createTextItem(self, text, value, list):
         rightOne.addItem(item[savestate.count])
         rightOne.setItemWidget(item[savestate.count], wid)
 
-    elif self.ui.addleft.isChecked() or list == 0:
+    elif self.ui.addleft.isChecked() or slist == 0:
         savestate.count = leftOne.count()
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
@@ -92,7 +95,7 @@ def createTextItem(self, text, value, list):
         information("Please select a list to add the object!")
 
 
-def createNumberItem(self: QMainWindow, text: str, value: str, listnr: int) -> None:
+def createNumberItem(self: QMainWindow, text: str, value: int, listnr: int, pretext: str) -> None:
     leftOne = self.ui.listWidget
     rightOne = self.ui.listWidget_2
 
@@ -105,6 +108,8 @@ def createNumberItem(self: QMainWindow, text: str, value: str, listnr: int) -> N
         wid.label.setText(text)
 
         wid.spinBox.setValue(int(value))
+
+        wid.lineEdit.setText(pretext)
 
         wid.setWhatsThis("number")
         item[savestate.count] = QListWidgetItem()
@@ -124,8 +129,9 @@ def createNumberItem(self: QMainWindow, text: str, value: str, listnr: int) -> N
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
-        if value:
-            wid.spinBox.setValue(int(value))
+        wid.lineEdit.setText(pretext)
+
+        wid.spinBox.setValue(int(value))
 
         wid.setWhatsThis("number")
         item[savestate.count] = QListWidgetItem()
@@ -214,7 +220,7 @@ def autTextListElement(self, name, nr, value, *itemType):
         information("Please select a list to add the object!")
 
 
-def getTextOfItem(self, path, *item):
+def getTextOfItem(self, path, altpath, *item):
     # This function gets the text from within the List Widgets, first from the left list, then from the other one it
     # will also write these texts into the xml and text files. If there is an item given it will internally return
     # that item in the form: "text" #unique "label" so it can be split. item should be a number
@@ -256,6 +262,9 @@ def getTextOfItem(self, path, *item):
             labeltext = ET.SubElement(itemdirect[index], "labeltext")
             labeltext.set("text", label)
 
+            # create the textfile associated with the element
+            createTextFile(label, altpath, text)
+
         if itemtype == "number":
             # Set the list in which the item lays for revive purposes
             listnr = ET.SubElement(itemdirect[index], "list")
@@ -266,9 +275,17 @@ def getTextOfItem(self, path, *item):
             value = ET.SubElement(itemdirect[index], "value")
             value.set("value", valueint)
 
+            textvaluestr = self.ui.listWidget.itemWidget(current).lineEdit.text()
+
+            textvalue = ET.SubElement(itemdirect[index], "textvalue")
+            textvalue.set("textvalue", textvaluestr)
+
             # And now the label
             labeltext = ET.SubElement(itemdirect[index], "labeltext")
             labeltext.set("text", label)
+
+            # create the textfile associated with the element
+            createTextFile(label, altpath, str(textvaluestr + valueint))
 
         # Out to the log it goes
         print("text of item", itemdirect[index], "saved to file")
@@ -304,6 +321,9 @@ def getTextOfItem(self, path, *item):
             labeltext = ET.SubElement(itemdirect[index], "labeltext")
             labeltext.set("text", label)
 
+            # create the textfile associated with the element
+            createTextFile(label, altpath, text)
+
         if itemtype == "number":
             # Set the list in which the item lays for revive purposes
             listnr = ET.SubElement(itemdirect[index], "list")
@@ -314,9 +334,17 @@ def getTextOfItem(self, path, *item):
             value = ET.SubElement(itemdirect[index], "value")
             value.set("value", valueint)
 
+            textvaluestr = self.ui.listWidget_2.itemWidget(current).lineEdit.text()
+
+            textvalue = ET.SubElement(itemdirect[index], "textvalue")
+            textvalue.set("textvalue", textvaluestr)
+
             # And now the label
             labeltext = ET.SubElement(itemdirect[index], "labeltext")
             labeltext.set("text", label)
+
+            # create the textfile associated with the element
+            createTextFile(label, altpath, str(textvaluestr + valueint))
 
         # Out to the log it goes
         print("text of item", itemdirect[index], "saved to file")
@@ -336,12 +364,23 @@ def getTextOfItem(self, path, *item):
             print("Requested item could not be located!")
 
 
-def createListFiles(self, path):
-    print("Trying to recall what was in the list... \n")
+def createListFiles(self, path, newpath):
+    # This method recreates the list files from the autosave.xml file.
+    # It determines which kind of item has to be created
+
+    print("Trying to recall what was in the list...")
+    logWrite("Trying to recall what was in the list...")
+
+    # delete old textfiles and create a new empty folder
+    emptyDir(newpath + "\\textfiles")
+    os.mkdir(path + "\\textfiles")
+    logWrite("Deleted old textfiles and created a fresh folder!\n")
+
     # Lets look in the xml so we know what was up
     try:
         source = ET.parse(path + "\\autosave.xml")
         sourceroot = source.getroot()
+        logWrite("Parsing autosave...")
 
         # After parsing we need to get the values for each field. Then we put it in the list. Sorry for the naming here.
         # a is the value, b is the name/text the user has called his element,
@@ -353,21 +392,56 @@ def createListFiles(self, path):
             c = int(child.find("list").attrib.get("list"))
             d = child.find("itemtype").attrib.get("itemtype")
 
+            try:
+                e = child.find("textvalue").attrib.get("textvalue")
+                print("Number Item")
+            except AttributeError:
+                print("Text Item")
+
             # x = next(iter(a.values()))
 
             print(
                 "# Value of the " + str(d) + " item is " + str(a) + "\n" + "# Name of item is " + str(
                     b) + "\n" + "# List where it needs to be is " +
                 str(c))
+            logWriteNoTime("\n# Value of the " + str(d) + " item is " + str(a) + "\n" +
+                     "# Name of item is " + str(b) + "\n" +
+                     "# List where it needs to be is " + str(c) + "\n")
+
             if d == "text":
                 createTextItem(self, b, a, int(c))
+                createTextFile(b, newpath, a)
             elif d == "number":
-                createNumberItem(self, b, a, int(c))
+                createNumberItem(self, b, a, int(c), e)
+                createTextFile(b, newpath, str(e + a))
             else:
                 information("The Element could not be loaded! The data may have been corrupted!")
+                logWrite("The Element could not be loaded! The data may have been corrupted!")
     except xml.etree.ElementTree.ParseError:
         print("No Files found")
+        logWrite("No Files found")
 
+    logWriteNoTime("\n")
+
+
+def createTextFile(name, path, text):
+    # This method is used to create and edit the textfiles used around the program.
+    filename = str(path + "\\textfiles\\" + name + ".txt")
+
+    file = open(filename, "w+")
+    file.write(text)
+
+    file.close()
+
+
+def deleteTextFile(name, path):
+    filename = str(path + "\\textfiles\\" + name + ".txt")
+    os.remove(filename)
+
+
+def emptyDir(path):
+    # for f in listdir(path):
+    shutil.rmtree(join(path))
 
 
 '''

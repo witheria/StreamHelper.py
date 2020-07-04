@@ -1,3 +1,0 @@
-This is a list on what the errorcodes in the program StreamHelper are referring to and how to fix them.
-
-0o02: There was no ListWidget initialized. The Widget where the list items are located in could not be created. This is a non-fixable error, reinstall the program from a credible source.

@@ -1,12 +1,12 @@
 import os
-import sys
 
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from resources.runtime import savestate
-from resources.runtime.functions import information, activateUi, updateSelection, createStandardFiles, createTextFiles
+from resources.runtime.functions import information, activateUi, updateSelection, createStandardFiles, \
+    logCreate, logWrite
 from resources.runtime.interactions import addListElement, setFilePath, autTextListElement, getTextOfItem, \
     createListFiles, saveConfig, loadConfig
 
@@ -19,6 +19,15 @@ from resources.runtime.savestate import standardFilePath
 
 import webbrowser
 
+import ctypes, sys
+
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
 
 class uiControlTest(QMainWindow):
     """uncomment this to output a logfile"""
@@ -26,64 +35,78 @@ class uiControlTest(QMainWindow):
     # old_stdout = sys.stdout
     # log_file = open("message.log", "w")
     # sys.stdout = log_file
+    if is_admin():
+        def __init__(self):
+            super(uiControlTest, self).__init__()
 
-    def __init__(self):
-        super(uiControlTest, self).__init__()
+            # Basic loading and startup operations
 
-        # Basic loading and startup operations
-        self.ui = uic.loadUi('main.ui')
-        window = self.ui
-        window.setWindowIcon(QIcon("images\\icon.png"))
-        information("The Program is in developement! \n"
-                    "Currently, only the textfiles are working, numbers and the other stuff are WIP. Masks aren't "
-                    "importable yet")
-        self.ui.show()
 
-        # Check if the folder exists
-        try:
-            print("Trying to create the standard Folder...")
-            os.mkdir(os.getenv('LOCALAPPDATA') + "\\StreamHelper")
-        except FileExistsError:
-            print("Folder exists!")
+            self.ui = uic.loadUi('main.ui')
+            window = self.ui
+            window.setWindowIcon(QIcon("images\\icon.png"))
+            information("The Program is in developement! \n"
+                        "Currently, only the textfiles are working, numbers and the other stuff are WIP. Masks aren't "
+                        "importable yet")
+            self.ui.show()
 
-        # Lets create all the standard files (xml and txt) or at least check if they exist
-        createStandardFiles(standardFilePath, 0)
+            # Check if the folder exists
+            try:
+                print("Trying to create the standard Folder...")
+                os.mkdir(os.getenv('LOCALAPPDATA') + "\\StreamHelper")
+            except FileExistsError:
+                print("Folder exists!")
 
-        # Parse the paths from the xml files so we know where to check for the files
-        tree = ET.parse(standardFilePath + "\\config.xml")
-        root = tree.getroot()
-        dictStandard = root[0][1].attrib
-        dictCustom = root[0][0].attrib
+            # Lets create all the standard files (xml and txt) or at least check if they exist
+            createStandardFiles(standardFilePath, 0)
 
-        oldFilePath = dictStandard["path"]
-        newFilePath = dictCustom["path"]
+            # init a logfile
+            logCreate()
+            logWrite("The Program is in developement! \n"
+                     "            Currently, only the textfiles are working, numbers and the other stuff are WIP. "
+                     "Masks aren't "
+                     "importable yet \n")
 
-        # Set the read filepath so we got it internally to work with
-        savestate.standardFilePath = newFilePath
+            # Parse the paths from the xml files so we know where to check for the files
+            tree = ET.parse(standardFilePath + "\\config.xml")
+            root = tree.getroot()
+            dictStandard = root[0][1].attrib
+            dictCustom = root[0][0].attrib
 
-        # Tell the log whats up
-        for child in root.iter("filepath"):
-            print("Loading " + child.tag + "...")
-            print("Standard file path is ", root[0][1].attrib, "\n" + "Custom file path is ", root[0][0].attrib)
+            oldFilePath = dictStandard["path"]
+            newFilePath = dictCustom["path"]
 
-        # Get the List back up from the xml and revisit the TXTs so they are what they were on last startup
-        createListFiles(self, standardFilePath)
-        createTextFiles(newFilePath, 1)
+            # Set the read filepath so we got it internally to work with
+            savestate.standardFilePath = newFilePath
 
-        # Make it work
-        activateUi(self.ui)
+            # Tell the log whats up
+            for child in root.iter("filepath"):
+                print("Loading " + child.tag + "...")
+                print("Standard file path is ", root[0][1].attrib, "\n" + "Custom file path is ", root[0][0].attrib)
+                logWrite(str("Loading " + child.tag + "..." + "\n"))
+                logWrite(str("Standard file path is " + str(root[0][1].attrib["path"]) + "\n" +
+                             "            Custom file path is " + str(root[0][0].attrib["path"]) + "\n"))
 
-        # Detect the interactions
-        window.addButton.clicked.connect(lambda: addListElement(self))
-        # window.listWidget.itemSelectionChanged.connect(lambda: updateSelection(self, 0))
-        # window.listWidget_2.itemSelectionChanged.connect(lambda: updateSelection(self, 1))
+            # Get the List back up from the xml and revisit the TXTs so they are what they were on last startup
+            createListFiles(self, standardFilePath, newFilePath)
 
-        window.actionSetMainFilePath.triggered.connect(lambda: setFilePath(self))
-        window.actionStreamHelperDocumentation.triggered.connect(lambda: webbrowser.open("https://github.com/xFLLSquadronNorden/StreamHelper.py"))
-        window.actionSave.triggered.connect(lambda: saveConfig(self, newFilePath))
-        window.actionLoad.triggered.connect(lambda: loadConfig(self, newFilePath))
+            # Make it work
+            activateUi(self.ui)
 
-        window.updateButton.clicked.connect(lambda: getTextOfItem(self, oldFilePath))
+            # Detect the interactions
+            window.addButton.clicked.connect(lambda: addListElement(self))
+            # window.listWidget.itemSelectionChanged.connect(lambda: updateSelection(self, 0))
+            # window.listWidget_2.itemSelectionChanged.connect(lambda: updateSelection(self, 1))
+
+            window.actionSetMainFilePath.triggered.connect(lambda: setFilePath(self))
+            window.actionStreamHelperDocumentation.triggered.connect(
+                lambda: webbrowser.open("https://github.com/xFLLSquadronNorden/StreamHelper.py"))
+            window.actionSave.triggered.connect(lambda: saveConfig(self, newFilePath))
+            window.actionLoad.triggered.connect(lambda: loadConfig(self, newFilePath))
+
+            window.updateButton.clicked.connect(lambda: getTextOfItem(self, oldFilePath, newFilePath))
+    else:
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
 
 
 if __name__ == "__main__":

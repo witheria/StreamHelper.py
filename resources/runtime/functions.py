@@ -1,10 +1,11 @@
+import datetime
 import os
 from os.path import exists
 
 from PyQt5.QtWidgets import QMessageBox, QListWidget
 
 from resources.runtime import savestate
-from resources.runtime.savestate import standardFilePath, standardFileNames, standardXMLNames
+from resources.runtime.savestate import standardFilePath, standardXMLNames
 
 try:
     import xml.etree.cElementTree as ET
@@ -133,22 +134,41 @@ def createStandardFiles(path, arg):
             initXMLFiles(path)
 
     else:
-        print("Only creating textfiles...")
-        createTextFiles(path, 1)
+        print("Not valid!")
 
 
-def createTextFiles(path, *arg, **name):
-    if arg == 0:
-        open(path + "\\textfiles" + "\\" + name + ".txt", "w+")
-        print(name, " initialized!")
+def logCreate():
+    logname = "\\StreamLog.log"
 
-    else:
-        for i in standardFileNames:
-            if exists(path + "\\textfiles" + "\\" + i + ".txt"):
-                print(i + " already exists!")
-            else:
-                open(path + "\\textfiles" + "\\" + i + ".txt", "w+")
-                print(i + " initialized!")
+    z = open(standardFilePath + logname, "w+")
+    z.write("Log initialized on " + str(datetime.datetime.now(tz=None)) + "\n" + "\n")
+    # str(datetime.datetime.year) + "-" +
+    # str(datetime.month) + "-" +
+    # str(datetime.day) + "-" +
+    # str(datetime.datetime.hour) + "-" +
+    # str(datetime.datetime.minute) + "-" +
+    # str(datetime.datetime.second))
+
+
+def logWrite(text):
+    now = datetime.datetime.now()
+    logname = standardFilePath + "\\StreamLog.log"
+    try:
+        z = open(logname, "a")
+    except FileNotFoundError:
+        logCreate()
+        logWrite(text)
+    z.write("\n" + now.strftime("%H:%M:%S") + ":   " + text)
+
+
+def logWriteNoTime(text):
+    logname = standardFilePath + "\\StreamLog.log"
+    try:
+        z = open(logname, "a")
+    except FileNotFoundError:
+        logCreate()
+        logWrite(text)
+    z.write(text)
 
 
 def setNewFilePath(path):

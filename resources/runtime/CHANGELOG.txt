@@ -1,0 +1,30 @@
+CLOSED ALPHA 0.1.0
+
+Added:
+    - Program UI for standard usage
+    - Two lists to easily create and edit textfiles
+    - Add Button functionality
+    - Update Button functionality
+
+    - Text Item
+    - Number Item
+
+    - Delete All Button functionality
+    - Menu functionality of following items:
+        - Save Configuration (creates savefile)
+        - Load Configuration (loads a savefile)
+        - StreamHelper Documentation (opens the GitHub Page)
+        - Set main file path (changes the location of the textfiles)
+        - NOTE: Only savefiles can safely be send to other computers. Don't copy any .xml files from the directory!
+
+    - Add Button file dialog supports creation of basic textfiles and number items
+    - Item buttons aren't supported yet
+    - All other buttons NOT mentioned dont do anything yet - wait for next update!
+
+    - Cleaned up directory
+    - Added .oi file ending
+
+See you in 0.1.1 - no more devalpha woohoo
+
+
+

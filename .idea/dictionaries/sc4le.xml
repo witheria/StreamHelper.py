@@ -8,9 +8,13 @@
       <w>erroreasy</w>
       <w>itemdirect</w>
       <w>listnr</w>
+      <w>logname</w>
       <w>myfile</w>
+      <w>newpath</w>
       <w>retval</w>
       <w>runprogram</w>
+      <w>savefile</w>
+      <w>savefiles</w>
       <w>textfiles</w>
     </words>
   </dictionary>
