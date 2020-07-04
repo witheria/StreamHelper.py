@@ -386,39 +386,6 @@
          <zorder>addright</zorder>
         </widget>
        </widget>
-       <widget class="QWidget" name="tab_2">
-        <attribute name="title">
-         <string>Chrono's</string>
-        </attribute>
-        <widget class="QGroupBox" name="chronodown">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>761</width>
-           <height>201</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>Chrono Down</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="tab_3">
-        <attribute name="title">
-         <string>Tree View</string>
-        </attribute>
-        <widget class="QTreeView" name="treeView">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>401</width>
-           <height>521</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
       </widget>
      </item>
     </layout>
@@ -450,6 +417,7 @@
     <addaction name="separator"/>
     <addaction name="actionAboutStreamHelper"/>
     <addaction name="actionCredits"/>
+    <addaction name="actionVersion_Changes"/>
     <addaction name="separator"/>
     <addaction name="actionLog"/>
    </widget>
@@ -511,6 +479,11 @@
   <action name="actionSetMainFilePath">
    <property name="text">
     <string>Set main file path</string>
+   </property>
+  </action>
+  <action name="actionVersion_Changes">
+   <property name="text">
+    <string>Version Changes</string>
    </property>
   </action>
  </widget>

@@ -2,10 +2,12 @@
   <dictionary name="sc4le">
     <words>
       <w>alloydeselect</w>
+      <w>bugfixes</w>
       <w>certaintext</w>
       <w>dictname</w>
       <w>errorcode</w>
       <w>erroreasy</w>
+      <w>hotfix</w>
       <w>itemdirect</w>
       <w>listnr</w>
       <w>logname</w>

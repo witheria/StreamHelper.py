@@ -24,6 +24,14 @@ Added:
     - Cleaned up directory
     - Added .oi file ending
 
+    in 0.1.a (Hotfix)
+    - Basic log functionality (Don't expect anything)
+        - Log Button works
+        - Changelog Button works
+
+    - less files to handle
+    - small bugfixes
+
 See you in 0.1.1 - no more devalpha woohoo
 
 

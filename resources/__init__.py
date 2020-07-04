@@ -41,7 +41,6 @@ class uiControlTest(QMainWindow):
 
             # Basic loading and startup operations
 
-
             self.ui = uic.loadUi('main.ui')
             window = self.ui
             window.setWindowIcon(QIcon("images\\icon.png"))
@@ -105,6 +104,11 @@ class uiControlTest(QMainWindow):
             window.actionLoad.triggered.connect(lambda: loadConfig(self, newFilePath))
 
             window.updateButton.clicked.connect(lambda: getTextOfItem(self, oldFilePath, newFilePath))
+
+            window.actionLog.triggered.connect(lambda: webbrowser.open(standardFilePath + "\\StreamLog.log"))
+
+            window.actionVersion_Changes.triggered.connect(lambda: webbrowser.open("CHANGELOG.txt"))
+
     else:
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
 
