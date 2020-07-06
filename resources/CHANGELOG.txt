@@ -22,7 +22,7 @@ Added:
     - All other buttons NOT mentioned dont do anything yet - wait for next update!
 
     - Cleaned up directory
-    - Added .oi file ending
+    - Added .oi file ending (for saved configs)
 
     in 0.1.a (Hotfix)
     - Basic log functionality (Don't expect anything)

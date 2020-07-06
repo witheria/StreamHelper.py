@@ -170,16 +170,3 @@ def logWriteNoTime(text):
         logWrite(text)
     z.write(text)
 
-
-def setNewFilePath(path):
-    # initialize the file path and create the standard files at that location
-    print(path)
-    createStandardFiles(path, 1)
-
-    # set the new filepath into the xml document so it gets saved for the next startup
-    tree = ET.parse(standardFilePath + "\\config.xml")
-    root = tree.getroot()
-
-    root[0][0].set("path", path)
-    tree.write(standardFilePath + "\\config.xml")
-    print(root[0][0].attrib)

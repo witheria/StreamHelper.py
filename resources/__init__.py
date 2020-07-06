@@ -30,22 +30,18 @@ def is_admin():
 
 
 class uiControlTest(QMainWindow):
-    """uncomment this to output a logfile"""
 
-    # old_stdout = sys.stdout
-    # log_file = open("message.log", "w")
-    # sys.stdout = log_file
     if is_admin():
         def __init__(self):
             super(uiControlTest, self).__init__()
 
             # Basic loading and startup operations
 
-            self.ui = uic.loadUi('main.ui')
+            self.ui = uic.loadUi('mainALPHA.ui')
             window = self.ui
             window.setWindowIcon(QIcon("images\\icon.png"))
             information("The Program is in developement! \n"
-                        "Currently, only the textfiles are working, numbers and the other stuff are WIP. Masks aren't "
+                        "Currently, only the textfiles and numbers are working, the other stuff is WIP. . Masks aren't "
                         "importable yet")
             self.ui.show()
 
@@ -62,7 +58,7 @@ class uiControlTest(QMainWindow):
             # init a logfile
             logCreate()
             logWrite("The Program is in developement! \n"
-                     "            Currently, only the textfiles are working, numbers and the other stuff are WIP. "
+                     "            Currently, only the textfiles and numbers are working, the other stuff is WIP. "
                      "Masks aren't "
                      "importable yet \n")
 
@@ -76,7 +72,7 @@ class uiControlTest(QMainWindow):
             newFilePath = dictCustom["path"]
 
             # Set the read filepath so we got it internally to work with
-            savestate.standardFilePath = newFilePath
+            # savestate.standardFilePath = newFilePath
 
             # Tell the log whats up
             for child in root.iter("filepath"):
@@ -87,7 +83,7 @@ class uiControlTest(QMainWindow):
                              "            Custom file path is " + str(root[0][0].attrib["path"]) + "\n"))
 
             # Get the List back up from the xml and revisit the TXTs so they are what they were on last startup
-            createListFiles(self, standardFilePath, newFilePath)
+            createListFiles(self, standardFilePath)
 
             # Make it work
             activateUi(self.ui)
@@ -97,17 +93,20 @@ class uiControlTest(QMainWindow):
             # window.listWidget.itemSelectionChanged.connect(lambda: updateSelection(self, 0))
             # window.listWidget_2.itemSelectionChanged.connect(lambda: updateSelection(self, 1))
 
-            window.actionSetMainFilePath.triggered.connect(lambda: setFilePath(self))
+            window.actionSetMainFilePath.triggered.connect(lambda: setFilePath(self, newFilePath))
             window.actionStreamHelperDocumentation.triggered.connect(
                 lambda: webbrowser.open("https://github.com/xFLLSquadronNorden/StreamHelper.py"))
             window.actionSave.triggered.connect(lambda: saveConfig(self, newFilePath))
             window.actionLoad.triggered.connect(lambda: loadConfig(self, newFilePath))
+            window.actionQuit.triggered.connect(lambda: sys.exit(0))
 
             window.updateButton.clicked.connect(lambda: getTextOfItem(self, oldFilePath, newFilePath))
 
             window.actionLog.triggered.connect(lambda: webbrowser.open(standardFilePath + "\\StreamLog.log"))
 
             window.actionVersion_Changes.triggered.connect(lambda: webbrowser.open("CHANGELOG.txt"))
+
+
 
     else:
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
@@ -117,4 +116,3 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     win = uiControlTest()
     sys.exit(app.exec_())
-    # sys.stdout = old_stdout

@@ -9,7 +9,8 @@ from qtpy import uic
 
 from resources import information
 from resources.runtime import savestate
-from resources.runtime.functions import setNewFilePath, logWrite, logWriteNoTime
+from resources.runtime.functions import logWrite, logWriteNoTime, createStandardFiles
+from resources.runtime.savestate import standardFilePath
 
 try:
     import xml.etree.cElementTree as ET
@@ -24,10 +25,14 @@ def addListElement(self):
     # 'Enter the desired name for your object:')
     itemselect = uic.loadUi("SelectionDialog.ui")
     itemselect.setWindowTitle("Itemselection")
-    itemselect.exec_()
+    itemselect.buttonBox.accepted.connect(itemselect.accept)
+    itemselect.buttonBox.rejected.connect(itemselect.reject)
+    ok = itemselect.exec_()
     item = itemselect.select.currentIndex()
     text = itemselect.name.text()
-    ok = itemselect.buttonBox.accepted
+
+    print(ok)
+
     if item == 1:
         # Creates a NUMBER
         if ok:
@@ -143,19 +148,6 @@ def createNumberItem(self: QMainWindow, text: str, value: int, listnr: int, pret
 
     else:
         information("Please select a list to add the object!")
-
-
-def setFilePath(self):
-    # Transition and check interaction function to change the custom filepath parameter
-    text, ok = QInputDialog.getText(self, 'Enter Path',
-                                    'Enter the desired path for your objects:')
-    if len(text) > 0:
-        if ":" in text:
-            setNewFilePath(text)
-        else:
-            information("Make sure the path you enter is valid!")
-    else:
-        information("Make sure the path you enter is valid!")
 
 
 def autTextListElement(self, name, nr, value, *itemType):
@@ -364,7 +356,7 @@ def getTextOfItem(self, path, altpath, *item):
             print("Requested item could not be located!")
 
 
-def createListFiles(self, path, newpath):
+def createListFiles(self, newpath):
     # This method recreates the list files from the autosave.xml file.
     # It determines which kind of item has to be created
 
@@ -373,12 +365,13 @@ def createListFiles(self, path, newpath):
 
     # delete old textfiles and create a new empty folder
     emptyDir(newpath + "\\textfiles")
-    os.mkdir(path + "\\textfiles")
+    os.mkdir(newpath + "\\textfiles")
     logWrite("Deleted old textfiles and created a fresh folder!\n")
 
     # Lets look in the xml so we know what was up
     try:
-        source = ET.parse(path + "\\autosave.xml")
+        print(savestate.standardFilePath)
+        source = ET.parse(savestate.standardFilePath + "\\autosave.xml")
         sourceroot = source.getroot()
         logWrite("Parsing autosave...")
 
@@ -397,6 +390,7 @@ def createListFiles(self, path, newpath):
                 print("Number Item")
             except AttributeError:
                 print("Text Item")
+                e = ""
 
             # x = next(iter(a.values()))
 
@@ -405,8 +399,8 @@ def createListFiles(self, path, newpath):
                     b) + "\n" + "# List where it needs to be is " +
                 str(c))
             logWriteNoTime("\n# Value of the " + str(d) + " item is " + str(a) + "\n" +
-                     "# Name of item is " + str(b) + "\n" +
-                     "# List where it needs to be is " + str(c) + "\n")
+                           "# Name of item is " + str(b) + "\n" +
+                           "# List where it needs to be is " + str(c) + "\n")
 
             if d == "text":
                 createTextItem(self, b, a, int(c))
@@ -420,6 +414,9 @@ def createListFiles(self, path, newpath):
     except xml.etree.ElementTree.ParseError:
         print("No Files found")
         logWrite("No Files found")
+    except AttributeError:
+        print("File not readable!")
+        logWrite("Autosave not readable!")
 
     logWriteNoTime("\n")
 
@@ -440,9 +437,11 @@ def deleteTextFile(name, path):
 
 
 def emptyDir(path):
-    # for f in listdir(path):
-    shutil.rmtree(join(path))
+    try:
+        shutil.rmtree(join(path))
+    except FileNotFoundError:
 
+        logWrite("The folder could not be found!")
 
 '''
     def autListElement(self, name, nr, value, itemType):
@@ -472,6 +471,13 @@ def loadConfig(self, basefilepath):
         source = ET.parse(file[0])
         sourceroot = source.getroot()
 
+        logWrite("Trying to parse input file...")
+
+        # delete old textfiles and create a new empty folder
+        emptyDir(basefilepath + "\\textfiles")
+        os.mkdir(basefilepath + "\\textfiles")
+        logWrite("Deleted old textfiles and created a fresh folder!\n")
+
         # After parsing we need to get the values for each field. Then we put it in the list. Sorry for the naming here,
         # its really quite obvious though. a is the value, b is the name/text the user has called his element,
         # c is the list in which it should be; 0 means left 1 means right
@@ -480,18 +486,84 @@ def loadConfig(self, basefilepath):
             a = child.find("value").attrib.get("value")
             b = child.find("labeltext").attrib.get("text")
             c = int(child.find("list").attrib.get("list"))
-            # d = child.find("itemtype").attrib.get("type")
+            d = child.find("itemtype").attrib.get("itemtype")
 
-            # x = next(iter(a.values()))
+            try:
+                e = child.find("textvalue").attrib.get("textvalue")
+                print("Number Item")
+            except AttributeError:
+                print("Text Item")
+                e = ""
 
             print(
-                "# Value of item is " + a + "\n" + "# Name of item is " + b + "\n" + "# List where it needs to be is " +
+                "# Value of the " + str(d) + " item is " + str(a) + "\n" + "# Name of item is " + str(
+                    b) + "\n" + "# List where it needs to be is " +
                 str(c))
-            if c == 1:
-                autTextListElement(self, b, 1, a)
-            elif c == 0:
-                autTextListElement(self, b, 0, a)
+            logWriteNoTime("\n# Value of the " + str(d) + " item is " + str(a) + "\n" +
+                           "# Name of item is " + str(b) + "\n" +
+                           "# List where it needs to be is " + str(c) + "\n")
+
+            if d == "text":
+                createTextItem(self, b, a, int(c))
+                createTextFile(b, basefilepath, a)
+            elif d == "number":
+                createNumberItem(self, b, a, int(c), e)
+                createTextFile(b, basefilepath, str(e + a))
             else:
                 information("The Element could not be loaded! The data may have been corrupted!")
+                logWrite("The Element could not be loaded! The data may have been corrupted!")
     except xml.etree.ElementTree.ParseError:
+        print("No Files found")
+        logWrite("No Files found")
+    except AttributeError:
         print("File not readable!")
+        logWrite("Autosave not readable!")
+    except FileNotFoundError:
+        print("No file selected")
+    logWriteNoTime("\n")
+
+
+def setFilePath(self, oldpath):
+    # Transition and check interaction function to change the custom filepath parameter
+    text, ok = QInputDialog.getText(self, 'Enter Path',
+                                    'Enter the desired path for your objects. \nWarning! All Changes since the last '
+                                    'Update will be lost!\n \n' +
+                                    "Textfiles are at path: " + oldpath)
+    logWrite("Filepath change detected. New file path should be " + str(text))
+    if len(text) > 0:
+        if ":" in text:
+            # delete the old textfiles folder so theres no garbage floating around
+            emptyDir(oldpath + "\\textfiles")
+
+            setNewFilePath(self, text)
+
+        else:
+            information("Make sure the path you enter is valid!")
+            logWrite("No valid path entered, exiting...")
+    else:
+        logWrite("No path entered - nothings changed!")
+
+
+def setNewFilePath(self, path):
+
+    # initialize the file path and create the standard files at that location
+    print(path)
+    logWrite("New textfilepath will be " + str(path))
+    createStandardFiles(path, 1)
+
+
+
+    logWrite("Created the new textfiles at new path")
+    # set the new filepath into the xml document so it gets saved for the next startup
+    tree = ET.parse(standardFilePath + "\\config.xml")
+    root = tree.getroot()
+
+    root[0][0].set("path", path)
+    tree.write(standardFilePath + "\\config.xml")
+    print(root[0][0].attrib)
+
+    # reset the two list widgets and reload the items from the xml
+    self.ui.listWidget.clear()
+    self.ui.listWidget_2.clear()
+
+    createListFiles(self, path)
