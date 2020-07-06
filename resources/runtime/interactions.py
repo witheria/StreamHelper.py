@@ -23,7 +23,7 @@ def addListElement(self):
 
     # text, ok = QInputDialog.getText(self, 'Enter Name',
     # 'Enter the desired name for your object:')
-    itemselect = uic.loadUi("SelectionDialog.ui")
+    itemselect = uic.loadUi("uis\\SelectionDialog.ui")
     itemselect.setWindowTitle("Itemselection")
     itemselect.buttonBox.accepted.connect(itemselect.accept)
     itemselect.buttonBox.rejected.connect(itemselect.reject)
@@ -65,7 +65,7 @@ def createTextItem(self, text, value, slist):
         print("Added item: " + str(item))
         logWrite("Added item: " + str(item[savestate.count]) + "\n")
 
-        wid = uic.loadUi("TextFileWidget.ui")
+        wid = uic.loadUi("uis\\TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -83,7 +83,7 @@ def createTextItem(self, text, value, slist):
         savestate.count = leftOne.count()
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
-        wid = uic.loadUi("TextFileWidget.ui")
+        wid = uic.loadUi("uis\\TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
         if value:
@@ -108,7 +108,7 @@ def createNumberItem(self: QMainWindow, text: str, value: int, listnr: int, pret
         savestate.count = leftOne.count()
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
-        wid = uic.loadUi("NumberWidget.ui")
+        wid = uic.loadUi("uis\\NumberWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -130,7 +130,7 @@ def createNumberItem(self: QMainWindow, text: str, value: int, listnr: int, pret
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
 
-        wid = uic.loadUi("NumberWidget.ui")
+        wid = uic.loadUi("uis\\NumberWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -177,7 +177,7 @@ def autTextListElement(self, name, nr, value, *itemType):
         print("Added item: " + str(dictname.get(savestate.count)) + "\n")
 
         # create the widget and set the text
-        wid = uic.loadUi("TextFileWidget.ui")
+        wid = uic.loadUi("uis\\TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -197,7 +197,7 @@ def autTextListElement(self, name, nr, value, *itemType):
         savestate.count = leftOne.count()
         dictname = {savestate.count: str(text)}
         print("Added item: " + str(dictname.get(savestate.count)) + "\n")
-        wid = uic.loadUi("TextFileWidget.ui")
+        wid = uic.loadUi("uis\\TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
         wid.lineEdit.setText(value)

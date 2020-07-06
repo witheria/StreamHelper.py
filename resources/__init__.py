@@ -3,6 +3,7 @@ import os
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QApplication
+from qtpy import QtGui
 
 from resources.runtime import savestate
 from resources.runtime.functions import information, activateUi, updateSelection, createStandardFiles, \
@@ -37,7 +38,7 @@ class uiControlTest(QMainWindow):
 
             # Basic loading and startup operations
 
-            self.ui = uic.loadUi('mainALPHA.ui')
+            self.ui = uic.loadUi('uis\\mainALPHA.ui')
             window = self.ui
             window.setWindowIcon(QIcon("images\\icon.png"))
             information("The Program is in developement! \n"
@@ -114,5 +115,6 @@ class uiControlTest(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setWindowIcon(QtGui.QIcon("icon.ico"))
     win = uiControlTest()
     sys.exit(app.exec_())
