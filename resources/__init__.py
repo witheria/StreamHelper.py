@@ -24,34 +24,43 @@ import ctypes, sys
 
 
 def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
+    if savestate.platform == "linux":
+        return True
+    else:
+        try:
+            return ctypes.windll.shell32.IsUserAnAdmin()
+        except:
+            return False
 
 
 class uiControlTest(QMainWindow):
-
     if is_admin():
         def __init__(self):
             super(uiControlTest, self).__init__()
 
             # Basic loading and startup operations
 
-            self.ui = uic.loadUi('uis\\mainALPHA.ui')
+            self.ui = uic.loadUi('uis' + savestate.symbol + 'main.ui')
             window = self.ui
-            window.setWindowIcon(QIcon("images\\icon.png"))
+            window.setWindowIcon(QIcon("images" + savestate.symbol + "icon.png"))
             information("The Program is in developement! \n"
                         "Currently, only the textfiles and numbers are working, the other stuff is WIP. . Masks aren't "
                         "importable yet")
             self.ui.show()
 
             # Check if the folder exists
-            try:
-                print("Trying to create the standard Folder...")
-                os.mkdir(os.getenv('LOCALAPPDATA') + "\\StreamHelper")
-            except FileExistsError:
-                print("Folder exists!")
+            if savestate.platform == "linux":
+                try:
+                    print("Trying to create the standard Folder...")
+                    os.mkdir(savestate.home + "/Documents/StreamHelper")
+                except FileExistsError:
+                    print("Folder exists!")
+            else:
+                try:
+                    print("Trying to create the standard Folder...")
+                    os.mkdir(os.getenv('LOCALAPPDATA') + "\\StreamHelper")
+                except FileExistsError:
+                    print("Folder exists!")
 
             # Lets create all the standard files (xml and txt) or at least check if they exist
             createStandardFiles(standardFilePath, 0)
@@ -64,7 +73,7 @@ class uiControlTest(QMainWindow):
                      "importable yet \n")
 
             # Parse the paths from the xml files so we know where to check for the files
-            tree = ET.parse(standardFilePath + "\\config.xml")
+            tree = ET.parse(standardFilePath + savestate.symbol + "config.xml")
             root = tree.getroot()
             dictStandard = root[0][1].attrib
             dictCustom = root[0][0].attrib
@@ -103,14 +112,15 @@ class uiControlTest(QMainWindow):
 
             window.updateButton.clicked.connect(lambda: getTextOfItem(self, oldFilePath, newFilePath))
 
-            window.actionLog.triggered.connect(lambda: webbrowser.open(standardFilePath + "\\StreamLog.log"))
+            window.actionLog.triggered.connect(lambda: webbrowser.open(standardFilePath + savestate.symbol +
+                                                                       "StreamLog.log"))
 
             window.actionVersion_Changes.triggered.connect(lambda: webbrowser.open("CHANGELOG.txt"))
-
-
-
     else:
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+        if savestate.platform is 'linux':
+            logWrite("The application could not be started in sudo mode!")
+        else:
+            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
 
 
 if __name__ == "__main__":

@@ -107,8 +107,8 @@ def erroreasy(self, text, errorcode):
 
 def initXMLFiles(path):
     for file in standardXMLNames:
-        print("Opening files at " + path + "\\" + file + ".xml")
-        open(path + "\\" + file + ".xml", "w+")
+        print("Opening files at " + path + savestate.symbol + file + ".xml")
+        open(path + savestate.symbol + file + ".xml", "w+")
 
     data = ET.Element('data')
     filepath = ET.SubElement(data, "filepath")
@@ -116,19 +116,19 @@ def initXMLFiles(path):
     standardFilePathXML = ET.SubElement(filepath, "StandardFilePath")
     customfilepath.set("path", standardFilePath)
     standardFilePathXML.set("path", standardFilePath)
-    myfile = open(standardFilePath + "\\" + "config.xml", "w")
+    myfile = open(standardFilePath + savestate.symbol + "config.xml", "w")
     myfile.write(ET.tostring(data).decode('utf-8'))
 
 
 def createStandardFiles(path, arg):
     print("Trying to create the standard Files with arg " + str(arg) + "...")
     try:
-        os.mkdir(path + "\\textfiles")
+        os.mkdir(path + savestate.symbol + "textfiles")
     except FileExistsError:
         print("Standard file folder exists!")
 
     if arg == 0:
-        if exists(path + "\\config.xml"):
+        if exists(path + savestate.symbol + "config.xml"):
             print("XML Files exist, not creating any new ones")
         else:
             initXMLFiles(path)
@@ -138,7 +138,7 @@ def createStandardFiles(path, arg):
 
 
 def logCreate():
-    logname = "\\StreamLog.log"
+    logname = savestate.symbol + "StreamLog.log"
 
     z = open(standardFilePath + logname, "w+")
     z.write("Log initialized on " + str(datetime.datetime.now(tz=None)) + "\n" + "\n")
@@ -152,7 +152,7 @@ def logCreate():
 
 def logWrite(text):
     now = datetime.datetime.now()
-    logname = standardFilePath + "\\StreamLog.log"
+    logname = standardFilePath + savestate.symbol + "StreamLog.log"
     try:
         z = open(logname, "a")
     except FileNotFoundError:
@@ -162,7 +162,7 @@ def logWrite(text):
 
 
 def logWriteNoTime(text):
-    logname = standardFilePath + "\\StreamLog.log"
+    logname = standardFilePath + savestate.symbol + "StreamLog.log"
     try:
         z = open(logname, "a")
     except FileNotFoundError:

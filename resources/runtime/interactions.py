@@ -23,7 +23,7 @@ def addListElement(self):
 
     # text, ok = QInputDialog.getText(self, 'Enter Name',
     # 'Enter the desired name for your object:')
-    itemselect = uic.loadUi("uis\\SelectionDialog.ui")
+    itemselect = uic.loadUi("uis" + savestate.symbol + "SelectionDialog.ui")
     itemselect.setWindowTitle("Itemselection")
     itemselect.buttonBox.accepted.connect(itemselect.accept)
     itemselect.buttonBox.rejected.connect(itemselect.reject)
@@ -51,7 +51,7 @@ def addListElement(self):
     elif item == 3:
         # Creates a CHRONOS item which writes time or dates to textfiles
         if ok:
-            information("Not implemented yet!")
+            createChronoItem(self, text, "", 3)
             # savestate.itemorder.append(savestate.itemType.CHRONOS) TODO
 
 
@@ -65,7 +65,7 @@ def createTextItem(self, text, value, slist):
         print("Added item: " + str(item))
         logWrite("Added item: " + str(item[savestate.count]) + "\n")
 
-        wid = uic.loadUi("uis\\TextFileWidget.ui")
+        wid = uic.loadUi("uis" + savestate.symbol + "TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -83,7 +83,7 @@ def createTextItem(self, text, value, slist):
         savestate.count = leftOne.count()
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
-        wid = uic.loadUi("uis\\TextFileWidget.ui")
+        wid = uic.loadUi("uis" + savestate.symbol + "TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
         if value:
@@ -108,7 +108,7 @@ def createNumberItem(self: QMainWindow, text: str, value: int, listnr: int, pret
         savestate.count = leftOne.count()
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
-        wid = uic.loadUi("uis\\NumberWidget.ui")
+        wid = uic.loadUi("uis" + savestate.symbol + "NumberWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -130,7 +130,7 @@ def createNumberItem(self: QMainWindow, text: str, value: int, listnr: int, pret
         item = {savestate.count: str(text)}
         print("Added item: " + str(item))
 
-        wid = uic.loadUi("uis\\NumberWidget.ui")
+        wid = uic.loadUi("uis" + savestate.symbol + "NumberWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -139,6 +139,52 @@ def createNumberItem(self: QMainWindow, text: str, value: int, listnr: int, pret
         wid.spinBox.setValue(int(value))
 
         wid.setWhatsThis("number")
+        item[savestate.count] = QListWidgetItem()
+        item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
+        item[savestate.count].setData(5, savestate.count + 1)
+        item[savestate.count].setSizeHint(QSize(270, 80))
+        rightOne.addItem(item[savestate.count])
+        rightOne.setItemWidget(item[savestate.count], wid)
+
+    else:
+        information("Please select a list to add the object!")
+
+
+def createChronoItem(self, text, value, listnr):
+    leftOne = self.ui.listWidget
+    rightOne = self.ui.listWidget_2
+
+    if listnr == 0 or self.ui.addleft.isChecked():
+        savestate.count = leftOne.count()
+        item = {savestate.count: str(text)}
+        print("Added item: " + str(item))
+        wid = uic.loadUi("uis" + savestate.symbol + "ChronoWidget.ui")
+        wid.setStyleSheet(savestate.shortBorder)
+        wid.label.setText(text)
+
+        wid.showTime.setText(value)
+
+        wid.setWhatsThis("chrono")
+        item[savestate.count] = QListWidgetItem()
+        item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
+        item[savestate.count].setData(5, text)
+        item[savestate.count].setSizeHint(QSize(270, 80))
+        leftOne.addItem(item[savestate.count])
+        leftOne.setItemWidget(item[savestate.count], wid)
+
+    elif listnr == 1 or self.ui.addright.isChecked():
+
+        savestate.count = rightOne.count()
+        item = {savestate.count: str(text)}
+        print("Added item: " + str(item))
+
+        wid = uic.loadUi("uis" + savestate.symbol + "ChronoWidget.ui")
+        wid.setStyleSheet(savestate.shortBorder)
+        wid.label.setText(text)
+
+        wid.showTime.setText(value)
+
+        wid.setWhatsThis("chrono")
         item[savestate.count] = QListWidgetItem()
         item[savestate.count].setFlags(item[savestate.count].flags() | Qt.ItemIsEditable)
         item[savestate.count].setData(5, savestate.count + 1)
@@ -177,7 +223,7 @@ def autTextListElement(self, name, nr, value, *itemType):
         print("Added item: " + str(dictname.get(savestate.count)) + "\n")
 
         # create the widget and set the text
-        wid = uic.loadUi("uis\\TextFileWidget.ui")
+        wid = uic.loadUi("uis" + savestate.symbol + "TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
 
@@ -197,7 +243,7 @@ def autTextListElement(self, name, nr, value, *itemType):
         savestate.count = leftOne.count()
         dictname = {savestate.count: str(text)}
         print("Added item: " + str(dictname.get(savestate.count)) + "\n")
-        wid = uic.loadUi("uis\\TextFileWidget.ui")
+        wid = uic.loadUi("uis" + savestate.symbol + "TextFileWidget.ui")
         wid.setStyleSheet(savestate.shortBorder)
         wid.label.setText(text)
         wid.lineEdit.setText(value)
@@ -218,7 +264,7 @@ def getTextOfItem(self, path, altpath, *item):
     # that item in the form: "text" #unique "label" so it can be split. item should be a number
 
     # init the xml file for the textfiles
-    xmlFile = open(path + "\\autosave.xml", "w+")
+    xmlFile = open(path + savestate.symbol + "autosave.xml", "w+")
 
     # Introducing the xml data tree
     data = ET.Element('data')
@@ -364,14 +410,14 @@ def createListFiles(self, newpath):
     logWrite("Trying to recall what was in the list...")
 
     # delete old textfiles and create a new empty folder
-    emptyDir(newpath + "\\textfiles")
-    os.mkdir(newpath + "\\textfiles")
+    emptyDir(newpath + savestate.symbol + "textfiles")
+    os.mkdir(newpath + savestate.symbol + "textfiles")
     logWrite("Deleted old textfiles and created a fresh folder!\n")
 
     # Lets look in the xml so we know what was up
     try:
         print(savestate.standardFilePath)
-        source = ET.parse(savestate.standardFilePath + "\\autosave.xml")
+        source = ET.parse(savestate.standardFilePath +  savestate.symbol + "autosave.xml")
         sourceroot = source.getroot()
         logWrite("Parsing autosave...")
 
@@ -423,7 +469,7 @@ def createListFiles(self, newpath):
 
 def createTextFile(name, path, text):
     # This method is used to create and edit the textfiles used around the program.
-    filename = str(path + "\\textfiles\\" + name + ".txt")
+    filename = str(path + savestate.symbol + "textfiles" + savestate.symbol + name + ".txt")
 
     file = open(filename, "w+")
     file.write(text)
@@ -432,7 +478,7 @@ def createTextFile(name, path, text):
 
 
 def deleteTextFile(name, path):
-    filename = str(path + "\\textfiles\\" + name + ".txt")
+    filename = str(path + savestate.symbol + "textfiles" + savestate.symbol + name + ".txt")
     os.remove(filename)
 
 
@@ -442,6 +488,7 @@ def emptyDir(path):
     except FileNotFoundError:
 
         logWrite("The folder could not be found!")
+
 
 '''
     def autListElement(self, name, nr, value, itemType):
@@ -458,7 +505,7 @@ def saveConfig(self, basefilepath):
     # saves the current lists to a separate file
     filepath = QFileDialog.getSaveFileName(self, "Create Save", basefilepath, ".oi")
     file = str(filepath[0] + ".oi")
-    savefile = shutil.copy(str(savestate.standardFilePath + "\\autosave.xml"), file)
+    savefile = shutil.copy(str(savestate.standardFilePath + savestate.symbol + "autosave.xml"), file)
 
 
 def loadConfig(self, basefilepath):
@@ -474,8 +521,8 @@ def loadConfig(self, basefilepath):
         logWrite("Trying to parse input file...")
 
         # delete old textfiles and create a new empty folder
-        emptyDir(basefilepath + "\\textfiles")
-        os.mkdir(basefilepath + "\\textfiles")
+        emptyDir(basefilepath + savestate.symbol + "textfiles")
+        os.mkdir(basefilepath + savestate.symbol + "textfiles")
         logWrite("Deleted old textfiles and created a fresh folder!\n")
 
         # After parsing we need to get the values for each field. Then we put it in the list. Sorry for the naming here,
@@ -533,7 +580,7 @@ def setFilePath(self, oldpath):
     if len(text) > 0:
         if ":" in text:
             # delete the old textfiles folder so theres no garbage floating around
-            emptyDir(oldpath + "\\textfiles")
+            emptyDir(oldpath + savestate.symbol + "textfiles")
 
             setNewFilePath(self, text)
 
@@ -545,21 +592,18 @@ def setFilePath(self, oldpath):
 
 
 def setNewFilePath(self, path):
-
     # initialize the file path and create the standard files at that location
     print(path)
     logWrite("New textfilepath will be " + str(path))
     createStandardFiles(path, 1)
 
-
-
     logWrite("Created the new textfiles at new path")
     # set the new filepath into the xml document so it gets saved for the next startup
-    tree = ET.parse(standardFilePath + "\\config.xml")
+    tree = ET.parse(standardFilePath + savestate.symbol + "config.xml")
     root = tree.getroot()
 
     root[0][0].set("path", path)
-    tree.write(standardFilePath + "\\config.xml")
+    tree.write(standardFilePath + savestate.symbol + "config.xml")
     print(root[0][0].attrib)
 
     # reset the two list widgets and reload the items from the xml
