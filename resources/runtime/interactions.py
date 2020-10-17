@@ -9,8 +9,9 @@ from qtpy import uic
 
 from resources import information
 from resources.runtime import savestate
-from resources.runtime.functions import logWrite, logWriteNoTime, createStandardFiles
+from resources.runtime.functions import createStandardFiles
 from resources.runtime.savestate import standardFilePath
+from resources.runtime.logfunctions import logWrite, logWriteNoTime
 
 try:
     import xml.etree.cElementTree as ET
@@ -579,8 +580,9 @@ def setFilePath(self, oldpath):
     logWrite("Filepath change detected. New file path should be " + str(text))
     if len(text) > 0:
         if ":" in text:
-            # delete the old textfiles folder so theres no garbage floating around
-            emptyDir(oldpath + savestate.symbol + "textfiles")
+            # delete the old textfiles folder so there is no garbage floating around
+            emptyDir(oldpath + savestate
+                     .symbol + "textfiles")
 
             setNewFilePath(self, text)
 

@@ -6,10 +6,11 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from qtpy import QtGui
 
 from resources.runtime import savestate
-from resources.runtime.functions import information, activateUi, updateSelection, createStandardFiles, \
-    logCreate, logWrite
+from resources.runtime.functions import information, activateUi, updateSelection, createStandardFiles
+from resources.runtime.logfunctions import logWrite, logWriteNoTime, logCreate
 from resources.runtime.interactions import addListElement, setFilePath, autTextListElement, getTextOfItem, \
     createListFiles, saveConfig, loadConfig
+from resources.runtime.maskfunctions import loadMask
 
 try:
     import xml.etree.cElementTree as ET
@@ -109,6 +110,9 @@ class uiControlTest(QMainWindow):
             window.actionSave.triggered.connect(lambda: saveConfig(self, newFilePath))
             window.actionLoad.triggered.connect(lambda: loadConfig(self, newFilePath))
             window.actionQuit.triggered.connect(lambda: sys.exit(0))
+
+            #Load Masks and check for them
+            window.actionLoad_Mask.triggered.connect(lambda: loadMask(self))
 
             window.updateButton.clicked.connect(lambda: getTextOfItem(self, oldFilePath, newFilePath))
 

@@ -53,8 +53,23 @@
      </property>
      <item row="1" column="0">
       <widget class="QTabWidget" name="tabWidget">
+       <property name="accessibleName">
+        <string>LoL Overlay</string>
+       </property>
        <property name="currentIndex">
         <number>0</number>
+       </property>
+       <property name="documentMode">
+        <bool>false</bool>
+       </property>
+       <property name="tabsClosable">
+        <bool>false</bool>
+       </property>
+       <property name="movable">
+        <bool>true</bool>
+       </property>
+       <property name="tabBarAutoHide">
+        <bool>false</bool>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -397,7 +412,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -406,6 +421,8 @@
     </property>
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoad_Mask"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -426,6 +443,9 @@
      <string>Settings</string>
     </property>
     <addaction name="actionSetMainFilePath"/>
+    <addaction name="separator"/>
+    <addaction name="actionRiot_API_Settings"/>
+    <addaction name="actionMask_Settings"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
@@ -486,9 +506,23 @@
     <string>Version Changes</string>
    </property>
   </action>
+  <action name="actionRiot_API_Settings">
+   <property name="text">
+    <string>Riot API Settings</string>
+   </property>
+  </action>
+  <action name="actionLoad_Mask">
+   <property name="text">
+    <string>Load Mask</string>
+   </property>
+  </action>
+  <action name="actionMask_Settings">
+   <property name="text">
+    <string>Mask Settings</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
   <tabstop>listWidget</tabstop>
   <tabstop>listWidget_2</tabstop>
   <tabstop>addButton</tabstop>

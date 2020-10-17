@@ -1,3 +1,15 @@
+CLOSED ALPHA 0.1.1
+
+Added:
+    - Chrono Widgets
+    - The "Credits" Menu option is now working
+    - You can now choose between dark mode and light mode + basic settings are available
+
++++ The program also works on Linux now, though no package has been made yet +++
+
+Lets hope I can get the masks working soon, I'd love to see that idea in action
+
+
 CLOSED ALPHA 0.1.0
 
 Added:

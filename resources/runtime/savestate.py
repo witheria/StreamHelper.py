@@ -9,6 +9,7 @@ except ImportError:
 from sys import platform
 
 from pathlib import Path
+
 home = str(Path.home())
 
 os.system("cls")
@@ -65,3 +66,6 @@ class itemType(Enum):
 # Saving lists and values
 saveListNames = {}
 saveListValues = {}
+
+# Masks imported and numbered
+masklist = {"standard": 0}
