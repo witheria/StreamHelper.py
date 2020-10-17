@@ -27,7 +27,7 @@ Added:
         - Load Configuration (loads a savefile)
         - StreamHelper Documentation (opens the GitHub Page)
         - Set main file path (changes the location of the textfiles)
-        - NOTE: Only savefiles can safely be send to other computers. Don't copy any .xml files from the directory!
+        - NOTE: Only savefiles can be safely sent to other computers. Don't copy any .xml files from the directory!
 
     - Add Button file dialog supports creation of basic textfiles and number items
     - Item buttons aren't supported yet
