@@ -1,3 +1,24 @@
+CLOSED ALPHA 0.2.1
+
+Added:
+    - The LoL Mask to have everything neatly fit in with your gaming needs
+    - Full mask functionality
+    - Configs can now be imported and exported
+    - A "Settings" Menu Option for your convenience
+
++++ A guide and startup manual will be written and released soon, even though there aren't many features yet
+
+APIs are not working yet. This will come in a later update
+
+I have also distanced myself from the "Mask" idea that I initially had ( import mask when you need it,
+remove if you dont ), because it is simply too much work to implement it. So, the package will just include everything
+and you WILL BE ABLE to remove some UIs/tabs in the settings later on. They wont get fully deleted, but wont
+load on startup, so that's a plus i guess.
+
+I split all the code in several different files for organizing purposes. Feel free to comment on this, I thought it
+would be better than having everything in like three files.
+
+
 CLOSED ALPHA 0.1.1
 
 Added:

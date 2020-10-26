@@ -198,7 +198,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>images/001-add.png</normaloff>images/001-add.png</iconset>
+            <normaloff>../../../../.designer/backup/images/001-add.png</normaloff>../../../../.designer/backup/images/001-add.png</iconset>
           </property>
          </widget>
          <widget class="QPushButton" name="swapButton">
@@ -218,7 +218,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>images/transfer.png</normaloff>images/transfer.png</iconset>
+            <normaloff>../../../../.designer/backup/images/transfer.png</normaloff>../../../../.designer/backup/images/transfer.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -244,7 +244,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>images/replay.png</normaloff>images/replay.png</iconset>
+            <normaloff>../../../../.designer/backup/images/replay.png</normaloff>../../../../.designer/backup/images/replay.png</iconset>
           </property>
          </widget>
          <widget class="QPushButton" name="allDeleteButton">
@@ -264,7 +264,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>C:/Users/sc4le/.designer/backup/images/can.png</normaloff>C:/Users/sc4le/.designer/backup/images/can.png</iconset>
+            <normaloff>../../../../.designer/backup/C:/Users/sc4le/.designer/backup/images/can.png</normaloff>../../../../.designer/backup/C:/Users/sc4le/.designer/backup/images/can.png</iconset>
           </property>
          </widget>
          <widget class="QPushButton" name="assignButton">
@@ -284,7 +284,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>images/027-pointer.png</normaloff>images/027-pointer.png</iconset>
+            <normaloff>../../../../.designer/backup/images/027-pointer.png</normaloff>../../../../.designer/backup/images/027-pointer.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -307,7 +307,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>images/030-share.png</normaloff>images/030-share.png</iconset>
+            <normaloff>../../../../.designer/backup/images/030-share.png</normaloff>../../../../.designer/backup/images/030-share.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -333,7 +333,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>C:/Users/sc4le/.designer/backup/images/can.png</normaloff>C:/Users/sc4le/.designer/backup/images/can.png</iconset>
+            <normaloff>../../../../.designer/backup/C:/Users/sc4le/.designer/backup/images/can.png</normaloff>../../../../.designer/backup/C:/Users/sc4le/.designer/backup/images/can.png</iconset>
           </property>
          </widget>
          <widget class="QPushButton" name="deleteButton_2">
@@ -353,7 +353,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>C:/Users/sc4le/.designer/backup/images/can.png</normaloff>C:/Users/sc4le/.designer/backup/images/can.png</iconset>
+            <normaloff>../../../../.designer/backup/C:/Users/sc4le/.designer/backup/images/can.png</normaloff>../../../../.designer/backup/C:/Users/sc4le/.designer/backup/images/can.png</iconset>
           </property>
          </widget>
          <widget class="QRadioButton" name="addleft">
@@ -401,6 +401,1105 @@
          <zorder>addright</zorder>
         </widget>
        </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>LoL</string>
+        </attribute>
+        <widget class="QLineEdit" name="Caster3_2">
+         <property name="geometry">
+          <rect>
+           <x>530</x>
+           <y>430</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Summoner Name</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedBot_2">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>130</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Bot</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueTop">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>230</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Top</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedTop">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>230</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Top</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="Area_1">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>20</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Champions</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="APIAuto">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>440</y>
+           <width>151</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Always get from API</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="Line" name="line_horEdge">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>771</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="statsSelect">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>70</y>
+           <width>144</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>Don't show stats</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Extra file</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Same file - After Champion</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Same file - Before Champion</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLineEdit" name="RedSup_2">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>160</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Support</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Caster3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>480</y>
+           <width>113</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Caster 3</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueJgl_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>70</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Jungle</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Caster2">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>450</y>
+           <width>113</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Caster 2</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedJgl">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>260</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Jungle</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="Area_2">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>200</y>
+           <width>161</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Summoner Names</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="UpdateAuto">
+         <property name="geometry">
+          <rect>
+           <x>340</x>
+           <y>470</y>
+           <width>141</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Auto-Update files</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueSup_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>160</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Support</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedBot">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>320</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Bot</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Caster1">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>420</y>
+           <width>113</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Caster 1</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="ServerSelect">
+         <property name="geometry">
+          <rect>
+           <x>670</x>
+           <y>430</y>
+           <width>79</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>Server</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>EUW</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>EUNE</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>NA</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="Line" name="line_horTeams">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>180</y>
+           <width>771</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedTop_2">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>40</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Top</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedJgl_2">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>70</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Jungle</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>480</y>
+           <width>113</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Caster Settings</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueBot">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>320</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Bot</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="GetAPI">
+         <property name="geometry">
+          <rect>
+           <x>640</x>
+           <y>460</y>
+           <width>109</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Get from API</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_6">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>390</y>
+           <width>16</width>
+           <height>121</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="Area_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>400</y>
+           <width>161</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Caster</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_vertEdge">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>10</y>
+           <width>21</width>
+           <height>501</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>304</x>
+           <y>410</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Update every</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="updateLoL">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>270</y>
+           <width>120</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Update to files</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Team1">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>230</y>
+           <width>113</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Team 1</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueSup">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>350</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Support</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_3">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>50</y>
+           <width>161</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Show Champion stats in</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="updateTime">
+         <property name="geometry">
+          <rect>
+           <x>400</x>
+           <y>404</y>
+           <width>50</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>999</number>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedMid_2">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>100</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Mid</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedSup">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>350</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Support</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueTop_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>40</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Top</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueMid_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>100</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Mid</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="geometry">
+          <rect>
+           <x>530</x>
+           <y>460</y>
+           <width>80</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Establish</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueBot_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>130</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Bot</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="Area_4">
+         <property name="geometry">
+          <rect>
+           <x>600</x>
+           <y>400</y>
+           <width>161</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Riot Settings </string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueMid">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>290</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Mid</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="Team2">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>230</y>
+           <width>113</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Team 2</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line_horCast">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>380</y>
+           <width>750</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="BlueJgl">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>260</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="placeholderText">
+          <string>Blue Team Jungle</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="RedMid">
+         <property name="geometry">
+          <rect>
+           <x>650</x>
+           <y>290</y>
+           <width>121</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Red Team Mid</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>464</x>
+           <y>410</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>seconds</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_4">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>20</y>
+           <width>91</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Winrate (avg.)</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_5">
+         <property name="geometry">
+          <rect>
+           <x>570</x>
+           <y>20</y>
+           <width>91</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Winrate (avg.)</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_7">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>300</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Swap Teams</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebtop">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>44</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebjgl">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>74</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebmid">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>104</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebbot">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>134</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebsup">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>164</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winraterbot">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>134</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winraterjgl">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>74</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratersup">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>164</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratertop">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>44</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratermid">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>104</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebbot_2">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>324</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winraterbot_2">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>324</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebjgl_2">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>264</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratertop_2">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>234</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebsup_2">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>354</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratermid_2">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>294</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratersup_2">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>354</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebtop_2">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>234</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winraterjgl_2">
+         <property name="geometry">
+          <rect>
+           <x>580</x>
+           <y>264</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="winratebmid_2">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>294</y>
+           <width>57</width>
+           <height>15</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>0%</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>570</x>
+           <y>210</y>
+           <width>91</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Winrate (avg.)</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_12">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>210</y>
+           <width>91</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Winrate (avg.)</string>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </item>
     </layout>
@@ -422,8 +1521,6 @@
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
     <addaction name="separator"/>
-    <addaction name="actionLoad_Mask"/>
-    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -442,14 +1539,12 @@
     <property name="title">
      <string>Settings</string>
     </property>
-    <addaction name="actionSetMainFilePath"/>
     <addaction name="separator"/>
-    <addaction name="actionRiot_API_Settings"/>
-    <addaction name="actionMask_Settings"/>
+    <addaction name="actionMain_Settings"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuHelp"/>
    <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSave">
@@ -516,9 +1611,9 @@
     <string>Load Mask</string>
    </property>
   </action>
-  <action name="actionMask_Settings">
+  <action name="actionMain_Settings">
    <property name="text">
-    <string>Mask Settings</string>
+    <string>Main Settings</string>
    </property>
   </action>
  </widget>

@@ -1,6 +1,8 @@
 import os
 from enum import Enum
 
+from PyQt5 import uic
+
 try:
     import xml.etree.cElementTree as ET
 except ImportError:
@@ -51,7 +53,7 @@ lastItemSelected = [0, 0]
 # Standard Filepath and File Names
 # standardFilePath: str = os.getcwd()
 # standardFileNames = {"chronoup", "chronodown", "time"} UNUSED
-standardXMLNames = ['autosave', 'config', 'init']
+standardXMLNames = ['autosave', 'config', 'settings']
 
 itemorder = []
 
@@ -67,5 +69,23 @@ class itemType(Enum):
 saveListNames = {}
 saveListValues = {}
 
-# Masks imported and numbered
-masklist = {"standard": 0}
+# Dict to process the settings tree and connect it to the stacked widget
+settingsList = {
+    "Main Settings": 0,
+    "Riot API": 0,
+    "File Paths": 1,
+    "Format": 2,
+    "Output file": 3,
+    "Riot Settings": 4,
+    "Statistics": 5,
+    "Timers": 6,
+    "About": 7
+}
+# This list will be loaded on startup from the settings file, and saved on request or shutdown. Any changes will
+# therefore apply immediately
+configList = {
+    "StartupTab": 0,
+    "UserFilePath": 0,
+    "FontSize": 11,
+
+}
