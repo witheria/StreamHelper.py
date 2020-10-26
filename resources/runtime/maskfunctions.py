@@ -1,9 +1,8 @@
-from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QListWidgetItem, QInputDialog, QFileDialog, QMainWindow, QTabWidget
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5 import uic
 
 from resources.runtime import savestate
-from resources.runtime.logfunctions import logWrite
+from resources.runtime.Settings.logfunctions import logWrite
 
 
 def loadMask(self):
@@ -13,12 +12,38 @@ def loadMask(self):
     searchMask = QFileDialog.getOpenFileName(self, "Load Mask", savestate.standardFilePath)
     try:
         file = searchMask[0]
-        print(str(file))
+        files = splitFile(file)
+
         mask = uic.loadUi(file)
-        self.ui.tabWidget.addTab(mask, "LoL")
+        # if the item is not well formed, the program will try to import it as a basic .ui file
+        if len(files) is 1:
+            self.ui.tabWidget.addTab(mask, "TestMask")
+        else:
+            self.ui.tabWidget.addTab(mask, files[0])
         savestate.masklist[file] = len(savestate.masklist)
         print(savestate.masklist)
-
+        self.ui.tabWidget.setCurrentWidget(mask)
 
     except FileNotFoundError:
-        print("No file selected")
+        print("No Mask file selected")
+
+
+def splitFile(filepath):
+    # this method splits the custom filetype into a .py and a .oic file
+    pack = open(filepath, "r")
+    packtext = pack.read()
+    files = packtext.split("&&")
+    print(len(files))
+    if len(files) is 1:
+        return files
+    else:
+        logWrite("The Mask included in this file is " + str(files[0]))
+        file1 = open(savestate.standardFilePath + savestate.symbol + str(files[0]) + ".py", "w+")
+        file1.write(files[1])
+        file2 = open(savestate.standardFilePath + savestate.symbol + str(files[0]) + ".oic", "w+")
+        file2.write(files[2])
+        file1.close()
+        file2.close()
+
+    pack.close()
+    return files

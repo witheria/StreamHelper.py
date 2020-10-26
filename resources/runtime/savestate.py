@@ -1,6 +1,8 @@
 import os
 from enum import Enum
 
+from PyQt5 import uic
+
 try:
     import xml.etree.cElementTree as ET
 except ImportError:
@@ -67,5 +69,3 @@ class itemType(Enum):
 saveListNames = {}
 saveListValues = {}
 
-# Masks imported and numbered
-masklist = {"standard": 0}
