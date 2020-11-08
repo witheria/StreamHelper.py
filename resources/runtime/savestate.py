@@ -75,7 +75,7 @@ settingsList = {
     "Riot API": 0,
     "File Paths": 1,
     "Format": 2,
-    "Output file": 3,
+    "Output File": 3,
     "Riot Settings": 4,
     "Statistics": 5,
     "Timers": 6,
