@@ -3,8 +3,8 @@ from PyQt5.QtWidgets import QListWidgetItem
 from qtpy import uic
 
 from resources.runtime import savestate
-from resources.runtime.functions import erroreasy
 from resources.runtime.Settings.logfunctions import logWrite
+from resources.runtime.functions import erroreasy
 
 try:
     import xml.etree.cElementTree as ET
@@ -38,17 +38,17 @@ def addToList(self, text: str, itemid: int, value: str, slist: int, pretext: str
     item = {savestate.count: str(text)}
     print("Added item: " + str(item))
     logWrite("Added item: " + str(item[savestate.count]) + "\n")
-    if itemid is 0:
+    if itemid == 0:
         wid = uic.loadUi("uis" + savestate.symbol + "TextFileWidget.ui")
         wid.setWhatsThis("text")
         if value:
             wid.lineEdit.setText(value)
-    elif itemid is 1:
+    elif itemid == 1:
         wid = uic.loadUi("uis" + savestate.symbol + "NumberWidget.ui")
         wid.setWhatsThis("number")
         wid.spinBox.setValue(int(value))
         wid.lineEdit.setText(pretext)
-    elif itemid is 2:
+    elif itemid == 2:
         wid = uic.loadUi("uis" + savestate.symbol + "ChronoWidget.ui")
         wid.setWhatsThis("chrono")
     else:

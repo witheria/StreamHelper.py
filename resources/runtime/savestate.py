@@ -1,8 +1,6 @@
 import os
 from enum import Enum
 
-from PyQt5 import uic
-
 try:
     import xml.etree.cElementTree as ET
 except ImportError:
@@ -75,7 +73,7 @@ settingsList = {
     "Riot API": 0,
     "File Paths": 1,
     "Format": 2,
-    "Output File": 3,
+    "Output file": 3,
     "Riot Settings": 4,
     "Statistics": 5,
     "Timers": 6,
@@ -88,4 +86,17 @@ configList = {
     "UserFilePath": 0,
     "FontSize": 11,
 
+}
+
+# This saves the currently active Summoner for the session
+summoner = ""
+
+# Look for images at these locations (they have to be named according to the guidelines)
+imageLocations = {
+    "1": standardFilePath + "\\images"
+}
+
+# Image names
+imageNames = {
+    
 }

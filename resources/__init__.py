@@ -4,11 +4,12 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
 from qtpy import QtGui, uic
 
+from resources.access.bindings import initConnection
 from resources.runtime import savestate
 from resources.runtime.Settings.configfunc import saveConfig, loadConfig
+from resources.runtime.Settings.logfunctions import logWrite, logWriteNoTime, logCreate
 from resources.runtime.Settings.program import syncSettings
 from resources.runtime.functions import information, createStandardFiles, erroreasy
-from resources.runtime.Settings.logfunctions import logWrite, logWriteNoTime, logCreate
 from resources.runtime.textfiles.fileedit import createListFiles
 from resources.runtime.textlists.package import txlinit, addToList
 
@@ -115,6 +116,7 @@ class StreamHelper(QMainWindow):
 
             # Basic loading and startup operations
             window = txlinit(self, newFilePath, oldFilePath)
+            initConnection(self)
 
             # Detect the interactions / NOW HANDLED IN DESIGNATED PACKAGES
             # There are only the menu-items binded here in the main package
@@ -148,7 +150,7 @@ class StreamHelper(QMainWindow):
                 self.w.close()  # Close window.
                 self.w = None  # Discard reference.
     else:
-        if savestate.platform is 'linux':
+        if savestate.platform == 'linux':
             logWrite("The application could not be started in sudo mode!")
         else:
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
