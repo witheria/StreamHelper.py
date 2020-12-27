@@ -1,3 +1,4 @@
+
 *StreamHelper* is a program to centralize and simplify the creation and updating of textfiles with set names.
 
 It is mainly intended for small to semi-professional streamers, who need to control a rather large amount of textfiles while streaming (e. g. OBS, Streamlabs, etc.)
