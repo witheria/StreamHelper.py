@@ -1,1 +1,0 @@
-pyinstaller D:\com\StreamHelper\resources\__init__.py -n StreamHelper -w -y --add-data D:\com\StreamHelper\resources\uis\;.\resources --hidden-import pyperclip --icon D:\com\StreamHelper\resources\images\common\icon2.ico --uac-admin
