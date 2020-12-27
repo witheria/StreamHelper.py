@@ -1,59 +1,29 @@
-from PyQt5.QtWidgets import QInputDialog
-from qtpy import uic
+import json
 
-from resources import SettingsWindow
 from resources.runtime import savestate
-from resources.runtime.functions import information, createStandardFiles
 from resources.runtime.Settings.logfunctions import logWrite
-from resources.runtime.savestate import standardFilePath
-from resources.runtime.textfiles.fileedit import createListFiles
-from resources.runtime.textfiles.folderedit import emptyDir
-
-try:
-    import xml.etree.cElementTree as ET
-except ImportError:
-    import xml.etree.ElementTree as ET
 
 
-def setFilePath(self, oldpath):
-    # Transition and check interaction function to change the custom filepath parameter
-    text, ok = QInputDialog.getText(self, 'Enter Path',
-                                    'Enter the desired path for your objects. \nWarning! All Changes since the last '
-                                    'Update will be lost!\n \n' +
-                                    "Textfiles are at path: " + oldpath)
-    logWrite("Filepath change detected. New file path should be " + str(text))
-    if len(text) > 0:
-        if ":" in text:
-            # delete the old textfiles folder so there is no garbage floating around
-            emptyDir(oldpath + savestate.symbol + "textfiles")
+def readSettings():
+    # This method reads the settings from the file on startup and writes them to the dict in savestate
+    logWrite("Loading contents from savefile...")
 
-            setNewFilePath(self, text)
-
-        else:
-            information("Make sure the path you enter is valid!")
-            logWrite("No valid path entered, exiting...")
-    else:
-        logWrite("No path entered - nothings changed!")
+    try:
+        file = open(savestate.standardFilePath + savestate.symbol + "config.json", "r", encoding="utf-8")
+        json_object = json.loads(file.read())
+        savestate.configList = json_object
+        file.close()
+    except FileNotFoundError:
+        logWrite("No config file could be found!")
+        print("No config file found! Restart the program. If this error persists, please contact the developer.")
 
 
-def setNewFilePath(self, path):
-    # initialize the file path and create the standard files at that location
-    print(path)
-    logWrite("New path for textfiles will be " + str(path))
-    createStandardFiles(path, 1)
-
-    logWrite("Created the new textfiles at new path")
-    # set the new filepath into the xml document so it gets saved for the next startup
-    tree = ET.parse(standardFilePath + savestate.symbol + "config.xml")
-    root = tree.getroot()
-
-    root[0][0].set("path", path)
-    tree.write(standardFilePath + savestate.symbol + "config.xml")
-    print(root[0][0].attrib)
-
-    # reset the two list widgets and reload the items from the xml
-    self.ui.listWidget.clear()
-    self.ui.listWidget_2.clear()
-
-    createListFiles(self, path)
-
+def updateSettings():
+    try:
+        file = open(savestate.standardFilePath + savestate.symbol + "config.json", "w+", encoding="utf-8")
+        output = json.dumps(savestate.configList, sort_keys=True, indent=4)
+        file.write(output)
+        file.close()
+    except FileNotFoundError:
+        logWrite("No config file could be found!")
+        print("No config file found! Restart the program. If this error persists, please contact the developer.")

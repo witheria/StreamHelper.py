@@ -20,6 +20,7 @@ def logCreate():
 def logWrite(text):
     now = datetime.datetime.now()
     logname = standardFilePath + savestate.symbol + "StreamLog.log"
+    z = None
     try:
         z = open(logname, "a")
     except FileNotFoundError:
@@ -30,6 +31,7 @@ def logWrite(text):
 
 def logWriteNoTime(text):
     logname = standardFilePath + savestate.symbol + "StreamLog.log"
+    z = None
     try:
         z = open(logname, "a")
     except FileNotFoundError:

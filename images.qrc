@@ -1,0 +1,10 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>images/common/add.png</file>
+    <file>images/common/reset.png</file>
+    <file>images/common/swap.png</file>
+    <file>images/common/update.png</file>
+    <file>images/common/delete.png</file>
+    <file>images/common/icon2.png</file>
+</qresource>
+</RCC>

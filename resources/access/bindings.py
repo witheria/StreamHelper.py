@@ -5,6 +5,11 @@ from lcu_driver import Connector
 
 from resources.images.program import copyFile
 from resources.runtime import savestate
+from resources.runtime.functions import information
+
+"""
+Could be used in theory, but does basically nothing
+"""
 
 connector = Connector()
 
@@ -18,14 +23,19 @@ def initConnection(self):
 
 def getClient(self):
     # init method to call all subsequent functions. Will build up the stats.
+    cmdrun = None
     try:
         cmdrun = subprocess.run(['wmic', 'PROCESS', "WHERE", "name='LeagueClientUx.exe'", "GET", "commandline"],
-                            capture_output=True, text=True).stdout
+                                capture_output=True, text=True).stdout
     except AttributeError:
         print("Process not found!")
+    except TypeError:
+        print("Not supported!")
+        information("Not supported on this platform!")
     try:
         port = re.search("app-port=([0-9]*)", cmdrun).group().split("=")[1]
         auth = re.search("remoting-auth-token=([\w]*)", cmdrun).group().split("=")[1]
+        startConnector()
     except IndexError:
         # if there is no = in the found part
         port = "Error in collecting process data!"
@@ -38,10 +48,6 @@ def getClient(self):
         self.ui.SummonerName.setStyleSheet("QLineEdit{background: lightred;}")
     print(port, auth)
 
-    try:
-        startConnector()
-    except:
-        print("nothing found")
     if savestate.summoner != "":
         self.ui.SummonerName.setText(savestate.summoner["displayName"])
         self.ui.SummonerName.setStyleSheet("QLineEdit{background: lightgreen;}")
