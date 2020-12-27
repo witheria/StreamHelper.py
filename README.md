@@ -55,7 +55,7 @@ You can deinstall StreamHelper from the "installed programs" section within your
 ### Thank you for being a part of this project!
 
 
-
+[Donate...](https://www.paypal.com/donate?hosted_button_id=825RPFTRDCW7A)
 
 
 
