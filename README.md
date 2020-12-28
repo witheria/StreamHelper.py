@@ -25,9 +25,13 @@ There shouldn't be any issues, since this process is straightforward.
 
 ## Startup
 On startup, a folder will be created at *C:\Users\\<username\>\AppData\Local\StreamHelper* and all basic files will get created. This includes:
+
 	- The  autosave
+	
 	- The config file
+	
 	- An unused settings file (remnants  from earlier versions, will be removed)
+	
 	- The folder *textfiles* with all subfolders *Lists*, *eSports* and *API (unused in 0.3)*
 
 The program will *not* start if you don't have elevated privileges! 
