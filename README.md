@@ -14,6 +14,9 @@ StreamHelper is implemented in **python** and is being distributed with the help
 ## Installation
 Since this is *not* a signed installer, Windows Smart Screen will warn you on installation. This is normal and perfectly fine and cannot be circumvented at the moment. 
 
+GitHub download speeds are sometimes pretty low. To ease access to the installer, I also uploaded the file on mega:
+https://mega.nz/folder/JOxmABTQ#Dn8tYTcBoKMxezW61TWK0A
+
 1. Open the installer by double-clicking
 2. Select, if you want to install the program for *all users (recommended)* or just the current one
 3. Accept the license and set the path
