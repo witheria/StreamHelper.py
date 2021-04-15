@@ -65,6 +65,7 @@ def initPackage(ui):
     # Load a save
     lists = readAutosave("eSports")
     savestate.txtlist = lists["txtlist"]
+    savestate.morelist = lists["morelist"]
     loadTexts()
 
     # Connect the lineedits to the textfiles
@@ -76,6 +77,7 @@ def initPackage(ui):
     ui.CS_League.editingFinished.connect(lambda: editTxts("CS_League"))
     ui.CS_Group.editingFinished.connect(lambda: editTxts("CS_Group"))
     ui.CS_Tournament.editingFinished.connect(lambda: editTxts("CS_Tournament"))
+    ui.showMoreFieldsButton.clicked.connect(lambda: showAddFields())
 
     # Home Team
     ui.HT_Player1.editingFinished.connect(lambda: editTxts("HT_Player1"))
@@ -376,3 +378,7 @@ def zeroScoreChanger(window):
     window.T_ScoreDiff.setValue(0)
     for team in range(1, 5):
         editTxts("T" + str(team) + "_score")
+
+
+def showAddFields():
+    savestate.ExtraFieldWidget.ui.show()

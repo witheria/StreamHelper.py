@@ -16,7 +16,7 @@ except ImportError:
 
 def saveConfig(self, basefilepath):
     """
-    saves the current lists to a separate file
+    saves the current lists and eSports contents to a separate file
 
     :param self: SettingsWindow
     :param basefilepath: str

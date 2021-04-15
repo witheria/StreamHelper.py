@@ -18,21 +18,25 @@ def txlinit(self):
     """
     Used to initialize the basic UI.
 
-    :type self: Settings
+    :type self: StreamHelper
     :return uic type
     """
-    window = None
     try:
         logWrite("Initializing the basic ui...")
-        self.ui = uic.loadUi(savestate.SOURCE_PATH + 'uis' + savestate.symbol + 'main030.ui')
+        self.ui = uic.loadUi(savestate.SOURCE_PATH + 'uis' + savestate.symbol + 'main031.ui')
         window = self.ui
+        window.tabWidget.setCurrentIndex(savestate.configList["StartupTab"])
         self.ui.show()
+
         # Save the listwidgets to savestate for unbound use
         savestate.saveLists["Left"] = self.ui.listWidget
         savestate.saveLists["Right"] = self.ui.listWidget_2
 
         self.ui.listWidget.setToolTip(savestate.configList["LeftListName"])
         self.ui.listWidget_2.setToolTip(savestate.configList["RightListName"])
+
+        # self.ui.listWidget.setDragDropMode(QAbstractItemView.DragDrop)
+        # self.ui.listWidget_2.setDragDropMode(QAbstractItemView.DragDrop)
 
     except FileNotFoundError:
         erroreasy("The main user interface could not be loaded. Try reinstalling the program. "
@@ -77,7 +81,7 @@ def addListElement(self):
     ok, item, text = itemselect.exec()
     try:
         for key in savestate.forbiddenChars:
-            if key in text or text[len(text) - 1] == " " or text[len(text) - 1] == ".":
+            if key in text or text[-1] == " " or text[-1] == ".":
                 information("This name can not be used!")
                 addListElement(self)
                 return None
@@ -92,7 +96,10 @@ def addListElement(self):
     slist = 0
     if self.ui.addright.isChecked():
         slist = 1
-    value = ""
+    if item == 2:
+        value = "00:00:00"
+    else:
+        value = ""
 
     if ok:
         logWrite("Adding an element with name " + text + " to list " + str(slist))
@@ -109,7 +116,7 @@ def swapLists():
     temp = savestate.saveListData["Left"]
     savestate.saveListData["Left"] = savestate.saveListData["Right"]
     savestate.saveListData["Right"] = temp
-    # print(temp, savestate.saveListData)
+    print(temp, savestate.saveListData)
     updateLists()
     initTextFiles("initFolders")
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>271</width>
-    <height>81</height>
+    <width>272</width>
+    <height>80</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -110,9 +110,12 @@
      <rect>
       <x>180</x>
       <y>23</y>
-      <width>71</width>
-      <height>20</height>
+      <width>70</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Number</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QWidget: {background: white}</string>
@@ -127,6 +130,9 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Show this as text in front of the number</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">QWidget: {background: white}</string>
     </property>
@@ -139,7 +145,7 @@
      <rect>
       <x>180</x>
       <y>50</y>
-      <width>71</width>
+      <width>70</width>
       <height>21</height>
      </rect>
     </property>
@@ -207,6 +213,9 @@
       </disabled>
      </palette>
     </property>
+    <property name="toolTip">
+     <string>Delete this item from the list</string>
+    </property>
     <property name="text">
      <string>Delete</string>
     </property>
@@ -219,6 +228,9 @@
       <width>75</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Copy the path of this item to the clipboard</string>
     </property>
     <property name="text">
      <string>Copy Path</string>

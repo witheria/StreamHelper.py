@@ -1,10 +1,7 @@
 import os
 from inspect import getsourcefile
 
-try:
-    import xml.etree.cElementTree as ET
-except ImportError:
-    import xml.etree.ElementTree as ET
+from PyQt5.QtCore import QTimer
 
 from sys import platform
 
@@ -34,24 +31,13 @@ elif platform == "win32":
 
 # Installation path, app id, product info
 SOURCE_PATH: str = os.path.split(os.path.abspath(getsourcefile(lambda: 0)))[0].replace("runtime", "")
-print(SOURCE_PATH)
 APP_ID: str = "ToniSchmidbauer.StreamHelper.StreamHelperOpenAlpha.0.3.0"
-
 
 # StyleSheet for the list elements
 shortBorder = \
     ".QWidget {\n" \
     + "border: 1px solid black;\n" \
     + "}"
-
-name = ""
-count = 1
-
-# States of the List Widgets
-deselectItemFunctionInitiated = [False, False]
-deselectListFunctionInitiated = False
-lastListSelected = 0
-lastItemSelected = [0, 0]
 
 # Standard Filepath and File Names
 # standardFilePath: str = os.getcwd()
@@ -64,8 +50,6 @@ forbiddenChars = ["/", ">", "<", ":", "\"", "\\", "|", "?", "*", "CON", "PRN", "
 
 # Saving lists and values
 saveLists = {"Left": None, "Right": None}
-saveListNames = {}
-saveListValues = {}
 saveListItems = {"Left": {}, "Right": {}}
 saveListData = {"Left": {}, "Right": {}}
 
@@ -79,12 +63,22 @@ txtlist = {"CS_Day": "", "CS_Game": "", "CS_Group": "", "CS_League": "", "CS_Tou
            "T3_name": "", "T3_score": "", "T3_city": "",
            "T4_name": "", "T4_score": "", "T4_city": ""
            }
-folderlist = ["Competitive Streaming", "Home Team", "Teams"]
+morelist = {"Caster1": "",
+            "Caster2": "",
+            "Caster3": "",
+            "Stat1": "",
+            "Stat2": "",
+            "Stat3": "",
+            "Custom1": "",
+            "Custom2": "",
+            "Custom3": "",
+            }
+folderlist = ["Competitive Streaming", "Home Team", "Teams", "More fields"]
 
 lineedit_list = {}
 
 # Standard autosave look
-autosave_standard = {"Lists": saveListData, "eSports": {"txtlist": txtlist}}
+autosave_standard = {"Lists": saveListData, "eSports": {"txtlist": txtlist, "morelist": morelist}}
 
 # Setting settings
 # Look for images at these locations (they have to be named according to the guidelines)
@@ -94,6 +88,9 @@ imageLocations = {"0": standardFilePath + symbol + "images"}
 imageNames = {
 
 }
+
+# On changing list names, this will process the name so the old folder gets deleted
+NewListName = tuple()
 
 # Dict to process the settings tree and connect it to the stacked widget
 settingsList = {
@@ -121,10 +118,11 @@ configList = {
 
     # List settings
     "AllowedItems": {
-        "Chrono Item": False,
+        "Chrono Item": True,
         "GT Item": False,
         "Number Item": True,
-        "Text Item": True
+        "Text Item": True,
+        "Image Item": True
     },
     "GlobalPretext": "",
     "ListSplit": False,
@@ -132,9 +130,12 @@ configList = {
     "RightListName": "Right",
     "LeftListName": "Left",
 
+    # eSport Settings
+    "funnelfile_separator": "\n",
+
     # Riot API settings
     "FontSize": 11,
-    "ChronoFormat": ""
+    "ChronoFormat": "hh:mm:ss"
 
 }
 # List used for resetting the settings (wont be changed around and read like the other one)
@@ -150,10 +151,11 @@ standardConfigList = {
 
     # List settings
     "AllowedItems": {
-        "Chrono Item": False,
+        "Chrono Item": True,
         "GT Item": False,
         "Number Item": True,
-        "Text Item": True
+        "Text Item": True,
+        "Image Item": True
     },
     "GlobalPretext": "",
     "ListSplit": False,
@@ -161,9 +163,12 @@ standardConfigList = {
     "RightListName": "Right",
     "LeftListName": "Left",
 
+    # eSport Settings
+    "funnelfile_separator": "\n",
+
     # Riot API settings
     "FontSize": 11,
-    "ChronoFormat": ""
+    "ChronoFormat": "hh:mm:ss"
 
 }
 
@@ -171,14 +176,173 @@ standardConfigList = {
 summoner = ""
 
 # Stuff needed for eSports
-# This is the path where all our actions will commence:
-path = ""
-
-# This is for creating the two folders if ListSplit is enabled:
-ListSplitFolders = [configList["RightListName"], configList["LeftListName"]]
 
 # This exists to allow the score operations to work
 lastScoreChange = 0
 
-# Since there are a lot of access requests to readAutosave(), only every % request will get logged
+# Since there are a lot of access requests to readAutosave(), only every %s request will get logged
 AUTOSAVE_LOG_LEVEL_OUTPUT = 4
+
+# This is the timer to clock the chronoitems
+timer: QTimer = None
+
+# Create the bonus fields window and connect it
+ExtraFieldWidget = None
+
+# important mappings for the League API
+champIdMaps: dict = {
+    "266": "Aatrox",
+    "103": "Ahri",
+    "84": "Akali",
+    "12": "Alistar",
+    "32": "Amumu",
+    "34": "Anivia",
+    "1": "Annie",
+    "523": "Aphelios",
+    "22": "Ashe",
+    "136": "AurelionSol",
+    "268": "Azir",
+    "432": "Bard",
+    "53": "Blitzcrank",
+    "63": "Brand",
+    "201": "Braum",
+    "51": "Caitlyn",
+    "164": "Camille",
+    "69": "Cassiopeia",
+    "31": "Chogath",
+    "42": "Corki",
+    "122": "Darius",
+    "131": "Diana",
+    "119": "Draven",
+    "36": "DrMundo",
+    "245": "Ekko",
+    "60": "Elise",
+    "28": "Evelynn",
+    "81": "Ezreal",
+    "9": "Fiddlesticks",
+    "114": "Fiora",
+    "105": "Fizz",
+    "3": "Galio",
+    "41": "Gangplank",
+    "86": "Garen",
+    "150": "Gnar",
+    "79": "Gragas",
+    "104": "Graves",
+    "120": "Hecarim",
+    "74": "Heimerdinger",
+    "420": "Illaoi",
+    "39": "Irelia",
+    "427": "Ivern",
+    "40": "Janna",
+    "59": "JarvanIV",
+    "24": "Jax",
+    "126": "Jayce",
+    "202": "Jhin",
+    "222": "Jinx",
+    "145": "Kaisa",
+    "429": "Kalista",
+    "43": "Karma",
+    "30": "Karthus",
+    "38": "Kassadin",
+    "55": "Katarina",
+    "10": "Kayle",
+    "141": "Kayn",
+    "85": "Kennen",
+    "121": "Khazix",
+    "203": "Kindred",
+    "240": "Kled",
+    "96": "KogMaw",
+    "7": "Leblanc",
+    "64": "LeeSin",
+    "89": "Leona",
+    "876": "Lillia",
+    "127": "Lissandra",
+    "236": "Lucian",
+    "117": "Lulu",
+    "99": "Lux",
+    "54": "Malphite",
+    "90": "Malzahar",
+    "57": "Maokai",
+    "11": "MasterYi",
+    "21": "MissFortune",
+    "62": "MonkeyKing",
+    "82": "Mordekaiser",
+    "25": "Morgana",
+    "267": "Nami",
+    "75": "Nasus",
+    "111": "Nautilus",
+    "518": "Neeko",
+    "76": "Nidalee",
+    "56": "Nocturne",
+    "20": "Nunu",
+    "2": "Olaf",
+    "61": "Orianna",
+    "516": "Ornn",
+    "80": "Pantheon",
+    "78": "Poppy",
+    "555": "Pyke",
+    "246": "Qiyana",
+    "133": "Quinn",
+    "497": "Rakan",
+    "33": "Rammus",
+    "421": "RekSai",
+    "526": "Rell",
+    "58": "Renekton",
+    "107": "Rengar",
+    "92": "Riven",
+    "68": "Rumble",
+    "13": "Ryze",
+    "360": "Samira",
+    "113": "Sejuani",
+    "235": "Senna",
+    "147": "Seraphine",
+    "875": "Sett",
+    "35": "Shaco",
+    "98": "Shen",
+    "102": "Shyvana",
+    "27": "Singed",
+    "14": "Sion",
+    "15": "Sivir",
+    "72": "Skarner",
+    "37": "Sona",
+    "16": "Soraka",
+    "50": "Swain",
+    "517": "Sylas",
+    "134": "Syndra",
+    "223": "TahmKench",
+    "163": "Taliyah",
+    "91": "Talon",
+    "44": "Taric",
+    "17": "Teemo",
+    "412": "Thresh",
+    "18": "Tristana",
+    "48": "Trundle",
+    "23": "Tryndamere",
+    "4": "TwistedFate",
+    "29": "Twitch",
+    "77": "Udyr",
+    "6": "Urgot",
+    "110": "Varus",
+    "67": "Vayne",
+    "45": "Veigar",
+    "161": "Velkoz",
+    "254": "Vi",
+    "234": "Viego",
+    "112": "Viktor",
+    "8": "Vladimir",
+    "106": "Volibear",
+    "19": "Warwick",
+    "498": "Xayah",
+    "101": "Xerath",
+    "5": "XinZhao",
+    "157": "Yasuo",
+    "777": "Yone",
+    "83": "Yorick",
+    "350": "Yuumi",
+    "154": "Zac",
+    "238": "Zed",
+    "115": "Ziggs",
+    "26": "Zilean",
+    "142": "Zoe",
+    "143": "Zyra"
+}

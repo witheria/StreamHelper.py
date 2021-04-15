@@ -9,6 +9,33 @@ from resources.runtime.Settings.save import readAutosave, writeToAutosave
 from resources.runtime.eSports.program import loadTexts
 from resources.runtime.functions import erroreasy
 from resources.runtime.savestate import symbol as s
+from resources.runtime.textfiles.folderedit import emptyDir
+
+
+def copyImage(path: str, newName: str, slist: int):
+    """
+    This method copies an image from the original location to the working directory, with a new name
+
+    path: the original image path
+    newName: the name the copied image will carry
+    slist: an integer telling what list the item accesses from
+    """
+    if savestate.configList["ListSplit"]:
+        if slist == 0:  # Left list
+            shutil.copy(path,
+                        savestate.configList["CustomFilePath"] + savestate.symbol +
+                        "textfiles" + savestate.symbol + "Lists" + savestate.symbol +
+                        savestate.configList["LeftListName"] + savestate.symbol + newName
+                        )
+        elif slist == 1:  # Right list
+            shutil.copy(path,
+                        savestate.configList["CustomFilePath"] + savestate.symbol +
+                        "textfiles" + savestate.symbol + "Lists" + savestate.symbol +
+                        savestate.configList["RightListName"] + savestate.symbol + newName
+                        )
+    else:
+        shutil.copy(path, savestate.configList["CustomFilePath"] + savestate.symbol +
+                    "textfiles" + savestate.symbol + "Lists" + savestate.symbol + newName)
 
 
 def createListFiles(*load: str):
@@ -36,11 +63,17 @@ def createListFiles(*load: str):
             json_object = readAutosave()
 
         # After parsing we need to get the values for each field. Then we put it in the list.
+        # Make sure that every ChronoItem is turned off
+
         # Lists
         for key in json_object["Lists"]["Left"]:
             savestate.saveListData["Left"][int(key)] = json_object["Lists"]["Left"][key]
+            if "chronotype" in savestate.saveListData["Left"][int(key)]["itemData"]:
+                savestate.saveListData["Left"][int(key)]["itemData"]["running"] = False
         for key in json_object["Lists"]["Right"]:
             savestate.saveListData["Right"][int(key)] = json_object["Lists"]["Right"][key]
+            if "chronotype" in savestate.saveListData["Right"][int(key)]["itemData"]:
+                savestate.saveListData["Right"][int(key)]["itemData"]["running"] = False
 
         # eSports
 
@@ -50,7 +83,7 @@ def createListFiles(*load: str):
         # print("txtlist = ", savestate.txtlist)
         for key in savestate.txtlist:
             if key not in json_object["eSports"]["txtlist"]:
-                print("The autosave does not contain: " + key, " Stopped loading!")
+                print("The autosave does not contain: " + key, ". Stopped loading!")
                 logWrite("The autosave does not contain: " + key + ". Stopped loading!")
                 success = False
                 break
@@ -142,6 +175,7 @@ def getTextOfItem():
     """
     # Just copy the saved items in the array from savestate into the file. Update all first though
     handling = 0
+    check = 0
     # print(savestate.saveListData)
     try:
         for index in savestate.saveListData["Left"]:
@@ -190,6 +224,12 @@ def getTextOfItem():
             if "pretext" in now:
                 arg = ["Lists", now["name"], str(now["pretext"] + str(now["value"])), lname]
                 check = initTextFiles("createFile", arg)
+            elif "chronotype" in now:
+                # Chronoitems edit their own textfiles in real time (hehe, time lol)
+                pass
+            elif "path" in now:
+                # Image items dont have any textfiles, so theres no work to do here
+                pass
             else:
                 arg = ["Lists", now["name"], str(now["value"]), lname]
                 check = initTextFiles("createFile", arg)
@@ -200,13 +240,17 @@ def getTextOfItem():
             if "pretext" in now:
                 arg = ["Lists", now["name"], str(now["pretext"] + str(now["value"])), rname]
                 check = initTextFiles("createFile", arg)
+            elif "chronotype" in now:
+                pass
+            elif "path" in now:
+                pass
             else:
                 arg = ["Lists", now["name"], str(now["value"]), rname]
                 check = initTextFiles("createFile", arg)
             if check > 0:
                 print("Item not accepted: ", savestate.saveListData["Left"][index])
-    except KeyError:
-        pass
+    except KeyError as e:
+        print(e)
 
 
 def initTextFiles(access_token: str, *args):
@@ -251,7 +295,11 @@ def initTextFiles(access_token: str, *args):
         for folder in folder_list:
             path_to_folder = str(folder_path + s + folder)
             if not os.path.exists(path_to_folder):
-                os.mkdir(path_to_folder)
+                try:
+                    os.mkdir(path_to_folder)
+                except FileNotFoundError:
+                    erroreasy("The path directory could not be found. It has been reset...", 0x0310)
+                    savestate.configList["CustomFilePath"] = savestate.standardFilePath
             else:
                 print("Directory already exists: " + folder)
 
@@ -268,20 +316,36 @@ def initTextFiles(access_token: str, *args):
             logWrite("The folder \"eSports\" does not exist!")
             return 2
 
-        # Check for list split argument
+        # Check for list split argument and delete the old folder
         if savestate.configList["ListSplit"]:
             logWrite("Creating split folders...")
             path_to_list_folder = ["left", "right"]
+            if len(savestate.NewListName) >= 1:
+                if savestate.NewListName[1] == 1:
+                    print("Deleting old left folder and creating new one...")
+                    emptyDir(folder_path + s + "Lists" + s + savestate.configList["LeftListName"])
+                    savestate.configList["LeftListName"] = savestate.NewListName[0]
+                elif savestate.NewListName[1] == 0:
+                    print("Deleting old right folder and creating new one...")
+                    emptyDir(folder_path + s + "Lists" + s + savestate.configList["RightListName"])
+                    savestate.configList["RightListName"] = savestate.NewListName[0]
+                else:
+                    # if there was no other folder before the change
+                    pass
+
             path_to_list_folder[0] = str(folder_path + s + "Lists" + s + savestate.configList["LeftListName"])
             path_to_list_folder[1] = str(folder_path + s + "Lists" + s + savestate.configList["RightListName"])
             for folder in path_to_list_folder:
                 if not os.path.exists(folder):
-                    os.mkdir(folder)
+                    try:
+                        os.makedirs(folder)
+                    except FileNotFoundError as e:
+                        print(e)
                 else:
                     print("List-splitting enabled and folder found: " + folder)
                 for filename in os.listdir(folder):
                     file_path = os.path.join(folder, filename)
-                    print("Tryng to delete: ", file_path)
+                    print("Trying to delete: ", file_path)
                     try:
                         if os.path.isfile(file_path) or os.path.islink(file_path):
                             os.unlink(file_path)
@@ -342,7 +406,7 @@ def initTextFiles(access_token: str, *args):
 
         # print("Creating a file here: ", file_path)
         try:
-            with open(file_path, "w+") as f:
+            with open(file_path, "w+", encoding="utf-8") as f:
                 f.write(args[2])
         except FileNotFoundError:
             print("The folders have been deleted! Rebuilding them...")

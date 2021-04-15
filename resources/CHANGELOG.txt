@@ -1,3 +1,23 @@
+OPEN ALPHA 0.3.1
+
+
+Added:
+    - Chrono Items (Counting up, down and showing time)
+    - Image displaying, swapping, copying and utilities
+    - eSports fields "Infotext" and "caster" in the "More..." field
+
+Bugs fixed:
+    - The application does not crash anymore on the follow occasions
+        - The config.json gets deleted while running
+        - The config.json gets modified while running
+        - The config.json gets modified to an unreadable format while closed
+
+        - same for autosave.json
+
+    Known Bugs:
+        The program sometimes crashes after installation with "init.py could not be found" or similar
+
+************************************************************************************************************************
 OPEN ALPHA 0.3.0
 
 

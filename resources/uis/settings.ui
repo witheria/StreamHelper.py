@@ -99,9 +99,6 @@
      <property name="whatsThis">
       <string>3</string>
      </property>
-     <property name="flags">
-      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable</set>
-     </property>
     </item>
    </item>
    <item>
@@ -109,7 +106,7 @@
      <string>Riot API</string>
     </property>
     <property name="flags">
-     <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+     <set>NoItemFlags</set>
     </property>
     <item>
      <property name="text">
@@ -117,6 +114,9 @@
      </property>
      <property name="whatsThis">
       <string>4</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable</set>
      </property>
     </item>
     <item>
@@ -158,7 +158,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>10</y>
+     <y>0</y>
      <width>541</width>
      <height>411</height>
     </rect>
@@ -166,8 +166,14 @@
    <property name="toolTip">
     <string/>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="MainSettings">
     <widget class="QLabel" name="label_2">
@@ -185,90 +191,6 @@
     </widget>
    </widget>
    <widget class="QWidget" name="FilePaths">
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>161</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Currently used filepath is:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_8">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>110</y>
-       <width>231</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Currently used filepath for textfiles is:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>170</y>
-       <width>311</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Pictures will be imported from following locations:</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="standardPath">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>70</y>
-       <width>500</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>The filepath used to store the settings and autosave</string>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="TextFilePath">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>130</y>
-       <width>500</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>The filepath used to store the textfiles</string>
-     </property>
-    </widget>
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>190</y>
-       <width>501</width>
-       <height>61</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="Area_5">
      <property name="geometry">
       <rect>
@@ -287,181 +209,137 @@
       <string>File Paths</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="changeTextPath">
+    <widget class="QFrame" name="frame_5">
      <property name="geometry">
       <rect>
-       <x>450</x>
-       <y>130</y>
-       <width>71</width>
-       <height>23</height>
+       <x>-1</x>
+       <y>60</y>
+       <width>541</width>
+       <height>251</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Change</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-    </widget>
-    <widget class="QPushButton" name="AddImagePath">
-     <property name="enabled">
-      <bool>false</bool>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
      </property>
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>250</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Add</string>
-     </property>
+     <widget class="QPushButton" name="AddImagePath">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>210</y>
+        <width>503</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset (deletes all image items)</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="pictureLocations">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>501</width>
+        <height>61</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>161</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Currently used filepath is:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>311</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pictures are currently used from these locations:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="standardPath">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>500</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>The filepath used to store the settings and autosave</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="TextFilePath">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>500</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>The filepath used to store the textfiles</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>231</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Currently used filepath for textfiles is:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="changeTextPath">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>90</y>
+        <width>71</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Change</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="Lists">
-    <widget class="QCheckBox" name="SplitLists">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>220</y>
-       <width>181</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Split the list files into two folders, named after each List</string>
-     </property>
-     <property name="text">
-      <string>Split lists into two folders</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="AutoUpdate">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>240</y>
-       <width>201</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>On lost focus in the item, the item will update itself</string>
-     </property>
-     <property name="text">
-      <string>Auto-Update Files on edit</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_10">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>171</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Allow these types of items:</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="allowText">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>70</y>
-       <width>85</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Allow text items to be selectable in the application</string>
-     </property>
-     <property name="text">
-      <string>Text items</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="allowNumbers">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>90</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>Allow number items to be selectable in the application</string>
-     </property>
-     <property name="text">
-      <string>Number items</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="allowChronos">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>110</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Chrono items</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="allowGT">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>130</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>GT items</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>160</y>
-       <width>201</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Show this in front of every value</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="glob_pretext">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>180</y>
-       <width>113</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="placeholderText">
-      <string/>
-     </property>
-    </widget>
     <widget class="QLabel" name="Area_6">
      <property name="geometry">
       <rect>
@@ -480,76 +358,385 @@
       <string>Lists</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_33">
+    <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>290</y>
-       <width>111</width>
-       <height>16</height>
+       <y>60</y>
+       <width>161</width>
+       <height>101</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Left list is called:</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLabel" name="label_33">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Left list is called:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="rlistname">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>121</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>This is what the folder for the right list will be called</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="llistname">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>121</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>This is what the folder for the left list will be called</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>121</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Right list is called:</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLabel" name="label_34">
+    <widget class="QFrame" name="frame_2">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>340</y>
-       <width>121</width>
-       <height>16</height>
+       <x>180</x>
+       <y>60</y>
+       <width>181</width>
+       <height>111</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Right list is called:</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QCheckBox" name="allowImage">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Image Items</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="allowNumbers">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Allow number items to be selectable in the application</string>
+      </property>
+      <property name="text">
+       <string>Number items</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Allow these types of items:</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="allowChronos">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Chrono items</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="allowText">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>85</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Allow text items to be selectable in the application</string>
+      </property>
+      <property name="text">
+       <string>Text items</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLineEdit" name="llistname">
+    <widget class="QFrame" name="frame_3">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>310</y>
-       <width>171</width>
-       <height>23</height>
+       <y>160</y>
+       <width>161</width>
+       <height>81</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>This is what the folder for the left list will be called</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QCheckBox" name="AutoUpdate">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>On lost focus in the item, the item will update itself</string>
+      </property>
+      <property name="text">
+       <string>Auto-Update Files on edit</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="SplitLists">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>181</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Split the list files into two folders, named after each List</string>
+      </property>
+      <property name="text">
+       <string>Split lists into two folders</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLineEdit" name="rlistname">
+    <widget class="QFrame" name="frame_4">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>360</y>
-       <width>171</width>
-       <height>23</height>
+       <x>360</x>
+       <y>60</y>
+       <width>161</width>
+       <height>191</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>This is what the folder for the right list will be called</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLineEdit" name="ChronoFormat">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>141</width>
+        <height>23</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>141</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Global Chrono Item Format:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>hh = Displays hours</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>mm = Displays minutes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>ss = Displays seconds</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>141</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>Every format with these
+characters is valid.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>141</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>For more information 
+click the button</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="applyChronoFormat">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>20</y>
+        <width>41</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Apply</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="linkChronoFormat">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>160</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="Miscellaneous">
-    <widget class="QLabel" name="label_23">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>43</y>
-       <width>221</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Open StreamHelper with this page:</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="Area_9">
      <property name="geometry">
       <rect>
@@ -568,33 +755,207 @@
       <string>Miscellaneous</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="StartupPage">
+    <widget class="QFrame" name="frame_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>191</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLabel" name="label_23">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Open StreamHelper with this page:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="StartupPage">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>79</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>TextFiles</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>eSports</string>
+       </property>
+      </item>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_9">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>191</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLineEdit" name="funnelFileSeparator">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>131</width>
+        <height>23</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Use this as the funnelfile separator:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <italic>false</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>  \n: &lt;i&gt;Start a new line&lt;/i&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="applyFunnel">
+      <property name="geometry">
+       <rect>
+        <x>101</x>
+        <y>40</y>
+        <width>41</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Apply</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_10">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>240</x>
-       <y>40</y>
-       <width>79</width>
-       <height>23</height>
+       <x>20</x>
+       <y>220</y>
+       <width>191</width>
+       <height>101</height>
       </rect>
      </property>
-     <item>
-      <property name="text">
-       <string>TextFiles</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLabel" name="label_32">
+      <property name="enabled">
+       <bool>false</bool>
       </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>LoL</string>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>181</width>
+        <height>16</height>
+       </rect>
       </property>
-     </item>
-     <item>
       <property name="text">
-       <string>eSports</string>
+       <string>Optimize StreamHelper for usage as:</string>
       </property>
-     </item>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>131</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Community Streamer</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>121</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Casual Streamer</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>131</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Competitive Streamer</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="RiotAPI">
@@ -942,19 +1303,6 @@
    </widget>
    <widget class="QWidget" name="timers"/>
    <widget class="QWidget" name="about">
-    <widget class="QLabel" name="label_24">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Program developed and implemented by:</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="Area_10">
      <property name="geometry">
       <rect>
@@ -973,120 +1321,17 @@
       <string>About StreamHelper</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_25">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>E-Mail for support purposes:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_26">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>50</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Toni Schmidbauer</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_27">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>80</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>schmidbauer.biz@gmail.com</string>
-     </property>
-     <property name="openExternalLinks">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_28">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>110</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Discord for support purposes:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_29">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>110</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Witheria #4806</string>
-     </property>
-     <property name="openExternalLinks">
-      <bool>false</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_30">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>150</y>
+       <x>20</x>
+       <y>127</y>
        <width>501</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
       <string>StreamHelper is written in Python, using PyQt5 and several other libraries. </string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_31">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>210</y>
-       <width>461</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>This program is free to use and share. If you want to use it commercially, 
-you might need a license for it. 
-
-Further details on the official Github page under &quot;Help&quot;-&gt;&quot;Documentation&quot;</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_32">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>300</y>
-       <width>481</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>If you want to help translating this program, consider contacting the developer</string>
-     </property>
-     <property name="openExternalLinks">
-      <bool>false</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="resetSettings">
@@ -1122,7 +1367,7 @@ Further details on the official Github page under &quot;Help&quot;-&gt;&quot;Doc
      <property name="geometry">
       <rect>
        <x>450</x>
-       <y>320</y>
+       <y>278</y>
        <width>64</width>
        <height>64</height>
       </rect>
@@ -1133,6 +1378,174 @@ Further details on the official Github page under &quot;Help&quot;-&gt;&quot;Doc
      <property name="text">
       <string/>
      </property>
+    </widget>
+    <widget class="QPushButton" name="showLicense">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>350</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show full license</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>463</x>
+       <y>258</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Donate</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>411</width>
+       <height>191</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>361</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Copyright (C) 2020  Toni Schmidbauer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>411</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLabel" name="label_28">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>251</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Discord for support purposes:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>60</y>
+        <width>251</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Witheria #4806</string>
+      </property>
+      <property name="openExternalLinks">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>251</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Program developed and implemented by:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_26">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>0</y>
+        <width>251</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Toni Schmidbauer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_27">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>30</y>
+        <width>251</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>schmidbauer.biz@gmail.com</string>
+      </property>
+      <property name="openExternalLinks">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_25">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>251</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>E-Mail for support purposes:</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

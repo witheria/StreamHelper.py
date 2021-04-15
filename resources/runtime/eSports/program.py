@@ -1,4 +1,3 @@
-
 from resources.runtime import savestate
 from resources.runtime.Settings.logfunctions import logWrite
 from resources.runtime.Settings.save import writeToAutosave
@@ -12,7 +11,8 @@ def saveCurrentState():
     """
     logWrite("Saving contents to the autosave...")
     thisSave = {
-       "txtlist": savestate.txtlist
+        "txtlist": savestate.txtlist,
+        "morelist": savestate.morelist
     }
     writeToAutosave("eSports", thisSave)
 

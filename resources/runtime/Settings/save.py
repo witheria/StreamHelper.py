@@ -52,7 +52,6 @@ def readAutosave(*filterkey):
                     print("Type error occurred while processing" + filterkey[0], json_object)
             else:
                 if json_object:
-                    print("Returning json object!")
                     return json_object
                 else:
                     return savestate.autosave_standard

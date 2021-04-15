@@ -2,7 +2,7 @@ import webbrowser
 
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QCheckBox
 
 from resources.runtime import savestate
 from resources.runtime.Settings.logfunctions import logWrite
@@ -37,10 +37,16 @@ def syncSettings(self):
                                        webbrowser.open("https://www.paypal.com/donate?hosted_button_id=825RPFTRDCW7A"))
 
     # Lists
-    if self.ui.allowText.isChecked():
-        savestate.configList["AllowedItems"]["Text Item"] = True
-    if self.ui.allowNumbers.isChecked():
-        savestate.configList["AllowedItems"]["Number Item"] = True
+    self.ui.ChronoFormat.setText(savestate.configList["ChronoFormat"])
+    self.ui.applyChronoFormat.clicked.connect(lambda: changeChronoFormat(self))
+    self.ui.allowText.setChecked(savestate.configList["AllowedItems"]["Text Item"])
+    self.ui.allowNumbers.setChecked(savestate.configList["AllowedItems"]["Number Item"])
+    self.ui.allowChronos.setChecked(savestate.configList["AllowedItems"]["Chrono Item"])
+    self.ui.allowImage.setChecked(savestate.configList["AllowedItems"]["Image Item"])
+    self.ui.allowText.clicked.connect(lambda: changeAllowedItems(self))
+    self.ui.allowNumbers.clicked.connect(lambda: changeAllowedItems(self))
+    self.ui.allowChronos.clicked.connect(lambda: changeAllowedItems(self))
+    self.ui.allowImage.clicked.connect(lambda: changeAllowedItems(self))
 
     self.ui.SplitLists.setChecked(savestate.configList["ListSplit"])
     self.ui.SplitLists.stateChanged.connect(lambda: activateFolderSplitting(self.ui.SplitLists))
@@ -52,7 +58,19 @@ def syncSettings(self):
     self.ui.rlistname.setText(savestate.configList["RightListName"])
     self.ui.llistname.editingFinished.connect(lambda: changeListName(self, 1))
     self.ui.rlistname.editingFinished.connect(lambda: changeListName(self, 0))
+    self.ui.linkChronoFormat.clicked.connect(lambda: webbrowser.open("https://doc.qt.io/qt-5/qtime.html#toString"))
+
+    # Miscellaneous
+    self.ui.StartupPage.setCurrentIndex(savestate.configList["StartupTab"])
+    self.ui.StartupPage.currentIndexChanged.connect(lambda: changeStartupPage(self))
+
+    self.ui.funnelFileSeparator.setText(savestate.configList["funnelfile_separator"])
+    self.ui.applyFunnel.clicked.connect(lambda: changeFunnelFileSeparator(self))
+
+    # About
     self.ui.resetSettings.clicked.connect(lambda: resetSettings(self))
+
+    self.ui.showLicense.clicked.connect(lambda: webbrowser.open(savestate.SOURCE_PATH + "COPYING.txt"))
 
 
 def changeSheet(self):
@@ -142,11 +160,11 @@ def changeListName(self, listwidget):
     """
 
     if listwidget == 0:  # List Right
-        savestate.configList["RightListName"] = self.ui.rlistname.text()
+        savestate.NewListName = (self.ui.rlistname.text(), 0)
         print("Changing name of the right list to " + self.ui.rlistname.text())
         logWrite("Changing name of the right list to " + self.ui.rlistname.text())
     elif listwidget == 1:  # List Left
-        savestate.configList["LeftListName"] = self.ui.llistname.text()
+        savestate.NewListName = (self.ui.llistname.text(), 1)
         print("Changing name of the left list to " + self.ui.llistname.text())
         logWrite("Changing name of the left list to " + self.ui.llistname.text())
     savestate.saveLists["Left"].setToolTip(savestate.configList["LeftListName"])
@@ -167,3 +185,27 @@ def resetSettings(self):
     savestate.configList = savestate.standardConfigList
     updateSettings()
     self.ui.infoReset.show()
+
+
+def changeAllowedItems(self):
+    savestate.configList["AllowedItems"]["Text Item"] = self.ui.allowText.isChecked()
+    savestate.configList["AllowedItems"]["Number Item"] = self.ui.allowNumbers.isChecked()
+    savestate.configList["AllowedItems"]["Chrono Item"] = self.ui.allowChronos.isChecked()
+    savestate.configList["AllowedItems"]["Image Item"] = self.ui.allowImage.isChecked()
+    updateSettings()
+
+
+def changeChronoFormat(self):
+    savestate.configList["ChronoFormat"] = self.ui.ChronoFormat.text()
+    updateLists()
+    updateSettings()
+
+
+def changeStartupPage(self):
+    savestate.configList["StartupTab"] = self.ui.StartupPage.currentIndex()
+    updateSettings()
+
+
+def changeFunnelFileSeparator(self):
+    savestate.configList["funnelfile_separator"] = self.ui.funnelFileSeparator.text()
+    updateSettings()
