@@ -3,7 +3,7 @@ import shutil
 from resources.runtime.functions import information
 
 """
-Not used in 0.3.0
+Not used in 0.3.1
 """
 
 

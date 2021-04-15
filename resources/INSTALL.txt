@@ -1,0 +1,142 @@
+StreamHelper, Version 0.3.0 open alpha
+
+
+
+
+Thank you for installing and alpha testing StreamHelper!
+
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+What's new?
+
+
+
+The changelog can be found under menu -> "Help" -> "Version Changes"
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+How do I operate the application?
+
+
+
+While I strongly advise you to explore the features yourself, since this way there is a higher chance
+
+of bugs occurring, the documentation can be found on the github page or under menu -> "Help" -> "Documentation"
+
+
+Also, most of the buttons and lineedits already have tooltips to ease your experience.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+Why does StreamHelper need admin rights to run?
+
+
+
+The admin rights are used to create folders and files on other partitions than the one you run the program on, 
+
+but more importantly, to update and delete files within the used directories. There will be an option in the 
+
+future to run the program with no admin rights, but hence also more restrictions. StreamHelper will NOT connect to 
+
+the internet on ANY occasion!
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+Who is StreamHelper intended for?
+
+
+
+I created this program to centralize textfile creation and editing, since many broadly used streaming
+
+programs (like OBS) can import textfiles as text. However, what you use it for is entirely your decision. 
+
+
+Originally, I developed a small Java applet specifically designed for eSports Koblenz to change texts 
+
+while streaming without making a mess and to help beginner streamers to control a stream more easily.
+
+As an update to this, StreamHelper is intended for both amateur eSports streamers and semi-professional streaming.
+
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+Why is this program so buggy? How do I report the bugs I encounter, and how long will it take for them to get fixed?
+
+
+
+I'm going to stay real with you, I don't have a lot of experience coding with python (around half a year) and 
+
+with coding generally. This is not a perfect application by any means, and I'm totally aware of it. I will 
+
+try and keep on working on this until it can eventually be used in more professional settings, but this will
+
+take a lot of time, which I don't have. So don't expect feature updates to come regularly, however, make sure to check
+
+the github page as I will roll out a few new subversions to fix the most annoying bugs as fast as possible or to 
+
+address the most wanted features.
+
+
+To report a bug, simply write an e-mail or go on the github page and create a bug report/pull request.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+Can I help the developer? Is there some way I can influence development to fit my needs?
+
+
+
+As I said, I do not have a lot of experience. If you want to help, you may review my code, simplify it, or translate the application.
+
+Also, the documentation of functions and classes is very time consuming and not easy to do for me, so help 
+
+is appreciated on this end as well. 
+
+
+Feature requests will get reviewed by me and set on a to-do-list if I like them.
+
+There is no way to influence the order in which I will roll out features with money, the things that get the most
+
+attention will get a higher priority.
+
+
+The whole project relies on donations. If you want t0 help me to free more time for this project, you may donate 
+
+any amount of money with paypal. If this catches more attention, I might post updates of my other, 
+
+non-official projects. 
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+What should I do if I want to use StreamHelper in an commercial environment?
+
+
+
+StreamHelper is a free program and can be used by anyone or any company for whatever purpose.
+
+Monetary support is also completely optional, but if you use my program to make money, you 
+
+are welcome to include me in your paycheck.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+Why is StreamHelper released under the GPL?
+
+
+
+The UI is written with PyQt5 which is released under the GPL. This requires me to release my program under this license as well. 
+
+The full license text can be found in the installation directory in the file "COPYING".
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+
+
+Copyright (C) 2020  Toni Schmidbauer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
