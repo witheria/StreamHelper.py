@@ -5,6 +5,9 @@ from resources.runtime.savestate import standardFilePath
 
 
 def logCreate():
+    """
+    Creates a log at the standard location (standardfilepath + "StreamLog.log")
+    """
     logname = savestate.symbol + "StreamLog.log"
 
     z = open(standardFilePath + logname, "w+")
@@ -17,7 +20,11 @@ def logCreate():
     # str(datetime.datetime.second))
 
 
-def logWrite(text):
+def logWrite(text: str):
+    """
+    Writes a string to the log as a new line. Adds the current time in front of the text
+    :type text: str
+    """
     now = datetime.datetime.now()
     logname = standardFilePath + savestate.symbol + "StreamLog.log"
     z = None
@@ -30,6 +37,10 @@ def logWrite(text):
 
 
 def logWriteNoTime(text):
+    """
+    Write a string to the logfile without putting the current time in front of it
+    :type text: str
+    """
     logname = standardFilePath + savestate.symbol + "StreamLog.log"
     z = None
     try:

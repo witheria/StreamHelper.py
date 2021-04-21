@@ -18,6 +18,9 @@ def saveCurrentState():
 
 
 def loadTexts():
+    """
+    Synchronizes the list data in savestate with the content of the line edits or spin boxes
+    """
     success = []
     for element in savestate.lineedit_list:
         try:

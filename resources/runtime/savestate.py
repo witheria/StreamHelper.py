@@ -172,6 +172,9 @@ standardConfigList = {
 
 }
 
+# This integer counts how many times the function saveChronoToAutosave in textlists.program has been accessed
+chrono_access_counter: int = 0
+
 # This saves the currently active Summoner for the session
 summoner = ""
 

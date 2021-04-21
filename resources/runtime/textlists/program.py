@@ -125,79 +125,84 @@ def updateLists():
         savestate.saveLists["Right"].clear()
     except AttributeError:
         # If there are for some reason no lists saved
-        print("List error - There are no lists!")
+        print("List error(lol) - There are no lists!")
     savestate.saveListItems = {"Left": {}, "Right": {}}
 
     # perform a miracle and resurrect all items from savestate
-    for key in savestate.saveListData["Left"]:
-        if "pretext" in savestate.saveListData["Left"][key]["itemData"]:
-            addToList(savestate.saveListData["Left"][key]["itemData"]["name"],
-                      1,
-                      savestate.saveListData["Left"][key]["itemData"]["value"],
-                      0,
-                      savestate.saveListData["Left"][key]["itemData"]["pretext"]
-                      )
-        elif "chronotype" in savestate.saveListData["Left"][key]["itemData"]:
-            addToList(savestate.saveListData["Left"][key]["itemData"]["name"],
-                      2,
-                      str(savestate.saveListData["Left"][key]["itemData"]["valueTime"] + ":" +
-                          str(savestate.saveListData["Left"][key]["itemData"]["running"]) + ":" +
-                          str(savestate.saveListData["Left"][key]["itemData"]["chronotype"]) + ":" +
-                          str(savestate.saveListData["Left"][key]["itemData"]["customFormat"])
-                          ),
-                      0,
-                      savestate.saveListData["Left"][key]["itemData"]["returnMsg"]
-                      )
-        elif "path" in savestate.saveListData["Left"][key]["itemData"]:
-            addToList(savestate.saveListData["Left"][key]["itemData"]["name"],
-                      3,
-                      savestate.saveListData["Left"][key]["itemData"]["path"],
-                      0,
-                      "")
-        else:
-            addToList(savestate.saveListData["Left"][key]["itemData"]["name"],
-                      0,
-                      savestate.saveListData["Left"][key]["itemData"]["value"],
-                      0,
-                      pretext=""
-                      )
+    for key in savestate.saveListData:
 
-    # List 2
-    for key in savestate.saveListData["Right"]:
-        savestate.saveListData["Right"][int(key)] = savestate.saveListData["Right"][key]
+        thislist = 0
+        if key == "Right":
+            thislist = 1
 
-        if "pretext" in savestate.saveListData["Right"][key]["itemData"]:
-            addToList(savestate.saveListData["Right"][key]["itemData"]["name"],
-                      1,
-                      savestate.saveListData["Right"][key]["itemData"]["value"],
-                      1,
-                      savestate.saveListData["Right"][key]["itemData"]["pretext"]
-                      )
-        elif "chronotype" in savestate.saveListData["Right"][key]["itemData"]:
-            addToList(savestate.saveListData["Right"][key]["itemData"]["name"],
-                      2,
-                      str(savestate.saveListData["Right"][key]["itemData"]["valueTime"] + ":" +
-                          str(savestate.saveListData["Right"][key]["itemData"]["running"]) + ":" +
-                          str(savestate.saveListData["Right"][key]["itemData"]["chronotype"]) + ":" +
-                          str(savestate.saveListData["Right"][key]["itemData"]["customFormat"])),
-                      1,
-                      savestate.saveListData["Right"][key]["itemData"]["returnMsg"]
-                      )
-        elif "path" in savestate.saveListData["Right"][key]["itemData"]:
-            addToList(savestate.saveListData["Right"][key]["itemData"]["name"],
-                      3,
-                      savestate.saveListData["Right"][key]["itemData"]["path"],
-                      1,
-                      "")
-        else:
-            addToList(savestate.saveListData["Right"][key]["itemData"]["name"],
-                      0,
-                      savestate.saveListData["Right"][key]["itemData"]["value"],
-                      1,
-                      pretext=""
-                      )
+        for index in savestate.saveListData[key]:
+            if "pretext" in savestate.saveListData[key][index]["itemData"]:
+                addToList(savestate.saveListData[key][index]["itemData"]["name"],
+                          1,
+                          savestate.saveListData[key][index]["itemData"]["value"],
+                          thislist,
+                          savestate.saveListData[key][index]["itemData"]["pretext"]
+                          )
+            elif "chronotype" in savestate.saveListData[key][index]["itemData"]:
+                addToList(savestate.saveListData[key][index]["itemData"]["name"],
+                          2,
+                          str(savestate.saveListData[key][index]["itemData"]["valueTime"] + ":" +
+                              str(savestate.saveListData[key][index]["itemData"]["running"]) + ":" +
+                              str(savestate.saveListData[key][index]["itemData"]["chronotype"]) + ":" +
+                              str(savestate.saveListData[key][index]["itemData"]["customFormat"])
+                              ),
+                          thislist,
+                          savestate.saveListData[key][index]["itemData"]["returnMsg"]
+                          )
+            elif "path" in savestate.saveListData[key][index]["itemData"]:
+                addToList(savestate.saveListData[key][index]["itemData"]["name"],
+                          3,
+                          savestate.saveListData[key][index]["itemData"]["path"],
+                          thislist,
+                          "")
+            else:
+                addToList(savestate.saveListData[key][index]["itemData"]["name"],
+                          0,
+                          savestate.saveListData[key][index]["itemData"]["value"],
+                          thislist,
+                          pretext=""
+                          )
     # Update the textfiles
     getTextOfItem()
+
+
+def resetAccessesToChrono():
+    """
+    Wrapper function to reset the access counter in savestate
+    """
+    savestate.chrono_access_counter = 0
+
+
+def saveChronoToAutosave():
+    """
+    Function to update the chrono items every second to the autosave dict, note: not the file
+    """
+    if savestate.chrono_access_counter == 0:
+        handling = 0
+        try:
+            for index in savestate.saveListData["Left"]:
+                handling = index
+                # Get the current element on index
+                savestate.saveListData["Left"][index]["itemData"] = \
+                    savestate.saveListItems["Left"][index]["item"].getProperties()
+            for index in savestate.saveListData["Right"]:
+                # Get the current element on index
+                handling = index
+                savestate.saveListData["Right"][index]["itemData"] = \
+                    savestate.saveListItems["Right"][index]["item"].getProperties()
+        except KeyError:
+            # The first time we load up the list, there can't be any items in there
+            logWrite("KeyError occurred at " + str(handling) + ". This is an expected error the first time the "
+                                                               "program is loaded.")
+        except RuntimeError:
+            pass
+        # set this to one so this only gets done once every second
+        savestate.chrono_access_counter = 1
 
 
 class TextItem:
@@ -433,7 +438,7 @@ class ChronoItem(QWidget):
         self.name = args[0]["name"]
         self.chronotype = args[0]["chronotype"]
         self.returnMsg = args[0]["returnMsg"]
-        print(args[0]["valueTime"])
+        # print(args[0]["valueTime"])
         self.valueSc = int(args[0]["valueTime"].split(":")[2])
         self.valueMn = int(args[0]["valueTime"].split(":")[1])
         self.valueHr = int(args[0]["valueTime"].split(":")[0])
@@ -497,6 +502,7 @@ class ChronoItem(QWidget):
                 self.countup()
             if self.chronotype == 3:  # show time
                 self.showTime()
+            saveChronoToAutosave()
         self.updateFileTime()
 
     def countdown(self):
@@ -610,12 +616,12 @@ class ChronoItem(QWidget):
         self.updateSelf()
 
     def setFormat(self, newFormat: str):
-        print("New format set!")
+        # print("New format set!")
         self.format = newFormat
         self.updateSelf()
 
     def changeFormat(self):
-        print("Format change request!")
+        # print("Format change request!")
         result, ok = QInputDialog.getText(self, "Input", "Enter a new local chrono format", QLineEdit.Normal, "")
         if ok:
             self.setFormat(result)
@@ -733,7 +739,7 @@ class ImageItem:
     name = ""
     path = ""
     # Basic filler image path, displaying the streamhelper logo. does not get displayed
-    imgPath = (savestate.SOURCE_PATH + savestate.symbol + "images" + savestate.symbol + "common" + savestate.symbol +
+    imgPath = (savestate.SOURCE_PATH + "images" + savestate.symbol + "common" + savestate.symbol +
                "icon2.png")
     optionalArgsStore = ""
 
@@ -755,12 +761,12 @@ class ImageItem:
 
         self.path = savestate.configList["CustomFilePath"] + "/textfiles/Lists/"
 
-        item = QListWidgetItem()
-        item.setFlags(item.flags() | Qt.ItemIsEditable)
-        item.setSizeHint(QSize(270, 80))
-        listwidget.addItem(item)
+        self.item = QListWidgetItem()
+        self.item.setFlags(self.item.flags() | Qt.ItemIsEditable)
+        self.item.setSizeHint(QSize(270, 80))
+        listwidget.addItem(self.item)
 
-        listwidget.setItemWidget(item, self.ui)
+        listwidget.setItemWidget(self.item, self.ui)
         self.parent = listwidget
 
         self.setName(self.name)
@@ -824,6 +830,9 @@ class ImageItem:
         except FileNotFoundError:
             print("This is a test exception")
 
+    def getSelected(self):
+        return self.item.isSelected()
+
     def loadPicture(self, path: str):
         picture = QPixmap(path)
         self.ui.picture.setScaledContents(True)
@@ -855,6 +864,40 @@ class ImageItem:
         picname: str = f"{self.name}"
         plist: int = 0
         if self.parent == savestate.saveLists["Right"]:
+            print(self.parent, savestate.saveLists["Right"])
             plist = 1
         # print("passing " + self.parent.toolTip() + " as list no")
         copyImage(self.imgPath, newName=picname, slist=plist)
+
+
+class CustomListItem:
+    """
+    This is the super class for all subitems, implementing all necessary methods
+    """
+
+    item: QListWidgetItem = None
+    path: str = ""
+    name: str = ""
+
+    def __init__(self, listwidget: QListWidget, args=None):
+        super().__init__()
+        # get the name
+        if args is None:
+            args = [{"name": "", }, None]
+        self.name = args[0]["name"]
+
+        # Load the ui
+        self.ui = uic.loadUi(savestate.SOURCE_PATH + "uis" + savestate.symbol + "ImgWidget.ui")
+
+        self.path = savestate.configList["CustomFilePath"] + "/textfiles/Lists/"
+
+        self.item = QListWidgetItem()
+        self.item.setFlags(self.item.flags() | Qt.ItemIsEditable)
+        self.item.setSizeHint(QSize(270, 80))
+        listwidget.addItem(self.item)
+
+        listwidget.setItemWidget(self.item, self.ui)
+        self.parent = listwidget
+
+        self.setName(self.name)
+

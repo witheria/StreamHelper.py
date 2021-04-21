@@ -4,9 +4,10 @@ import sys
 import webbrowser
 from json.decoder import JSONDecodeError
 
+from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
-from PySide2.QtCore import QTimer
+
 from qtpy import uic
 
 import resources.application_data_images as appim
@@ -43,7 +44,7 @@ class SettingsWindow(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.ui = uic.loadUi('uis' + savestate.symbol + 'settings.ui')
+        self.ui = uic.loadUi(savestate.SOURCE_PATH + 'uis' + savestate.symbol + 'settings.ui')
         self.ui.setWindowTitle("Settings")
         self.ui.treeWidget.expandAll()
         self.ui.stackedSettings.setCurrentIndex(savestate.configList["StartupSettingsTab"])

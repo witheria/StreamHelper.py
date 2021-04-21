@@ -63,6 +63,7 @@ def initPackage(ui):
     #    print("This location requires elevated permissions")
 
     # Load a save
+    logWrite("Trying to read the eSports autosave")
     lists = readAutosave("eSports")
     savestate.txtlist = lists["txtlist"]
     savestate.morelist = lists["morelist"]
@@ -145,30 +146,34 @@ def initPackage(ui):
 
 def clearSection(section):
     """
-    This method clears all line edits within a section (HT, Teams or CS)
+    This method sets all line edits and spin boxes within a section to zero or empty (HT, Teams or CS)
 
     :param section: str
     :return: None
     """
+    # Telling the log whats up
     logWrite("Clearing section " + section)
+    # initializing an array to check if everything went smoothly. every result gets appended here, so we know where
     success = []
     if section == "HT":
         for element in savestate.lineedit_list:
             if "HT_" in element:
                 try:
+                    # Try and set every line edit in the ui to the respective text
                     savestate.lineedit_list[element].setText("")
                     success.append(True)
                 except KeyError as e:
-
+                    # If we dont find one, there might be tampering going on
+                    logWrite(f"{str(e)} was not found in the line edit list - Illegal Access Code")
                     print(str(e) + " not found!")
                     success.append(False)
                 except AttributeError:
-                    # This should happen if there is no lineedit ( SpinBox for score )
+                    # This should happen if there is actually a spinbox instead of a line edit
 
                     try:
                         savestate.lineedit_list[element].setValue(0)
                     except KeyError as e:
-                        logWrite("KeyError occurred while clearing section (number)!")
+                        logWrite(f"{str(e)} was not found in the spin box list - Illegal Access Code")
                         print(str(e) + " not found!")
     elif section == "CS":
         for element in savestate.lineedit_list:
@@ -306,7 +311,7 @@ def setHomeTeam(where):
     editTxts("all")
 
 
-def scoreInteraction(action, value, operator):
+def scoreInteraction(action: str, value: int, operator: int):
     """
     This method handles score interactions within the application.
 
@@ -345,7 +350,7 @@ def scoreInteraction(action, value, operator):
     if action == "operation":
         print(savestate.lastScoreChange, value)
         if operator == 0:  # +
-            if savestate.lastScoreChange > value:
+            if savestate.lastScoreChange > value:  # we need some way of saving the score
                 savestate.lastScoreChange = value
             else:
                 for team in range(1, 5):
@@ -374,6 +379,9 @@ def scoreInteraction(action, value, operator):
 
 
 def zeroScoreChanger(window):
+    """
+    Sets all score spin boxes and exclusively them to zero
+    """
     logWrite("Setting team scores to zero")
     window.T_ScoreDiff.setValue(0)
     for team in range(1, 5):
@@ -381,4 +389,7 @@ def zeroScoreChanger(window):
 
 
 def showAddFields():
+    """
+    Wrapper function to show the extra fields
+    """
     savestate.ExtraFieldWidget.ui.show()

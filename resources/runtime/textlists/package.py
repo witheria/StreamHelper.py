@@ -8,10 +8,7 @@ from resources.runtime.Settings.logfunctions import logWrite
 from resources.runtime.eSports import package
 from resources.runtime.functions import erroreasy, information, confirmation, itemSelect
 from resources.runtime.textfiles.fileedit import initTextFiles
-from resources.runtime.textlists.program import addToList, getTextOfItem, updateLists
-
-
-# basic loading and startup operations
+from resources.runtime.textlists.program import addToList, getTextOfItem, updateLists, resetAccessesToChrono
 
 
 def txlinit(self):
@@ -23,6 +20,7 @@ def txlinit(self):
     """
     try:
         logWrite("Initializing the basic ui...")
+        print(f"Checking for main ui file here: {savestate.SOURCE_PATH + 'uis' + savestate.symbol + 'main031.ui'}")
         self.ui = uic.loadUi(savestate.SOURCE_PATH + 'uis' + savestate.symbol + 'main031.ui')
         window = self.ui
         window.tabWidget.setCurrentIndex(savestate.configList["StartupTab"])
@@ -65,6 +63,9 @@ def txlinit(self):
     window.swapButton.clicked.connect(lambda: swapLists())
     window.resetButton.clicked.connect(lambda: resetLists())
     window.allDeleteButton.clicked.connect(lambda: deleteAllItems())
+
+    # make sure the access counter gets set to zero every second
+    savestate.timer.timeout.connect(lambda: resetAccessesToChrono())
     return window
 
 
@@ -128,16 +129,16 @@ def resetLists():
     :return: None
     """
     logWrite("Resetting the value of every item...")
-    listl = savestate.saveListData["Left"]
-    listr = savestate.saveListData["Right"]
-    for key in listl:
-        listl[key]["itemData"]["value"] = ""
-        if "pretext" in listl[key]["itemData"]:
-            listl[key]["itemData"]["pretext"] = ""
-    for key in listr:
-        listr[key]["itemData"]["value"] = ""
-        if "pretext" in listr[key]["itemData"]:
-            listr[key]["itemData"]["pretext"] = ""
+    for key1 in savestate.saveListData:
+        for key2 in savestate.saveListData[key1]:
+            savestate.saveListData[key1][key2]["itemData"]["value"] = ""
+            if "pretext" in savestate.saveListData[key1][key2]["itemData"]:
+                savestate.saveListData[key1][key2]["itemData"]["pretext"] = ""
+            if "chronotype" in savestate.saveListData[key1][key2]["itemData"]:
+                savestate.saveListData[key1][key2]["itemData"]["valueTime"] = "0:0:0"
+                savestate.saveListData[key1][key2]["itemData"]["running"] = False
+            if "path" in savestate.saveListData[key1][key2]["itemData"]:
+                savestate.saveListData[key1][key2]["itemData"]["path"] = ""
     updateLists()
 
 

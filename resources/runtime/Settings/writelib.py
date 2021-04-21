@@ -5,7 +5,9 @@ from resources.runtime.Settings.logfunctions import logWrite
 
 
 def readSettings():
-    # This method reads the settings from the file on startup and writes them to the dict in savestate
+    """
+    This method reads the settings from the config file on startup and writes them to the dict in savestate
+    """
     try:
         file = open(savestate.standardFilePath + savestate.symbol + "config.json", "r", encoding="utf-8")
         json_object = json.loads(file.read())
@@ -17,6 +19,9 @@ def readSettings():
 
 
 def updateSettings():
+    """
+    Used to update the settings from the program to the config file
+    """
     try:
         file = open(savestate.standardFilePath + savestate.symbol + "config.json", "w+", encoding="utf-8")
         output = json.dumps(savestate.configList, sort_keys=True, indent=4)

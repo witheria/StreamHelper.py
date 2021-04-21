@@ -4,7 +4,11 @@ import shutil
 from resources.runtime.Settings.logfunctions import logWrite
 
 
-def emptyDir(path):
+def emptyDir(path) -> None:
+    """
+    Wrapper function to delete a given directory
+    :type path: str
+    """
     try:
         shutil.rmtree(path, ignore_errors=True)
     except FileNotFoundError:

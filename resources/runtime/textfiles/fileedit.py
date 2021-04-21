@@ -219,36 +219,31 @@ def getTextOfItem():
 
     # create the textFiles
     try:
-        for index in savestate.saveListData["Left"]:
-            now = savestate.saveListData["Left"][index]["itemData"]
-            if "pretext" in now:
-                arg = ["Lists", now["name"], str(now["pretext"] + str(now["value"])), lname]
-                check = initTextFiles("createFile", arg)
-            elif "chronotype" in now:
-                # Chronoitems edit their own textfiles in real time (hehe, time lol)
-                pass
-            elif "path" in now:
-                # Image items dont have any textfiles, so theres no work to do here
-                pass
-            else:
-                arg = ["Lists", now["name"], str(now["value"]), lname]
-                check = initTextFiles("createFile", arg)
-            if check > 0:
-                print("Item not accepted: ", savestate.saveListData["Left"][index])
-        for index in savestate.saveListData["Right"]:
-            now = savestate.saveListData["Right"][index]["itemData"]
-            if "pretext" in now:
-                arg = ["Lists", now["name"], str(now["pretext"] + str(now["value"])), rname]
-                check = initTextFiles("createFile", arg)
-            elif "chronotype" in now:
-                pass
-            elif "path" in now:
-                pass
-            else:
-                arg = ["Lists", now["name"], str(now["value"]), rname]
-                check = initTextFiles("createFile", arg)
-            if check > 0:
-                print("Item not accepted: ", savestate.saveListData["Left"][index])
+        for key in savestate.saveListData:
+
+            thisname = lname
+            if key == "Right":
+                thisname = rname
+
+            for index in savestate.saveListData[key]:
+                now = savestate.saveListData[key][index]["itemData"]
+                # print(now)
+
+                if "pretext" in now:
+                    arg = ["Lists", now["name"], str(now["pretext"] + str(now["value"])), thisname]
+                    check = initTextFiles("createFile", arg)
+                elif "chronotype" in now:
+                    # Chronoitems edit their own textfiles in real time (hehe, time lol)
+                    pass
+
+                elif "path" in now:
+                    # Image items dont have any textfiles, so theres no work to do here
+                    pass
+                else:
+                    arg = ["Lists", now["name"], str(now["value"]), thisname]
+                    check = initTextFiles("createFile", arg)
+                if check > 0:
+                    print("Item not accepted: ", savestate.saveListData[key][index])
     except KeyError as e:
         print(e)
 
@@ -281,7 +276,6 @@ def initTextFiles(access_token: str, *args):
     :param access_token: String
     :return: int
     """
-    error_code = 0
     if access_token == "initFolders":
         logWrite("Initializing Folders...")
         # Folder creation: Which folders need to be created?
@@ -368,9 +362,11 @@ def initTextFiles(access_token: str, *args):
             except Exception as e:
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 logWrite(str('Failed to delete %s. Reason: %s' % (file_path, e)))
+                return 2
 
         # Create the basic textfiles needed for operation
         createListFiles()
+        return 0
 
     if access_token == "createFolder":
         logWrite("Creating a new folder...")
@@ -412,4 +408,4 @@ def initTextFiles(access_token: str, *args):
             print("The folders have been deleted! Rebuilding them...")
             logWrite("The folders have been deleted while running! Rebuilding them...")
             initTextFiles("initFolders")
-    return error_code
+    return 0

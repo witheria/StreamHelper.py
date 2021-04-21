@@ -803,7 +803,7 @@ click the button</string>
       </property>
       <item>
        <property name="text">
-        <string>TextFiles</string>
+        <string>TextLists</string>
        </property>
       </item>
       <item>

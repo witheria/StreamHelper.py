@@ -16,7 +16,7 @@ except ImportError:
 
 def saveConfig(self, basefilepath):
     """
-    saves the current lists and eSports contents to a separate file
+    saves the current lists and eSports contents to a save file
 
     :param self: SettingsWindow
     :param basefilepath: str
@@ -28,6 +28,7 @@ def saveConfig(self, basefilepath):
         logWrite("Saving config...")
         file = str(filepath + ".oi")
         try:
+            # Just copy the autosave to the user location with a different name lol
             shutil.copy(str(savestate.standardFilePath + savestate.symbol + "autosave.json"), file)
         except FileNotFoundError:
             information("Saving failed, please restart the program!")
@@ -36,7 +37,9 @@ def saveConfig(self, basefilepath):
 
 
 def loadConfig(self, basefilepath):
-    # Loads a save file
+    """
+    This loads a save file with the .oi format for usage in the main program.
+    """
     logWrite("Trying to load a config, waiting on user...")
     information("Loading a config file will delete all current contents!")
     file, ok = QFileDialog.getOpenFileName(self, "Open Save", basefilepath, "*.oi")

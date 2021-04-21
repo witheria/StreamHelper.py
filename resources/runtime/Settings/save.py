@@ -6,6 +6,9 @@ from resources.runtime.Settings.logfunctions import logWrite
 
 
 def writeToAutosave(name, write):
+    """
+    Write the current configuration of a specific part to the autosave, e.g. "morelist", "textlist" etc.
+    """
     templist = savestate.autosave_standard
     try:
         templist = readAutosave()
@@ -25,7 +28,8 @@ def writeToAutosave(name, write):
 
 def readAutosave(*filterkey):
     """
-    This method is globally used to get data from the autosave
+    This method is globally used to get data from the autosave. A "filterkey" option can be specified to get only a part
+    of the autosave
 
     :type filterkey: str
     :return: dict

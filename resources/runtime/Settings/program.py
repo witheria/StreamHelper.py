@@ -12,13 +12,11 @@ from resources.runtime.textfiles.fileedit import initTextFiles
 from resources.runtime.textfiles.folderedit import emptyDir
 from resources.runtime.textlists.package import updateLists
 
-activeItem = None
-
 
 def syncSettings(self):
     """
-    this is a method that's frequently used when opening the settings window. It synchronizes the settings from
-    the file to the QWidget object and the user interface.
+    This method is frequently used when opening the settings window. It synchronizes the settings from
+    the file to the settings widget and the user interface.
     :param self: SettingsWindow
     :return: None
     """
@@ -39,6 +37,7 @@ def syncSettings(self):
     # Lists
     self.ui.ChronoFormat.setText(savestate.configList["ChronoFormat"])
     self.ui.applyChronoFormat.clicked.connect(lambda: changeChronoFormat(self))
+
     self.ui.allowText.setChecked(savestate.configList["AllowedItems"]["Text Item"])
     self.ui.allowNumbers.setChecked(savestate.configList["AllowedItems"]["Number Item"])
     self.ui.allowChronos.setChecked(savestate.configList["AllowedItems"]["Chrono Item"])
@@ -188,6 +187,9 @@ def resetSettings(self):
 
 
 def changeAllowedItems(self):
+    """
+    Wrapper to check for changes in the allowed item section
+    """
     savestate.configList["AllowedItems"]["Text Item"] = self.ui.allowText.isChecked()
     savestate.configList["AllowedItems"]["Number Item"] = self.ui.allowNumbers.isChecked()
     savestate.configList["AllowedItems"]["Chrono Item"] = self.ui.allowChronos.isChecked()
@@ -196,16 +198,25 @@ def changeAllowedItems(self):
 
 
 def changeChronoFormat(self):
+    """
+    Wrapper function to save and apply a new global chrono format
+    """
     savestate.configList["ChronoFormat"] = self.ui.ChronoFormat.text()
     updateLists()
     updateSettings()
 
 
 def changeStartupPage(self):
+    """
+    Wrapper function to change the startup tab value
+    """
     savestate.configList["StartupTab"] = self.ui.StartupPage.currentIndex()
     updateSettings()
 
 
 def changeFunnelFileSeparator(self):
+    """
+    Wrapper function to set a new string to be used as separator when funneling
+    """
     savestate.configList["funnelfile_separator"] = self.ui.funnelFileSeparator.text()
     updateSettings()
