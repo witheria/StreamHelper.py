@@ -124,7 +124,8 @@ def updateLists():
         savestate.saveLists["Left"].clear()
         savestate.saveLists["Right"].clear()
     except AttributeError:
-        # If there are for some reason no lists saved
+        # If there are for some reason no lists saved,
+        # NOTE: this should never happen and something would be seriously wrong
         print("List error(lol) - There are no lists!")
     savestate.saveListItems = {"Left": {}, "Right": {}}
 
@@ -216,6 +217,7 @@ class TextItem:
 
         # print(args)
 
+        self.item = None
         self.name = args[0]["name"]
         self.value = args[0]["value"]
         self.path = savestate.configList["CustomFilePath"] + "/textfiles/Lists/"
@@ -225,12 +227,12 @@ class TextItem:
         self.setName(self.name)
         self.setValue(self.value)
 
-        item = QListWidgetItem()
-        item.setFlags(item.flags() | Qt.ItemIsEditable)
-        item.setSizeHint(QSize(270, 80))
-        listwidget.addItem(item)
+        self.item = QListWidgetItem()
+        self.item.setFlags(self.item.flags() | Qt.ItemIsEditable)
+        self.item.setSizeHint(QSize(270, 80))
+        listwidget.addItem(self.item)
 
-        listwidget.setItemWidget(item, self.ui)
+        listwidget.setItemWidget(self.item, self.ui)
         self.parent = listwidget
 
         self.ui.deleteFromItem.clicked.connect(lambda: deleteFromItem(self.name))
@@ -246,6 +248,9 @@ class TextItem:
     def getList(self):
         return self.parent
 
+    def getSelected(self):
+        return self.item.isSelected()
+
     def setValue(self, value: str):
         self.ui.lineEdit.setText(value)
 
@@ -254,6 +259,9 @@ class TextItem:
 
     def setList(self, slist: QListWidgetItem):
         self.parent = slist
+
+    def setSelected(self, selected):
+        self.item.setSelected(selected)
 
     def updateSelf(self):
         if self.onEdit:
@@ -298,6 +306,7 @@ class NumberItem:
     value = 0
     pretext = ""
     onEdit = savestate.configList["AutoUpdateFiles"]
+    item = None
 
     def __init__(self, listwidget, *args):
         super().__init__()
@@ -317,12 +326,12 @@ class NumberItem:
         self.setPretext(self.pretext)
         self.path = savestate.configList["CustomFilePath"] + "/textfiles/Lists/"
 
-        item = QListWidgetItem()
-        item.setFlags(item.flags() | Qt.ItemIsEditable)
-        item.setSizeHint(QSize(270, 80))
-        listwidget.addItem(item)
+        self.item = QListWidgetItem()
+        self.item.setFlags(self.item.flags() | Qt.ItemIsEditable)
+        self.item.setSizeHint(QSize(270, 80))
+        listwidget.addItem(self.item)
 
-        listwidget.setItemWidget(item, self.ui)
+        listwidget.setItemWidget(self.item, self.ui)
         self.parent = listwidget
 
         self.ui.deleteFromItem.clicked.connect(lambda: deleteFromItem(self.name))
@@ -354,6 +363,9 @@ class NumberItem:
     def setList(self, slist: QListWidgetItem):
         self.parent = slist
 
+    def setSelected(self, selected):
+        self.item.setSelected(selected)
+
     def updateSelf(self):
         if self.onEdit:
             self.name = self.getName()
@@ -364,6 +376,9 @@ class NumberItem:
     def getProperties(self):
         arr = {"name": self.getName(), "value": self.getValue(), "pretext": self.getPretext()}
         return arr
+
+    def getSelected(self):
+        return self.item.isSelected()
 
     def setEdit(self, autoedit):
         self.onEdit = autoedit
@@ -418,6 +433,7 @@ class ChronoItem(QWidget):
     valueSc: int = 0
     returnMsg: str = "This timer is done like your momma"
     name: str = ""
+    item = None
 
     def __init__(self, listwidget, *args):
 
@@ -456,12 +472,12 @@ class ChronoItem(QWidget):
         self.parent = listwidget
         self.updateSelf()
 
-        item = QListWidgetItem()
-        item.setFlags(item.flags() | Qt.ItemIsEditable)
-        item.setSizeHint(QSize(270, 80))
-        listwidget.addItem(item)
+        self.item = QListWidgetItem()
+        self.item.setFlags(self.item.flags() | Qt.ItemIsEditable)
+        self.item.setSizeHint(QSize(270, 80))
+        listwidget.addItem(self.item)
 
-        listwidget.setItemWidget(item, self.ui)
+        listwidget.setItemWidget(self.item, self.ui)
 
         # create the file
         self.updateFileTime()
@@ -620,6 +636,9 @@ class ChronoItem(QWidget):
         self.format = newFormat
         self.updateSelf()
 
+    def setSelected(self, selected):
+        self.item.setSelected(selected)
+
     def changeFormat(self):
         # print("Format change request!")
         result, ok = QInputDialog.getText(self, "Input", "Enter a new local chrono format", QLineEdit.Normal, "")
@@ -649,6 +668,9 @@ class ChronoItem(QWidget):
                "customFormat": self.format
                }
         return arr
+
+    def getSelected(self):
+        return self.item.isSelected()
 
     def updateFileTime(self):
         """
@@ -742,6 +764,7 @@ class ImageItem:
     imgPath = (savestate.SOURCE_PATH + "images" + savestate.symbol + "common" + savestate.symbol +
                "icon2.png")
     optionalArgsStore = ""
+    item = None
 
     def __init__(self, listwidget, *args):
         super().__init__()
@@ -793,6 +816,9 @@ class ImageItem:
         This function is required, but since image items only update on new path load, its basically irrelevant
         """
         pass
+
+    def setSelected(self, selected):
+        self.item.setSelected(selected)
 
     def getValue(self):
         return self.imgPath
@@ -864,7 +890,7 @@ class ImageItem:
         picname: str = f"{self.name}"
         plist: int = 0
         if self.parent == savestate.saveLists["Right"]:
-            print(self.parent, savestate.saveLists["Right"])
+            # print(self.parent, savestate.saveLists["Right"])
             plist = 1
         # print("passing " + self.parent.toolTip() + " as list no")
         copyImage(self.imgPath, newName=picname, slist=plist)
@@ -873,11 +899,21 @@ class ImageItem:
 class CustomListItem:
     """
     This is the super class for all subitems, implementing all necessary methods
+    # NOT USED YET
     """
 
     item: QListWidgetItem = None
     path: str = ""
     name: str = ""
+    parent: QListWidget = None
+    itemType: int = 0
+
+    itemTypeUis: list = [
+        "TextFileWidget.ui",
+        "NumberWidget.ui",
+        "ChronoWidget.ui",
+        "ImgWidget.ui"
+    ]
 
     def __init__(self, listwidget: QListWidget, args=None):
         super().__init__()
@@ -886,8 +922,16 @@ class CustomListItem:
             args = [{"name": "", }, None]
         self.name = args[0]["name"]
 
+        # get the item type
+        if "pretext" in args[0]:
+            self.itemType = 1
+        elif "chronotype" in args[0]:
+            self.itemType = 2
+        elif "path" in args[0]:
+            self.itemType = 3
+
         # Load the ui
-        self.ui = uic.loadUi(savestate.SOURCE_PATH + "uis" + savestate.symbol + "ImgWidget.ui")
+        self.ui = uic.loadUi(savestate.SOURCE_PATH + "uis" + savestate.symbol + self.itemTypeUis[self.itemType])
 
         self.path = savestate.configList["CustomFilePath"] + "/textfiles/Lists/"
 
@@ -901,3 +945,17 @@ class CustomListItem:
 
         self.setName(self.name)
 
+        self.run(self)
+
+    def setName(self, newName: str) -> None:
+        if newName:
+            self.name = newName
+
+    def getName(self) -> str:
+        return self.name
+
+    def run(self, *args):
+        """
+        Overwrite this method to configure own stuff
+        """
+        pass

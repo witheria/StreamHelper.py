@@ -84,7 +84,7 @@
         <string>LoL Overlay</string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="documentMode">
         <bool>false</bool>
@@ -177,6 +177,12 @@
           <property name="verticalScrollBarPolicy">
            <enum>Qt::ScrollBarAlwaysOn</enum>
           </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::MultiSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectItems</enum>
+          </property>
          </widget>
          <widget class="QListWidget" name="listWidget_2">
           <property name="geometry">
@@ -195,6 +201,9 @@
           </property>
           <property name="verticalScrollBarPolicy">
            <enum>Qt::ScrollBarAlwaysOn</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::MultiSelection</enum>
           </property>
          </widget>
          <widget class="QFrame" name="frame_6">
@@ -378,7 +387,7 @@
            <property name="geometry">
             <rect>
              <x>20</x>
-             <y>190</y>
+             <y>210</y>
              <width>111</width>
              <height>41</height>
             </rect>
@@ -404,6 +413,45 @@
            </property>
            <property name="shortcut">
             <string>Return</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="toLeft">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>260</y>
+             <width>51</width>
+             <height>23</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="toRight">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>260</y>
+             <width>51</width>
+             <height>23</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="onlySelectedActivated">
+           <property name="geometry">
+            <rect>
+             <x>32</x>
+             <y>181</y>
+             <width>101</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Only Selected</string>
            </property>
           </widget>
          </widget>

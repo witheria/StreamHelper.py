@@ -208,7 +208,7 @@ class itemSelect(QWidget):
 
     def exec(self):
         ok = self.ui.exec_()
-        item = self.ui.select.currentIndex()
+        item: int = self.ui.select.currentIndex()
         if self.ui.select.itemText(item) == "Number Item":
             item = 1
         elif self.ui.select.itemText(item) == "Text Item":
@@ -217,7 +217,7 @@ class itemSelect(QWidget):
             item = 2
         elif self.ui.select.itemText(item) == "Image Item":
             item = 3
-        text = self.ui.name.text()
+        text: str = self.ui.name.text()
         return ok, item, text
 
 

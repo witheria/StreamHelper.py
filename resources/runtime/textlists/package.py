@@ -55,14 +55,18 @@ def txlinit(self):
     window.swapButton.setIcon(QIcon(":/images/common/swap.png"))
     window.resetButton.setIcon(QIcon(":/images/common/reset.png"))
     window.allDeleteButton.setIcon(QIcon(":/images/common/delete.png"))
+    window.toLeft.setIcon(QIcon(savestate.SOURCE_PATH + "/images/common/toLeft.png"))
+    window.toRight.setIcon(QIcon(savestate.SOURCE_PATH + "/images/common/toRight.png"))
 
     # Set bindings to the ui buttons
     window.addleft.setChecked(True)
     window.addButton.clicked.connect(lambda: addListElement(self))
     window.updateButton.clicked.connect(lambda: getTextOfItem())
-    window.swapButton.clicked.connect(lambda: swapLists())
+    window.swapButton.clicked.connect(lambda: swapLists(window))
     window.resetButton.clicked.connect(lambda: resetLists())
     window.allDeleteButton.clicked.connect(lambda: deleteAllItems())
+    window.toLeft.clicked.connect(lambda: moveSelected(0))
+    window.toRight.clicked.connect(lambda: moveSelected(1))
 
     # make sure the access counter gets set to zero every second
     savestate.timer.timeout.connect(lambda: resetAccessesToChrono())
@@ -104,15 +108,18 @@ def addListElement(self):
 
     if ok:
         logWrite("Adding an element with name " + text + " to list " + str(slist))
-        addToList(text, item, value, slist, pretext="")
+        addToList(text.strip(), item, value, slist, pretext="")
 
 
-def swapLists():
+def swapLists(window):
     """
     This method swaps the items in the two lists
 
     :return: None
     """
+    if window.onlySelectedActivated.isChecked():
+        moveSelected(2)
+        return
     logWrite("Swapping the items in the two lists...")
     temp = savestate.saveListData["Left"]
     savestate.saveListData["Left"] = savestate.saveListData["Right"]
@@ -153,3 +160,52 @@ def deleteAllItems():
         savestate.saveListData = {"Left": {}, "Right": {}}
         updateLists()
         initTextFiles("initFolders")
+
+
+def moveSelected(direction: int):
+    """
+    This method swaps or moves selected items.
+        direction == 0: move to the left list
+        direction == 1: move to the right list
+        direction == 2: swap both lists (selected)
+
+    :return: None
+    """
+    logWrite("Swapping every selected item")
+    if direction == 0:
+        # go through the list we are taking from and find all selected items
+        temp: dict = {}
+        newRight: dict = {}
+        for key2 in savestate.saveListData["Right"]:
+            if savestate.saveListItems["Right"][key2]["item"].getSelected():
+                temp[key2] = savestate.saveListData["Right"][key2]
+            else:
+                newRight[key2] = savestate.saveListData["Right"][key2]
+        savestate.saveListData["Left"] = mergeDicts(savestate.saveListData["Left"], temp)
+
+    elif direction == 2:
+        temp: dict = {"Left": {}, "Right": {}}
+        for key1 in savestate.saveListData:
+            for key2 in savestate.saveListData[key1]:
+                if savestate.saveListItems[key1][key2]["item"].getSelected():
+                    temp[key1][key2] = savestate.saveListData[key1][key2]
+
+
+def mergeDicts(onedict, twodict) -> dict:
+    """
+    A function to merge sorted dicts into one another (used for the moveSelected() function)
+
+    :type onedict: dict
+    :type twodict: dict
+    :return: dict
+    """
+    result: dict = {}
+    newthing = list(onedict.values())
+
+    for key in twodict:
+        newthing.insert(key, twodict[key])
+    for item in range(0, len(newthing)):
+        result[item] = newthing[item]
+
+    # result = {item: newthing[item] for item in range(0, len(newthing))}
+    return result

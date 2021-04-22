@@ -21,6 +21,7 @@ from resources.runtime.functions import information, createStandardFiles, errore
     confirmation
 from resources.runtime.savestate import standardFilePath
 from resources.runtime.textfiles.fileedit import createListFiles
+from resources.runtime.textfiles.folderedit import emptyDir
 from resources.runtime.textlists.package import txlinit, addToList
 
 
@@ -35,6 +36,14 @@ def is_admin():
         except Exception as e:
             print(e)
             return False
+
+
+def checkProductVersion():
+    localVersion = savestate.PRODUCT_VERSION
+    filesVersion = readSettings(nocopy=1)["Product Version"]
+    if filesVersion is not None and localVersion != filesVersion:
+        information("Your installed StreamHelper version differs from the one you are trying to open. \nPlease "
+                    "ensure that these versions are compatible before continuing.")
 
 
 class SettingsWindow(QWidget):
@@ -94,6 +103,9 @@ class StreamHelper(QMainWindow):
                 os.mkdir(os.getenv('LOCALAPPDATA') + "\\StreamHelper")
             except FileExistsError:
                 print("Folder exists!")
+
+        # Check for files versioning
+        checkProductVersion()
 
         # Lets create all the standard files (json and txt) or at least check if they exist
         createStandardFiles(0)
@@ -181,6 +193,7 @@ class StreamHelper(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(savestate.SOURCE_PATH + "/images/common/icon2.png"))
+    app.setStyleSheet(open(savestate.SOURCE_PATH + '/assets/style.css').read())
     win = StreamHelper()
     app.exec_()
     # sys.exit(app.exec_())

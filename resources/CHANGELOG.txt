@@ -3,8 +3,14 @@ OPEN ALPHA 0.3.1
 
 Added:
     - Chrono Items (Counting up, down and showing time)
-    - Image displaying, swapping, copying and utilities
-    - eSports fields "Infotext" and "caster" in the "More..." field
+    - Image Items (Copying images to the standard path)
+    - eSports fields "Infotext", "Caster" and "Custom" in the "More..." field with funneling
+    - Some additional settings to fit your needs
+
+- The UI has been stylized with frames. I am not putting enough work into UI design, but oh well, it works
+
+- The Documentation is in work, but since it will be a lot of work, I'll only be posting updates whenever it
+  fits my flow. Since noone else is currently really interested in this project yet, it doesn't really matter.
 
 Bugs fixed:
     - The application does not crash anymore on the follow occasions
@@ -14,8 +20,15 @@ Bugs fixed:
 
         - same for autosave.json
 
-    Known Bugs:
-        The program sometimes crashes after installation with "init.py could not be found" or similar
+    - The chrono format does not randomly get mixed up anymore
+    - There is now a custom format setting on each chrono item
+    - Chrono items have now icons instead of text
+
+    - Image items don't feel like crashing anymore if the image they are attached to gets deleted
+    - Image items can now actually be swapped
+    - Image items are properly saved even after resetting the lists
+
+    - A mass of bugs while development have been fixed, but there might be still many left. Help would be appreciated, feel free to contact me
 
 ************************************************************************************************************************
 OPEN ALPHA 0.3.0

@@ -31,7 +31,8 @@ elif platform == "win32":
 
 # Installation path, app id, product info
 SOURCE_PATH: str = os.path.split(os.path.abspath(getsourcefile(lambda: 0)))[0].replace("runtime", "")
-APP_ID: str = "ToniSchmidbauer.StreamHelper.StreamHelperOpenAlpha.0.3.0"
+APP_ID: str = "ToniSchmidbauer.StreamHelper.StreamHelperOpenAlpha.0.3.1b"
+PRODUCT_VERSION: int = 0o0003102
 
 # StyleSheet for the list elements
 shortBorder = \
@@ -49,9 +50,10 @@ forbiddenChars = ["/", ">", "<", ":", "\"", "\\", "|", "?", "*", "CON", "PRN", "
                   "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"]
 
 # Saving lists and values
-saveLists = {"Left": None, "Right": None}
-saveListItems = {"Left": {}, "Right": {}}
-saveListData = {"Left": {}, "Right": {}}
+saveLists: dict = {"Left": None, "Right": None}
+saveListItems: dict = {"Left": {}, "Right": {}}
+saveListData: dict = {"Left": {}, "Right": {}}
+saveListItemNames: list = []
 
 # create all necessary lists
 txtlist = {"CS_Day": "", "CS_Game": "", "CS_Group": "", "CS_League": "", "CS_Tournament": "",
@@ -110,6 +112,7 @@ configList = {
     # Basic settings
     "StartupTab": 0,
     "StartupSettingsTab": 0,
+    "Product Version": PRODUCT_VERSION,
 
     # File path settings
     "UserFilePath": 0,
