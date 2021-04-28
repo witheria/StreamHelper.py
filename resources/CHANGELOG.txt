@@ -6,6 +6,8 @@ Added:
     - Image Items (Copying images to the standard path)
     - eSports fields "Infotext", "Caster" and "Custom" in the "More..." field with funneling
     - Some additional settings to fit your needs
+    - selective swapping, moving and deleting (im working on drag/drop! Its hard work ok!!!)
+        -> just click on the items you want to move/swap/delete
 
 - The UI has been stylized with frames. I am not putting enough work into UI design, but oh well, it works
 
@@ -28,7 +30,8 @@ Bugs fixed:
     - Image items can now actually be swapped
     - Image items are properly saved even after resetting the lists
 
-    - A mass of bugs while development have been fixed, but there might be still many left. Help would be appreciated, feel free to contact me
+    - A mass of bugs while development have been fixed, but there might be still many left.
+    Help would be appreciated, feel free to contact me
 
 ************************************************************************************************************************
 OPEN ALPHA 0.3.0

@@ -89,13 +89,18 @@ def addListElement(self):
             if key in text or text[-1] == " " or text[-1] == ".":
                 information("This name can not be used!")
                 addListElement(self)
-                return None
+                return
     except IndexError:
         pass
     if len(text) > 24:
         information("The name is too long!")
         addListElement(self)
-        return None
+        return
+
+    if text in savestate.saveListItemNames:
+        information("This name already exists. Please make sure the names\nyou pick are unique")
+        addListElement(self)
+        return
 
     # process the input data
     slist = 0
@@ -109,6 +114,7 @@ def addListElement(self):
     if ok:
         logWrite("Adding an element with name " + text + " to list " + str(slist))
         addToList(text.strip(), item, value, slist, pretext="")
+        return
 
 
 def swapLists(window):
@@ -162,7 +168,7 @@ def deleteAllItems():
         initTextFiles("initFolders")
 
 
-def moveSelected(direction: int):
+def moveSelected(direction: int) -> None:
     """
     This method swaps or moves selected items.
         direction == 0: move to the left list
@@ -171,7 +177,6 @@ def moveSelected(direction: int):
 
     :return: None
     """
-    logWrite("Swapping every selected item")
     if direction == 0:
         # go through the list we are taking from and find all selected items
         temp: dict = {}
@@ -181,9 +186,33 @@ def moveSelected(direction: int):
                 temp[key2] = savestate.saveListData["Right"][key2]
             else:
                 newRight[key2] = savestate.saveListData["Right"][key2]
+        # merge the two new dicts we got into one new dict and this will be the new left one
         savestate.saveListData["Left"] = mergeDicts(savestate.saveListData["Left"], temp)
+        # we will have to renumerate the old right one (since we took some items from inbetween)
+        savestate.saveListData["Right"] = \
+            {item: list(newRight.values())[item] for item in range(0, len(list(newRight.values())))}
+        updateLists()
+        initTextFiles("initFolders")
+
+    if direction == 1:
+        # go through the list we are taking from and find all selected items
+        temp: dict = {}
+        newRight: dict = {}
+        for key2 in savestate.saveListData["Left"]:
+            if savestate.saveListItems["Left"][key2]["item"].getSelected():
+                temp[key2] = savestate.saveListData["Left"][key2]
+            else:
+                newRight[key2] = savestate.saveListData["Left"][key2]
+        # merge the two new dicts we got into one new dict and this will be the new left one
+        savestate.saveListData["Right"] = mergeDicts(savestate.saveListData["Right"], temp)
+        # we will have to renumerate the old right one (since we took some items from inbetween)
+        savestate.saveListData["Left"] = \
+            {item: list(newRight.values())[item] for item in range(0, len(list(newRight.values())))}
+        updateLists()
+        initTextFiles("initFolders")
 
     elif direction == 2:
+        logWrite("Swapping every selected item")
         temp: dict = {"Left": {}, "Right": {}}
         for key1 in savestate.saveListData:
             for key2 in savestate.saveListData[key1]:
@@ -194,6 +223,8 @@ def moveSelected(direction: int):
 def mergeDicts(onedict, twodict) -> dict:
     """
     A function to merge sorted dicts into one another (used for the moveSelected() function)
+
+    only works if the keys are numbers and sorted
 
     :type onedict: dict
     :type twodict: dict

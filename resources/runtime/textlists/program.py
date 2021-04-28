@@ -698,7 +698,7 @@ class ChronoItem(QWidget):
         except UnboundLocalError:
             self.updateFileTime()
         except RuntimeError:
-            print("Item deleted due to runtime, rebuilding list...")
+            print("Item deleted on runtime, rebuilding list...")
 
     def getTimeString(self) -> str:
         """
@@ -877,6 +877,7 @@ class ImageItem:
     def getPictureType(path: str):
         """
         This method gets the image type (png, jpg, whatever)
+        Note that it is not used in this version, since we dont need file endings for obs (lol)
         """
         try:
             return path.split(".")[-1]
@@ -885,7 +886,7 @@ class ImageItem:
 
     def copyPicture(self):
         """
-        This method is used to call the static method in fileedit with useful arguments
+        This method is used to call the static method in fileedit with reasonable arguments
         """
         picname: str = f"{self.name}"
         plist: int = 0

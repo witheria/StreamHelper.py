@@ -40,7 +40,15 @@ def is_admin():
 
 def checkProductVersion():
     localVersion = savestate.PRODUCT_VERSION
-    filesVersion = readSettings(nocopy=1)["Product Version"]
+    filesVersion = "Not initialized"
+    try:
+        filesVersion = readSettings(nocopy=1)["Product Version"]
+    except KeyError:
+        # This happens on versions 0.2.x - 0.3.0
+        filesVersion = "old, lol"
+    except TypeError:
+        # We get this, if there is no config file yet
+        pass
     if filesVersion is not None and localVersion != filesVersion:
         information("Your installed StreamHelper version differs from the one you are trying to open. \nPlease "
                     "ensure that these versions are compatible before continuing.")
@@ -193,7 +201,7 @@ class StreamHelper(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(savestate.SOURCE_PATH + "/images/common/icon2.png"))
-    app.setStyleSheet(open(savestate.SOURCE_PATH + '/assets/style.css').read())
+    # app.setStyleSheet(open(savestate.SOURCE_PATH + '/assets/style.css').read())
     win = StreamHelper()
     app.exec_()
     # sys.exit(app.exec_())

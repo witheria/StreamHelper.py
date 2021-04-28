@@ -22,20 +22,19 @@ def copyImage(path: str, newName: str, slist: int):
     """
     if savestate.configList["ListSplit"]:
         if slist == 0:  # Left list
-            shutil.copy(path,
-                        savestate.configList["CustomFilePath"] + savestate.symbol +
-                        "textfiles" + savestate.symbol + "Lists" + savestate.symbol +
-                        savestate.configList["LeftListName"] + savestate.symbol + newName
-                        )
+            newPath = savestate.configList["CustomFilePath"] + savestate.symbol + "textfiles" + savestate.symbol + \
+                      "Lists" + savestate.symbol + savestate.configList["LeftListName"] + savestate.symbol + newName
+            if not os.path.isfile(newPath):
+                shutil.copy(path, newPath)
         elif slist == 1:  # Right list
-            shutil.copy(path,
-                        savestate.configList["CustomFilePath"] + savestate.symbol +
-                        "textfiles" + savestate.symbol + "Lists" + savestate.symbol +
-                        savestate.configList["RightListName"] + savestate.symbol + newName
-                        )
+            newPath = savestate.configList["CustomFilePath"] + savestate.symbol + "textfiles" + savestate.symbol + \
+                      "Lists" + savestate.symbol + savestate.configList["RightListName"] + savestate.symbol + newName
+            if not os.path.isfile(newPath):
+                shutil.copy(path, newPath)
     else:
-        shutil.copy(path, savestate.configList["CustomFilePath"] + savestate.symbol +
-                    "textfiles" + savestate.symbol + "Lists" + savestate.symbol + newName)
+        newPath = savestate.configList["CustomFilePath"] + savestate.symbol + \
+                    "textfiles" + savestate.symbol + "Lists" + savestate.symbol + newName
+        shutil.copy(path, newPath)
 
 
 def createListFiles(*load: str):
@@ -237,8 +236,8 @@ def getTextOfItem():
                     pass
 
                 elif "path" in now:
-                    # Image items dont have any textfiles, so theres no work to do here
-                    pass
+                    # Image items dont have any textfiles, we do call the update funtion though
+                    savestate.saveListItems[key][index]["item"].copyPicture()
                 else:
                     arg = ["Lists", now["name"], str(now["value"]), thisname]
                     check = initTextFiles("createFile", arg)

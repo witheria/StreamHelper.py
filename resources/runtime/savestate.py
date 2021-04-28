@@ -34,12 +34,6 @@ SOURCE_PATH: str = os.path.split(os.path.abspath(getsourcefile(lambda: 0)))[0].r
 APP_ID: str = "ToniSchmidbauer.StreamHelper.StreamHelperOpenAlpha.0.3.1b"
 PRODUCT_VERSION: int = 0o0003102
 
-# StyleSheet for the list elements
-shortBorder = \
-    ".QWidget {\n" \
-    + "border: 1px solid black;\n" \
-    + "}"
-
 # Standard Filepath and File Names
 # standardFilePath: str = os.getcwd()
 # standardFileNames = {"chronoup", "chronodown", "time"} UNUSED
