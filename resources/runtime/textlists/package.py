@@ -193,6 +193,7 @@ def moveSelected(direction: int) -> None:
             {item: list(newRight.values())[item] for item in range(0, len(list(newRight.values())))}
         updateLists()
         initTextFiles("initFolders")
+        return
 
     if direction == 1:
         # go through the list we are taking from and find all selected items
@@ -210,14 +211,29 @@ def moveSelected(direction: int) -> None:
             {item: list(newRight.values())[item] for item in range(0, len(list(newRight.values())))}
         updateLists()
         initTextFiles("initFolders")
+        return
 
     elif direction == 2:
+        # We sort out the selected items in their respective temp dict sections and then merge them into the main
+        # savestate dicts.
+        # Merging always happens left to right, then right to left.
+        # I thought about how this could be done any simpler, but I have no ideas anymore. PLEASE HELP
+
         logWrite("Swapping every selected item")
         temp: dict = {"Left": {}, "Right": {}}
+        newLists: dict = {"Left": {}, "Right": {}}
         for key1 in savestate.saveListData:
             for key2 in savestate.saveListData[key1]:
                 if savestate.saveListItems[key1][key2]["item"].getSelected():
                     temp[key1][key2] = savestate.saveListData[key1][key2]
+                else:
+                    newLists[key1][key2] = savestate.saveListData[key1][key2]
+
+        savestate.saveListData["Right"] = mergeDicts(newLists["Right"], temp["Left"])
+        savestate.saveListData["Left"] = mergeDicts(newLists["Left"], temp["Right"])
+        updateLists()
+        initTextFiles("initFolders")
+        return
 
 
 def mergeDicts(onedict, twodict) -> dict:

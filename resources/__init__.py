@@ -20,7 +20,7 @@ from resources.runtime.Settings.program import syncSettings
 from resources.runtime.functions import information, createStandardFiles, erroreasy, eSportsExtensionWidget, \
     confirmation
 from resources.runtime.savestate import standardFilePath
-from resources.runtime.textfiles.fileedit import createListFiles
+from resources.runtime.textfiles.fileedit import createListFiles, getTextOfItem
 from resources.runtime.textfiles.folderedit import emptyDir
 from resources.runtime.textlists.package import txlinit, addToList
 
@@ -190,6 +190,16 @@ class StreamHelper(QMainWindow):
 
         # Show the bonus Tool
         window.actionPackage_Installer.triggered.connect(lambda: showPackageInstaller(self))
+
+    def closeEvent(self, event):
+        try:
+            if savestate.configList["saveOnShutdown"]:
+                getTextOfItem()
+                event.accept()
+            else:
+                event.accept()
+        except KeyError:
+            event.accept()  # On older StreamHelper versions than 0.3.2 this key is not in the config file
 
     # else:
     #     if savestate.platform == 'linux':

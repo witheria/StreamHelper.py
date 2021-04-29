@@ -465,7 +465,7 @@ class ChronoItem(QWidget):
             self.chronotype = int(args[0]["valueTime"].split(":")[4].split("#F")[0])
             temp = args[0]["valueTime"].split(":")[5:]
             self.format = ":".join([x for x in temp])
-            print(self.format)
+            # print(self.format)
         except IndexError:
             pass  # This just means that the item has been created by the user
 
@@ -489,14 +489,14 @@ class ChronoItem(QWidget):
         startButton.setIcon(QIcon(savestate.SOURCE_PATH + "images/common/play_pause.png"))
         resetButton.setIcon(QIcon(savestate.SOURCE_PATH + "images/common/reset.png"))
 
-        startButton.clicked.connect(self.startTime)
+        startButton.clicked.connect(lambda: self.startTime())
         # stopButton.pressed.connect(self.pauseTime)
         self.ui.deleteFromItem.clicked.connect(lambda: deleteFromItem(self.name))
         self.ui.copyPath.clicked.connect(lambda: self.getPath())
         self.ui.donemsg.textChanged.connect(lambda: self.setReturnMsg(self.ui.donemsg.text()))
         self.ui.format.clicked.connect(lambda: self.changeFormat())
-        resetButton.pressed.connect(self.resetTimer)
-        timeedit.timeChanged.connect(self.updateValues)
+        resetButton.pressed.connect(lambda: self.resetTimer())
+        timeedit.timeChanged.connect(lambda: self.updateValues())
 
         savestate.timer.timeout.connect(self.differentiate)
 
@@ -565,7 +565,7 @@ class ChronoItem(QWidget):
 
     def startTime(self):
         self.running = self.ui.startButton.isChecked()
-        # self.running)
+
         # This shouldnt be running if its on countdown and already zero
         if self.isZero() and self.chronotype == 1:
             self.running = False

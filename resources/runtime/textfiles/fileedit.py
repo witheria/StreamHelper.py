@@ -198,6 +198,9 @@ def getTextOfItem():
         logWrite("KeyError occurred at " + str(handling) + ". This is an expected error the first time the program is "
                                                            "loaded.")
     except RuntimeError:
+        # Expected error the first time this is loaded
+        print("Got an expected RuntimeError in getTextOfItem(). Please contact the developer if you see this message"
+              " more than once.")
         pass
     try:
         if savestate.saveLists["Left"].count() == 0 and savestate.saveLists["Right"].count() == 0:
@@ -209,7 +212,6 @@ def getTextOfItem():
             # print(tempArray)
     except AttributeError:
         # If the lists aren't saved yet
-        print("Expected List error 1")
         tempArray = savestate.saveListData
     # print("Temp array is: ", tempArray)
     writeToAutosave("Lists", tempArray)
@@ -228,15 +230,15 @@ def getTextOfItem():
                 now = savestate.saveListData[key][index]["itemData"]
                 # print(now)
 
-                if "pretext" in now:
+                if "pretext" in now:  # Number items
                     arg = ["Lists", now["name"], str(now["pretext"] + str(now["value"])), thisname]
                     check = initTextFiles("createFile", arg)
                 elif "chronotype" in now:
-                    # Chronoitems edit their own textfiles in real time (hehe, time lol)
+                    # Chronoitems edit their own text files in real time (hehe, time lol)
                     pass
 
                 elif "path" in now:
-                    # Image items dont have any textfiles, we do call the update funtion though
+                    # Image items dont have any textfiles, we do call the update function though
                     savestate.saveListItems[key][index]["item"].copyPicture()
                 else:
                     arg = ["Lists", now["name"], str(now["value"]), thisname]
@@ -338,7 +340,7 @@ def initTextFiles(access_token: str, *args):
                     print("List-splitting enabled and folder found: " + folder)
                 for filename in os.listdir(folder):
                     file_path = os.path.join(folder, filename)
-                    print("Trying to delete: ", file_path)
+                    # print("Trying to delete: ", file_path)
                     try:
                         if os.path.isfile(file_path) or os.path.islink(file_path):
                             os.unlink(file_path)
