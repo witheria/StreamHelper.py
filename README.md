@@ -23,8 +23,10 @@ https://mega.nz/folder/JOxmABTQ#Dn8tYTcBoKMxezW61TWK0A
 4. Read the FAQ and the changelog
 5. Start the  program from the location or your desktop
 
+0.3.1 has not been packed into an installer. If you want to use it, download from mega, extract where you want to and run.
+
 There shouldn't be any issues, since this process is straightforward.
-*Note: StreamHelper can only be started from the wizard if you gave it elevated privileges, otherwise it will fail. This is expected, since the program is only able to run with elevation!*
+*Note (Pre-0.3.1): StreamHelper can only be started from the wizard if you gave it elevated privileges, otherwise it will fail. This is expected, since the program is only able to run with elevation!*
 
 ## Startup
 On startup, a folder will be created at *C:\Users\\<username\>\AppData\Local\StreamHelper* and all basic files will get created. This includes:
@@ -32,12 +34,11 @@ On startup, a folder will be created at *C:\Users\\<username\>\AppData\Local\Str
 - The  autosave
 	
 - The config file
-	
-- An unused settings file (remnants  from earlier versions, will be removed)
-	
+		
 - The folder *textfiles* with all subfolders *Lists*, *eSports* and *API (unused in 0.3)*
 
-The program will *not* start if you don't have elevated privileges! 
+The program on any version before 0.3.1 will *not* start if you don't have elevated privileges! 
+From this version onwards, the program will ask for these privileges as soon as it needs it.
 
 ## Usage
 Using this program is straightforward and rather simple, there are tooltips for most buttons and sections. However, there are some things to know before starting to produce with it:
@@ -51,12 +52,16 @@ Using this program is straightforward and rather simple, there are tooltips for 
 - Deleting folders manually while using the program might cause StreamHelper to crash (known bug)
 - Keyboard shortcuts "ctrl+l, ctrl+v" for loading of files is deactivated (known bug)
 
+A complete list of changes, documentation and bugs is in the works, however, since interest on this project is low at best, these will take some time.
+
 More will be added to this list until I have a proper documentation with tutorials. Currently though, since the application isn't too big, please bear with me if I focus on programming.
 
-If you happen to have any questions regarding usage of this program, feel free to ask me, write me an e-mail or dm me on Discord!
+If you happen to have any questions regarding usage of this program, feel free to ask me, write me an e-mail or dm me on Discord (Witheria #4806)!
 
 ## Deinstallation
 You can deinstall StreamHelper from the "installed programs" section within your PC's settings. 
+
+0.3.1: Simply delete the directory you decided to put the files and the appdata folder.
 
 
 ### Thank you for being a part of this project!
