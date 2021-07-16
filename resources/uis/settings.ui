@@ -173,7 +173,7 @@
     <enum>QFrame::Sunken</enum>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="MainSettings">
     <widget class="QLabel" name="label_2">
@@ -954,6 +954,183 @@ click the button</string>
       </property>
       <property name="text">
        <string>Competitive Streamer</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_11">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>60</y>
+       <width>261</width>
+       <height>261</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <widget class="QLineEdit" name="server_key">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>231</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>A key for service communication</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_31">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>API Key for server connections:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="server_uri">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>231</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>The URI to send the request to</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_35">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>API Server URI:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="server_update">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>228</y>
+        <width>71</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="opt_params">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>231</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Comma separated list of parameters</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_36">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Optional Parameters:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="ign_params">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>180</y>
+        <width>231</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Comma separated list of values</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_37">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>231</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ignore these values from the server response:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_38">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>210</y>
+        <width>231</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Server text file path/name:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="srv_file_name">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>230</y>
+        <width>141</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Valid path string</string>
       </property>
      </widget>
     </widget>

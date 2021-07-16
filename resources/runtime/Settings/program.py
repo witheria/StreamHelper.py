@@ -11,6 +11,7 @@ from resources.runtime.functions import erroreasy, createStandardFiles
 from resources.runtime.textfiles.fileedit import initTextFiles
 from resources.runtime.textfiles.folderedit import emptyDir
 from resources.runtime.textlists.package import updateLists
+from resources.access.cryptography import encrypt, decrypt
 
 
 def syncSettings(self):
@@ -66,6 +67,13 @@ def syncSettings(self):
     self.ui.funnelFileSeparator.setText(savestate.configList["funnelfile_separator"])
     self.ui.applyFunnel.clicked.connect(lambda: changeFunnelFileSeparator(self))
 
+    self.ui.server_key.setText(decrypt(savestate.configList["serverkey"]))
+    self.ui.server_uri.setText(savestate.configList["serveruri"])
+    self.ui.opt_params.setText(savestate.configList["opt_params"])
+    self.ui.ign_params.setText(savestate.configList["ign_params"])
+    self.ui.srv_file_name.setText(savestate.configList["srv_file_name"])
+    self.ui.server_update.clicked.connect(lambda: changeServerKey(self))
+
     # About
     self.ui.resetSettings.clicked.connect(lambda: resetSettings(self))
 
@@ -75,7 +83,6 @@ def syncSettings(self):
 def changeSheet(self):
     """
     This method is used to synchronize the item-changing in the QTreeWidget of the settings with the stacked widget
-
 
     :param self: SettingsWindow
     :return: None
@@ -219,4 +226,13 @@ def changeFunnelFileSeparator(self):
     Wrapper function to set a new string to be used as separator when funneling
     """
     savestate.configList["funnelfile_separator"] = self.ui.funnelFileSeparator.text()
+    updateSettings()
+
+
+def changeServerKey(self):
+    savestate.configList["serverkey"] = encrypt(self.ui.server_key.text())
+    savestate.configList["serveruri"] = self.ui.server_uri.text()
+    savestate.configList["opt_params"] = self.ui.opt_params.text()
+    savestate.configList["ign_params"] = self.ui.ign_params.text()
+    savestate.configList["srv_file_name"] = self.ui.srv_file_name.text()
     updateSettings()

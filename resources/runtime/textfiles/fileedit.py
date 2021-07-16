@@ -37,7 +37,7 @@ def copyImage(path: str, newName: str, slist: int):
         shutil.copy(path, newPath)
 
 
-def createListFiles(*load: str):
+def createListFiles(load: str = None):
     """
     This method recreates the list files from the autosave.json file or a savefile
 

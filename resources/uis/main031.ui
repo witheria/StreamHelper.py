@@ -1624,6 +1624,7 @@
      <string>Tools</string>
     </property>
     <addaction name="actionPackage_Installer"/>
+    <addaction name="actionEKO_API_Connection"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSettings"/>
@@ -1703,6 +1704,11 @@
   <action name="actionPackage_Installer">
    <property name="text">
     <string>Package Installer</string>
+   </property>
+  </action>
+  <action name="actionEKO_API_Connection">
+   <property name="text">
+    <string>EKO API Connection</string>
    </property>
   </action>
  </widget>

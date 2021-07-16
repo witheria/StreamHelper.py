@@ -49,3 +49,11 @@ def logWriteNoTime(text):
         logCreate()
         logWrite(text)
     z.write(text)
+
+
+def pprint(ptext: str, LEVEL: str="DEBUG"):
+    """
+    hm. i think i need a proper sysout function to organise all this text @TODO
+    """
+    if savestate.printLevel == "DEBUG":
+        pass

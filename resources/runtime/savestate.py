@@ -48,6 +48,7 @@ saveLists: dict = {"Left": None, "Right": None}
 saveListItems: dict = {"Left": {}, "Right": {}}
 saveListData: dict = {"Left": {}, "Right": {}}
 saveListItemNames: list = []
+yeOldeSaveToCompare: dict = {"Left": {}, "Right": {}}  # This exists to compare different states of the program.
 
 # create all necessary lists
 txtlist = {"CS_Day": "", "CS_Game": "", "CS_Group": "", "CS_League": "", "CS_Tournament": "",
@@ -132,11 +133,20 @@ configList = {
 
     # Riot API settings
     "FontSize": 11,
-    "ChronoFormat": "hh:mm:ss"
+    "ChronoFormat": "hh:mm:ss",
 
+    # EKO API settings
+    "serverkey": "",
+    "serveruri": "",
+    "opt_params": "Limit=1",
+    "ign_params": "",
+    "srv_file_name": "server.txt",
+    "srv_interval": 12,
+    "svr_sep": "\n"
 }
 # List used for resetting the settings (wont be changed around and read like the other one)
 standardConfigList = {
+    "WARNING": "EVERY MANUAL CHANGE REQUIRES A RESTART OF THE PROGRAM!",
     # Basic settings
     "StartupTab": 0,
     "StartupSettingsTab": 0,
@@ -165,8 +175,15 @@ standardConfigList = {
 
     # Riot API settings
     "FontSize": 11,
-    "ChronoFormat": "hh:mm:ss"
+    "ChronoFormat": "hh:mm:ss",
 
+    # EKO API settings
+    "serverkey": "",
+    "serveruri": "",
+    "opt_params": "Limit=1",
+    "ign_params": "",
+    "srv_file_name": "server.txt",
+    "srv_interval": 12
 }
 
 # This integer counts how many times the function saveChronoToAutosave in textlists.program has been accessed
@@ -346,3 +363,18 @@ champIdMaps: dict = {
     "142": "Zoe",
     "143": "Zyra"
 }
+
+
+class LOCK:
+    COMMON: dict = {
+        'grant_type': 'authorization_code',
+        'client_id': "",
+        'client_secret': "",
+        'redirect_uri': "",
+        'code': ""
+    }
+    TOKEN: str = ""
+    REFRESH: str = ""
+    EXPIRE: int = 0
+    TIME: int = 0
+    URL: str = "https://www.streamlabs.com/api/v1.0/token"

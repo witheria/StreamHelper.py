@@ -24,6 +24,8 @@ from resources.runtime.textfiles.fileedit import createListFiles, getTextOfItem
 from resources.runtime.textfiles.folderedit import emptyDir
 from resources.runtime.textlists.package import txlinit, addToList
 
+from resources.access.eko_api.main import main
+
 
 def is_admin():
     # checks whether the user starting the program is an admin. Admin rights are needed for
@@ -188,8 +190,11 @@ class StreamHelper(QMainWindow):
         # Load and save settings
         window.actionMain_Settings.triggered.connect(showSettings)
 
-        # Show the bonus Tool
+        # Show the package installer Tool
         window.actionPackage_Installer.triggered.connect(lambda: showPackageInstaller(self))
+
+        # Show the API Connection
+        window.actionEKO_API_Connection.triggered.connect(lambda: main())
 
     def closeEvent(self, event):
         try:

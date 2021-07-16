@@ -1,3 +1,13 @@
+- load multiple oi files
+- selective loading of oi files
+- load oi files from server
+
+
+
+
+************************************************************************************************************************
+
+
 OPEN ALPHA 0.3.1
 
 
